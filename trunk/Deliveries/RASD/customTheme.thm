@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<alloy>
+
+<view>
+
+<defaultnode/>
+
+<defaultedge visible="no"/>
+
+<node>
+   <type name="afterOp"/>
+   <type name="Customer"/>
+   <type name="Employee"/>
+   <type name="FinalPackage"/>
+   <type name="FinalProduct"/>
+   <type name="initial"/>
+   <type name="Package"/>
+   <type name="paid"/>
+   <type name="pending"/>
+   <type name="Product"/>
+   <type name="reserved"/>
+   <type name="String"/>
+   <type name="univ"/>
+   <type name="open$3/Ord"/>
+   <type name="ordering/Ord"/>
+   <type name="seq/Int"/>
+</node>
+
+<node visible="no">
+   <type name="Int"/>
+   <type name="PackageStatus"/>
+   <type name="State"/>
+</node>
+
+<edge visible="no">
+   <relation name="$identicalFinalPackages"> <type name="FinalPackage"/> <type name="FinalPackage"/> </relation>
+   <relation name="$showDynamicCreateFinalPackage_c"> <type name="FinalPackage"/> <type name="Customer"/> </relation>
+   <relation name="$showDynamicCreateFinalPackage_c&apos;"> <type name="Product"/> <type name="Employee"/> </relation>
+</edge>
+
+<edge visible="no" attribute="yes">
+   <relation name="ID"> <type name="Customer"/> <type name="Int"/> </relation>
+   <relation name="ID"> <type name="Employee"/> <type name="Int"/> </relation>
+   <relation name="ID"> <type name="FinalPackage"/> <type name="Int"/> </relation>
+   <relation name="ID"> <type name="FinalProduct"/> <type name="Int"/> </relation>
+   <relation name="ID"> <type name="Package"/> <type name="Int"/> </relation>
+   <relation name="ID"> <type name="Product"/> <type name="Int"/> </relation>
+   <relation name="state"> <type name="Customer"/> <type name="State"/> </relation>
+   <relation name="state"> <type name="Employee"/> <type name="State"/> </relation>
+   <relation name="state"> <type name="FinalPackage"/> <type name="State"/> </relation>
+   <relation name="state"> <type name="FinalProduct"/> <type name="State"/> </relation>
+   <relation name="state"> <type name="Package"/> <type name="State"/> </relation>
+   <relation name="state"> <type name="Product"/> <type name="State"/> </relation>
+   <relation name="status"> <type name="FinalPackage"/> <type name="PackageStatus"/> </relation>
+</edge>
+
+<edge visible="yes">
+   <relation name="finalPackages"> <type name="Customer"/> <type name="FinalPackage"/> </relation>
+   <relation name="finalProducts"> <type name="FinalPackage"/> <type name="FinalProduct"/> </relation>
+   <relation name="packages"> <type name="Employee"/> <type name="Package"/> </relation>
+   <relation name="products"> <type name="Employee"/> <type name="Product"/> </relation>
+   <relation name="products"> <type name="FinalPackage"/> <type name="Product"/> </relation>
+   <relation name="products"> <type name="Package"/> <type name="Product"/> </relation>
+</edge>
+
+</view>
+
+</alloy>
