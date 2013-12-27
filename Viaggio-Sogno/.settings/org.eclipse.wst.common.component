@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="Viaggio-Sogno">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="Viaggio-Sogno-EJB.jar" deploy-path="/" handle="module:/resource/Viaggio-Sogno-EJB/Viaggio-Sogno-EJB">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="Viaggio-Sogno-EJBClient.jar" deploy-path="/" handle="module:/resource/Viaggio-Sogno-EJBClient/Viaggio-Sogno-EJBClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="Viaggio-Sogno-Web.war" deploy-path="/" handle="module:/resource/Viaggio-Sogno-Web/Viaggio-Sogno-Web">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
