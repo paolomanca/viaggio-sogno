@@ -6,17 +6,17 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the final_hotel database table.
+ * The persistent class for the FINAL_HOTEL database table.
  * 
  */
 @Entity
-@Table(name="final_hotel")
+@Table(name="FINAL_HOTEL")
 @NamedQuery(name="FinalHotel.findAll", query="SELECT f FROM FinalHotel f")
 public class FinalHotel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int idFINAL_HOTEL;
 

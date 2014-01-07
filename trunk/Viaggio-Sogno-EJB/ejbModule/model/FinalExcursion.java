@@ -6,17 +6,17 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the final_excursion database table.
+ * The persistent class for the FINAL_EXCURSION database table.
  * 
  */
 @Entity
-@Table(name="final_excursion")
+@Table(name="FINAL_EXCURSION")
 @NamedQuery(name="FinalExcursion.findAll", query="SELECT f FROM FinalExcursion f")
 public class FinalExcursion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int idFINAL_EXCURSION;
 
@@ -24,15 +24,15 @@ public class FinalExcursion implements Serializable {
 	@Column(nullable=false)
 	private Date date;
 
-	//bi-directional many-to-one association to Product
-	@ManyToOne
-	@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
-	private Product product;
-
 	//bi-directional many-to-one association to FinalPackage
 	@ManyToOne
 	@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
 	private FinalPackage finalPackage;
+
+	//bi-directional many-to-one association to Product
+	@ManyToOne
+	@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
+	private Product product;
 
 	public FinalExcursion() {
 	}
@@ -53,20 +53,20 @@ public class FinalExcursion implements Serializable {
 		this.date = date;
 	}
 
-	public Product getProduct() {
-		return this.product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
 	public FinalPackage getFinalPackage() {
 		return this.finalPackage;
 	}
 
 	public void setFinalPackage(FinalPackage finalPackage) {
 		this.finalPackage = finalPackage;
+	}
+
+	public Product getProduct() {
+		return this.product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 }
