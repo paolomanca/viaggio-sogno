@@ -6,17 +6,17 @@ import java.util.List;
 
 
 /**
- * The persistent class for the final_package database table.
+ * The persistent class for the FINAL_PACKAGE database table.
  * 
  */
 @Entity
-@Table(name="final_package")
+@Table(name="FINAL_PACKAGE")
 @NamedQuery(name="FinalPackage.findAll", query="SELECT f FROM FinalPackage f")
 public class FinalPackage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int idFINAL_PACKAGE;
 
@@ -32,15 +32,15 @@ public class FinalPackage implements Serializable {
 	@OneToMany(mappedBy="finalPackage")
 	private List<FinalHotel> finalHotels;
 
-	//bi-directional many-to-one association to Customer
-	@ManyToOne
-	@JoinColumn(name="CUSTOMER_idCUSTOMER", nullable=false)
-	private Customer customer;
-
 	//bi-directional many-to-one association to Package
 	@ManyToOne
 	@JoinColumn(name="PACKAGE_idPACKAGE", nullable=false)
 	private Package pkg;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="USER_idUSER", nullable=false)
+	private User user;
 
 	//bi-directional many-to-many association to Product
 	@ManyToMany(mappedBy="finalPackages")
@@ -123,20 +123,20 @@ public class FinalPackage implements Serializable {
 		return finalHotel;
 	}
 
-	public Customer getCustomer() {
-		return this.customer;
-	}
-
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
-	}
-
 	public Package getPackage() {
 		return this.pkg;
 	}
 
 	public void setPackage(Package pkg) {
 		this.pkg = pkg;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	public List<Product> getProducts() {

@@ -7,17 +7,17 @@ import java.util.List;
 
 
 /**
- * The persistent class for the product database table.
+ * The persistent class for the PRODUCT database table.
  * 
  */
 @Entity
-@Table(name="product")
+@Table(name="PRODUCT")
 @NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int idPRODUCT;
 
@@ -57,10 +57,14 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy="product")
 	private List<FinalHotel> finalHotels;
 
+	//bi-directional many-to-many association to Package
+	@ManyToMany(mappedBy="products")
+	private List<Package> packages;
+
 	//bi-directional many-to-many association to FinalPackage
 	@ManyToMany
 	@JoinTable(
-		name="final_package_has_product"
+		name="FINAL_PACKAGE_has_PRODUCT"
 		, joinColumns={
 			@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
 			}
@@ -69,19 +73,6 @@ public class Product implements Serializable {
 			}
 		)
 	private List<FinalPackage> finalPackages;
-
-	//bi-directional many-to-many association to Package
-	@ManyToMany
-	@JoinTable(
-		name="package_has_product"
-		, joinColumns={
-			@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="PACKAGE_idPACKAGE", nullable=false)
-			}
-		)
-	private List<Package> packages;
 
 	public Product() {
 	}
@@ -232,20 +223,20 @@ public class Product implements Serializable {
 		return finalHotel;
 	}
 
-	public List<FinalPackage> getFinalPackages() {
-		return this.finalPackages;
-	}
-
-	public void setFinalPackages(List<FinalPackage> finalPackages) {
-		this.finalPackages = finalPackages;
-	}
-
 	public List<Package> getPackages() {
 		return this.packages;
 	}
 
 	public void setPackages(List<Package> packages) {
 		this.packages = packages;
+	}
+
+	public List<FinalPackage> getFinalPackages() {
+		return this.finalPackages;
+	}
+
+	public void setFinalPackages(List<FinalPackage> finalPackages) {
+		this.finalPackages = finalPackages;
 	}
 
 }

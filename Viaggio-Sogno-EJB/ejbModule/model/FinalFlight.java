@@ -6,17 +6,17 @@ import java.util.Date;
 
 
 /**
- * The persistent class for the final_flight database table.
+ * The persistent class for the FINAL_FLIGHT database table.
  * 
  */
 @Entity
-@Table(name="final_flight")
+@Table(name="FINAL_FLIGHT")
 @NamedQuery(name="FinalFlight.findAll", query="SELECT f FROM FinalFlight f")
 public class FinalFlight implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int idFINAL_FLIGHT;
 
@@ -24,15 +24,15 @@ public class FinalFlight implements Serializable {
 	@Column(nullable=false)
 	private Date departure;
 
-	//bi-directional many-to-one association to Product
-	@ManyToOne
-	@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
-	private Product product;
-
 	//bi-directional many-to-one association to FinalPackage
 	@ManyToOne
 	@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
 	private FinalPackage finalPackage;
+
+	//bi-directional many-to-one association to Product
+	@ManyToOne
+	@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
+	private Product product;
 
 	public FinalFlight() {
 	}
@@ -53,20 +53,20 @@ public class FinalFlight implements Serializable {
 		this.departure = departure;
 	}
 
-	public Product getProduct() {
-		return this.product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
 	public FinalPackage getFinalPackage() {
 		return this.finalPackage;
 	}
 
 	public void setFinalPackage(FinalPackage finalPackage) {
 		this.finalPackage = finalPackage;
+	}
+
+	public Product getProduct() {
+		return this.product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
 }

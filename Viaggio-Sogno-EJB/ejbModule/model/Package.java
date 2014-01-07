@@ -6,17 +6,17 @@ import java.util.List;
 
 
 /**
- * The persistent class for the package database table.
+ * The persistent class for the PACKAGE database table.
  * 
  */
 @Entity
-@Table(name="package")
+@Table(name="PACKAGE")
 @NamedQuery(name="Package.findAll", query="SELECT p FROM Package p")
 public class Package implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
 	private int idPACKAGE;
 
@@ -27,14 +27,23 @@ public class Package implements Serializable {
 	@OneToMany(mappedBy="pkg")
 	private List<FinalPackage> finalPackages;
 
-	//bi-directional many-to-one association to Employee
-	@ManyToOne
-	@JoinColumn(name="EMPLOYEE_idEMPLOYEE", nullable=false)
-	private Employee employee;
-
 	//bi-directional many-to-many association to Product
-	@ManyToMany(mappedBy="packages")
+	@ManyToMany
+	@JoinTable(
+		name="PACKAGE_has_PRODUCT"
+		, joinColumns={
+			@JoinColumn(name="PACKAGE_idPACKAGE", nullable=false)
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
+			}
+		)
 	private List<Product> products;
+
+	//bi-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="USER_idUSER", nullable=false)
+	private User user;
 
 	public Package() {
 	}
@@ -77,20 +86,20 @@ public class Package implements Serializable {
 		return finalPackage;
 	}
 
-	public Employee getEmployee() {
-		return this.employee;
-	}
-
-	public void setEmployee(Employee employee) {
-		this.employee = employee;
-	}
-
 	public List<Product> getProducts() {
 		return this.products;
 	}
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+
+	public User getUser() {
+		return this.user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }
