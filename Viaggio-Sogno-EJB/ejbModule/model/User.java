@@ -10,7 +10,7 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="USER")
+@Table(name="USER_")
 @NamedQuery(name="User.findAll", query="SELECT u FROM User u")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -20,7 +20,7 @@ public class User implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int idUSER;
 
-	@Column(nullable=false, length=45)
+	@Column(unique=true, nullable=false, length=45)
 	private String email;
 
 	@Column(name="`first name`", nullable=false, length=45)
@@ -39,6 +39,13 @@ public class User implements Serializable {
 	//bi-directional many-to-one association to Package
 	@OneToMany(mappedBy="user")
 	private List<Package> packages;
+	
+	@ElementCollection(targetClass = Group.class)
+	@CollectionTable(	name = "USER_GROUP",
+						joinColumns = @JoinColumn(name = "email"))
+	@Enumerated(EnumType.STRING)
+	@Column(name="groupname")
+	private List<Group> groups;
 
 	public User() {
 	}

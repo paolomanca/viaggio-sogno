@@ -25,9 +25,9 @@ public class Product implements Serializable {
 	private String description;
 
 	@Column(length=45)
-	private String from;
+	private String depAirport;
 
-	private int length;
+	private int flightLength;
 
 	@Column(length=45)
 	private String location;
@@ -40,7 +40,7 @@ public class Product implements Serializable {
 	private int rating;
 
 	@Column(length=45)
-	private String to;
+	private String arrAirport;
 
 	@Column(nullable=false, length=10)
 	private String type;
@@ -94,19 +94,19 @@ public class Product implements Serializable {
 	}
 
 	public String getFrom() {
-		return this.from;
+		return this.depAirport;
 	}
 
-	public void setFrom(String from) {
-		this.from = from;
+	public void setFrom(String depAirport) {
+		this.depAirport = depAirport;
 	}
 
 	public int getLength() {
-		return this.length;
+		return this.flightLength;
 	}
 
 	public void setLength(int length) {
-		this.length = length;
+		this.flightLength = length;
 	}
 
 	public String getLocation() {
@@ -142,11 +142,11 @@ public class Product implements Serializable {
 	}
 
 	public String getTo() {
-		return this.to;
+		return this.arrAirport;
 	}
 
 	public void setTo(String to) {
-		this.to = to;
+		this.arrAirport = to;
 	}
 
 	public String getType() {
