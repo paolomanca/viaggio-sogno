@@ -1,0 +1,2 @@
+INSERT INTO USER_ (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME) values ('ciao@ciao.ciao','ciaociao','hi', 'hello');
+INSERT INTO USER_ (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME) values ('ciaaao@ciao.ciao','ciaociao','hi', 'hello');
