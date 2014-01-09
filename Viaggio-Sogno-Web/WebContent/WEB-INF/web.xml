@@ -3,7 +3,7 @@
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
 	version="3.1">
-	<display-name>se2-example-05-registrationWeb</display-name>
+	<display-name>Viaggio-Sogno-Web</display-name>
 	<servlet>
 		<servlet-name>Faces Servlet</servlet-name>
 		<servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -29,7 +29,7 @@
 			<url-pattern>/admin/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
-			<role-name>ADMIN</role-name>
+			<role-name>EMPLOYEE</role-name>
 		</auth-constraint>
 	</security-constraint>
 	<security-constraint>
@@ -39,7 +39,7 @@
 			<url-pattern>/user/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
-			<role-name>USER</role-name>
+			<role-name>COSTUMER</role-name>
 		</auth-constraint>
 	</security-constraint>
 	<!-- <security-constraint> <display-name>SSL transport required</display-name> 
