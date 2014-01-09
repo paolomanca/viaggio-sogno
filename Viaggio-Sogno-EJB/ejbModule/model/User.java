@@ -50,7 +50,7 @@ public class User implements Serializable {
 	
 	@ElementCollection(targetClass = Group.class)
 	@CollectionTable(	name = "USER_GROUP",
-						joinColumns = @JoinColumn(name = "email"))
+						joinColumns = @JoinColumn(name = "email", referencedColumnName = "EMAIL"))
 	@Enumerated(EnumType.STRING)
 	@Column(name="groupname")
 	private List<Group> groups;
