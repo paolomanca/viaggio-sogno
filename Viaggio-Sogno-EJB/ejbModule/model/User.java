@@ -1,7 +1,13 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.apache.commons.codec.digest.DigestUtils;
+
+import usermanagement.dto.UserDTO;
+
 import java.util.List;
 
 
@@ -15,6 +21,8 @@ import java.util.List;
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String FIND_ALL = "User.findAll";
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
@@ -23,13 +31,13 @@ public class User implements Serializable {
 	@Column(unique=true, nullable=false, length=45)
 	private String email;
 
-	@Column(name="`first name`", nullable=false, length=45)
-	private String first_name;
+	@Column(name="FIRST_NAME", nullable=false, length=45)
+	private String firstName;
 
-	@Column(name="`last name`", nullable=false, length=45)
-	private String last_name;
+	@Column(name="LAST_NAME", nullable=false, length=45)
+	private String lastName;
 
-	@Column(nullable=false, length=45)
+	@Column(nullable=false, length=128)
 	private String password;
 
 	//bi-directional many-to-one association to FinalPackage
@@ -46,8 +54,16 @@ public class User implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(name="groupname")
 	private List<Group> groups;
+	
+	public User(){
+		
+	}
 
-	public User() {
+	public User(UserDTO user) {
+		this.email = user.getEmail();
+		this.firstName = user.getFirstName();
+		this.lastName = user.getLastName();
+		this.password = DigestUtils.sha512Hex(user.getPassword());
 	}
 
 	public int getIdUSER() {
@@ -66,20 +82,20 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	public String getFirst_name() {
-		return this.first_name;
+	public String getFirstName() {
+		return this.firstName;
 	}
 
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
+	public void setFirstName(String first_name) {
+		this.firstName = first_name;
 	}
 
-	public String getLast_name() {
-		return this.last_name;
+	public String getLastName() {
+		return this.lastName;
 	}
 
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
+	public void setLastName(String last_name) {
+		this.lastName = last_name;
 	}
 
 	public String getPassword() {
@@ -132,6 +148,10 @@ public class User implements Serializable {
 		pkg.setUser(null);
 
 		return pkg;
+	}
+
+	public void setGroups(List<Group> groups) {
+		this.groups = groups;
 	}
 
 }
