@@ -39,7 +39,7 @@
 			<url-pattern>/user/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
-			<role-name>COSTUMER</role-name>
+			<role-name>CUSTOMER</role-name>
 		</auth-constraint>
 	</security-constraint>
 	<!-- <security-constraint> <display-name>SSL transport required</display-name> 
