@@ -1,4 +1,4 @@
-package usermanagement.dto;
+package dto;
 
 import javax.validation.constraints.Pattern;
 
