@@ -4,8 +4,8 @@ import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
-import usermanagement.UserMgr;
-import usermanagement.dto.UserDTO;
+import dto.UserDTO;
+import entitymanagers.UserMgr;
 
 @ManagedBean(name="registerBean")
 @RequestScoped

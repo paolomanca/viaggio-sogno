@@ -6,8 +6,8 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 
-import usermanagement.UserMgr;
-import usermanagement.dto.UserDTO;
+import dto.UserDTO;
+import entitymanagers.UserMgr;
 
 @ManagedBean
 @RequestScoped
@@ -28,7 +28,7 @@ public class UserBean {
 	}
 	
 	public String getName(){
-		return user.getEmail();
+		return user.getFirstName();
 	}
 	
 	public String unregister(){
