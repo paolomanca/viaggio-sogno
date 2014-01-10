@@ -1,10 +1,13 @@
 package beans;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
 
 import usermanagement.UserMgr;
+import usermanagement.dto.UserDTO;
 
 @ManagedBean
 @RequestScoped
@@ -13,8 +16,34 @@ public class UserBean {
 	@EJB
 	private UserMgr usrMgr;
 	
+	private UserDTO user;
+	
+	@PostConstruct
+	public void init() {
+		user = usrMgr.getUserDTO();
+	}
+	
+	public UserDTO getUser() {
+		return user;
+	}
+	
 	public String getName(){
-		return usrMgr.getUserDTO().getEmail();
+		return user.getEmail();
+	}
+	
+	public String unregister(){
+		usrMgr.unregister();
+		return logout();
+	}
+	
+	public String logout() {
+	    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+	    return "/home?faces-redirect=true";
+	}
+	
+	public String update(){
+		usrMgr.updateSelf(user);
+		return "/user/index?faces-redirect=true";
 	}
 	
 }
