@@ -1,8 +1,13 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import dto.ProductDTO;
+
 import java.math.BigInteger;
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -45,18 +50,6 @@ public class Product implements Serializable {
 	@Column(nullable=false, length=10)
 	private String type;
 
-	//bi-directional many-to-one association to FinalExcursion
-	@OneToMany(mappedBy="product")
-	private List<FinalExcursion> finalExcursions;
-
-	//bi-directional many-to-one association to FinalFlight
-	@OneToMany(mappedBy="product")
-	private List<FinalFlight> finalFlights;
-
-	//bi-directional many-to-one association to FinalHotel
-	@OneToMany(mappedBy="product")
-	private List<FinalHotel> finalHotels;
-
 	//bi-directional many-to-many association to Package
 	@ManyToMany(mappedBy="products")
 	private List<Package> packages;
@@ -75,6 +68,13 @@ public class Product implements Serializable {
 	private List<FinalPackage> finalPackages;
 
 	public Product() {
+	}
+
+	public Product(ProductDTO p) {
+		this.idPRODUCT = p.getId();
+		this.arrAirport = p.getArrAirport();
+		this.depAirport = p.getDepAirport();
+		this.description = p.getDescription();
 	}
 
 	public int getIdPRODUCT() {
@@ -157,72 +157,6 @@ public class Product implements Serializable {
 		this.type = type;
 	}
 
-	public List<FinalExcursion> getFinalExcursions() {
-		return this.finalExcursions;
-	}
-
-	public void setFinalExcursions(List<FinalExcursion> finalExcursions) {
-		this.finalExcursions = finalExcursions;
-	}
-
-	public FinalExcursion addFinalExcursion(FinalExcursion finalExcursion) {
-		getFinalExcursions().add(finalExcursion);
-		finalExcursion.setProduct(this);
-
-		return finalExcursion;
-	}
-
-	public FinalExcursion removeFinalExcursion(FinalExcursion finalExcursion) {
-		getFinalExcursions().remove(finalExcursion);
-		finalExcursion.setProduct(null);
-
-		return finalExcursion;
-	}
-
-	public List<FinalFlight> getFinalFlights() {
-		return this.finalFlights;
-	}
-
-	public void setFinalFlights(List<FinalFlight> finalFlights) {
-		this.finalFlights = finalFlights;
-	}
-
-	public FinalFlight addFinalFlight(FinalFlight finalFlight) {
-		getFinalFlights().add(finalFlight);
-		finalFlight.setProduct(this);
-
-		return finalFlight;
-	}
-
-	public FinalFlight removeFinalFlight(FinalFlight finalFlight) {
-		getFinalFlights().remove(finalFlight);
-		finalFlight.setProduct(null);
-
-		return finalFlight;
-	}
-
-	public List<FinalHotel> getFinalHotels() {
-		return this.finalHotels;
-	}
-
-	public void setFinalHotels(List<FinalHotel> finalHotels) {
-		this.finalHotels = finalHotels;
-	}
-
-	public FinalHotel addFinalHotel(FinalHotel finalHotel) {
-		getFinalHotels().add(finalHotel);
-		finalHotel.setProduct(this);
-
-		return finalHotel;
-	}
-
-	public FinalHotel removeFinalHotel(FinalHotel finalHotel) {
-		getFinalHotels().remove(finalHotel);
-		finalHotel.setProduct(null);
-
-		return finalHotel;
-	}
-
 	public List<Package> getPackages() {
 		return this.packages;
 	}
@@ -238,5 +172,52 @@ public class Product implements Serializable {
 	public void setFinalPackages(List<FinalPackage> finalPackages) {
 		this.finalPackages = finalPackages;
 	}
+	
+	public static List<ProductDTO> convertProductsToDTOs(List<Product> products) {
+		List<ProductDTO> out = new LinkedList<>();
+		for(Product p : products){
+			out.add(convertProductToDTO(p));
+		}
+		return out;
+	}
+
+	private static ProductDTO convertProductToDTO(Product p) {
+		ProductDTO out = new ProductDTO();
+		out.setArrAirport(p.getArrAirport());
+		out.setDepAirport(p.getDepAirport());
+		out.setDescription(p.getDescription());
+		out.setFlightLength(p.getFlightLength());
+		out.setId(p.getIdPRODUCT());
+		out.setLocation(p.getLocation());
+		out.setName(p.getName());
+		out.setPrice(p.getPrice().intValue());
+		out.setRating(p.getRating());
+		out.setType(p.getType());
+		return out;
+	}
+
+	public String getDepAirport() {
+		return depAirport;
+	}
+
+	public void setDepAirport(String depAirport) {
+		this.depAirport = depAirport;
+	}
+
+	public int getFlightLength() {
+		return flightLength;
+	}
+
+	public void setFlightLength(int flightLength) {
+		this.flightLength = flightLength;
+	}
+
+	public String getArrAirport() {
+		return arrAirport;
+	}
+
+	public void setArrAirport(String arrAirport) {
+		this.arrAirport = arrAirport;
+	}     
 
 }

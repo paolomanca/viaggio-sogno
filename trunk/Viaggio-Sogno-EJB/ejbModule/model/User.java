@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
-import usermanagement.dto.UserDTO;
+import dto.UserDTO;
 
 import java.util.List;
 

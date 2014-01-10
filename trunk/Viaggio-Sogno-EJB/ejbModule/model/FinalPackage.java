@@ -32,7 +32,7 @@ public class FinalPackage implements Serializable {
 	@OneToMany(mappedBy="finalPackage")
 	private List<FinalHotel> finalHotels;
 
-	//bi-directional many-to-one association to Package
+	//many-to-one association to Package
 	@ManyToOne
 	@JoinColumn(name="PACKAGE_idPACKAGE", nullable=false)
 	private Package pkg;
