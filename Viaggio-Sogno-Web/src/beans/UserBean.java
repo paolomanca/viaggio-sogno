@@ -13,4 +13,8 @@ public class UserBean {
 	@EJB
 	private UserMgr usrMgr;
 	
+	public String getName(){
+		return usrMgr.getUserDTO().getEmail();
+	}
+	
 }
