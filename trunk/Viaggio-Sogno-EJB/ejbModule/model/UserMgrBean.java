@@ -59,7 +59,8 @@ public class UserMgrBean implements UserMgr {
 
 
 	public User find(String email) {
-		return em.find(User.class, email);
+		return em.createQuery("SELECT t FROM User t where t.email = :email", User.class)
+                .setParameter("email", email).getSingleResult();
 	}
 
 	public List<User> getAllUsers() {
