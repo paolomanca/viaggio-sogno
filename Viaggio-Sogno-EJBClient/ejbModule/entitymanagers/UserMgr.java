@@ -1,8 +1,10 @@
-package usermanagement;
+package entitymanagers;
+
+import java.util.List;
 
 import javax.ejb.Local;
 
-import usermanagement.dto.UserDTO;
+import dto.UserDTO;
 
 @Local
 public interface UserMgr {
@@ -18,6 +20,8 @@ public interface UserMgr {
 	public void unregister();
 	
 	public void remove(String email);
+	
+	public UserDTO findByEmailDTO(String email);
 	
 	public UserDTO getUserDTO();
 
