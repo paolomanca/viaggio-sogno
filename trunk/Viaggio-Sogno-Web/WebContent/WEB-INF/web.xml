@@ -24,9 +24,9 @@
 	</login-config>
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>Admins Pages</web-resource-name>
+			<web-resource-name>Employee Pages</web-resource-name>
 			<description />
-			<url-pattern>/admin/*</url-pattern>
+			<url-pattern>/employee/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>EMPLOYEE</role-name>
@@ -34,9 +34,9 @@
 	</security-constraint>
 	<security-constraint>
 		<web-resource-collection>
-			<web-resource-name>Users Pages</web-resource-name>
+			<web-resource-name>Customer Pages</web-resource-name>
 			<description />
-			<url-pattern>/user/*</url-pattern>
+			<url-pattern>/customer/*</url-pattern>
 		</web-resource-collection>
 		<auth-constraint>
 			<role-name>CUSTOMER</role-name>
