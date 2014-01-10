@@ -3,12 +3,14 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+    xmlns:p="http://primefaces.org/ui">
 
 <h:body>
 	<h1>Hello #{userBean.name}</h1>
 	<h:form>
-		<p:commandButton action="#{logoutBean.logout}" value="Logout" />
+		<p:commandButton action="#{userBean.logout}" value="Logout" /><br/>
+		<p:commandButton action="#{userBean.unregister}" value="Unregister from TravelDream" /><br/>		
+		<p:commandButton action="/user/cp?faces-redirect=true" value="Edit your profile" />
 	</h:form>
 </h:body>
 </html>

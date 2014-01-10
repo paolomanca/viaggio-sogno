@@ -29,7 +29,7 @@ public class RegisterBean {
 	}
 	
 	public String register() {
-		userMgr.save(user);
+		userMgr.addCustomer(user);
 		return "home?faces-redirect=true";
 	}
 }
