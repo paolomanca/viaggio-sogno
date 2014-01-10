@@ -12,10 +12,10 @@ import javax.persistence.PersistenceContext;
 
 import org.apache.commons.codec.digest.DigestUtils;
 
+import dto.UserDTO;
+import entitymanagers.UserMgr;
 import model.Group;
 import model.User;
-import usermanagement.UserMgr;
-import usermanagement.dto.UserDTO;
 
 /**
  * Session Bean implementation class UserBean
@@ -54,11 +54,12 @@ public class UserMgrBean implements UserMgr {
 	@Override
 	@RolesAllowed({Group._CUSTOMER})
 	public void updateSelf(UserDTO user) {
-		getPrincipalUser().setEmail(user.getEmail());
 		getPrincipalUser().setPassword(DigestUtils.sha512Hex(user.getPassword()));
 		getPrincipalUser().setFirstName(user.getFirstName());
 		getPrincipalUser().setLastName(user.getLastName());
+		/*getPrincipalUser().setEmail(user.getEmail());*/
 	}
+	
 
 	@Override
 	@RolesAllowed({Group._EMPLOYEE})
@@ -85,6 +86,12 @@ public class UserMgrBean implements UserMgr {
 	private User findByEmail(String email) {
 		return em.createQuery("SELECT t FROM User t where t.email = :email", User.class)
 				.setParameter("email", email).getSingleResult();
+	}
+
+
+	@Override
+	public UserDTO findByEmailDTO(String email) {
+		return convertToDTO(findByEmail(email));
 	}
 
 

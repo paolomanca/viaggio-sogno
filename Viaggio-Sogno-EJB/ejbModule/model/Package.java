@@ -1,7 +1,13 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import dto.PackageDTO;
+import dto.ProductDTO;
+
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -14,6 +20,8 @@ import java.util.List;
 @NamedQuery(name="Package.findAll", query="SELECT p FROM Package p")
 public class Package implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String FIND_ALL = "Package.findAll";
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -22,11 +30,8 @@ public class Package implements Serializable {
 
 	@Column(nullable=false, length=45)
 	private String name;
-
-	//bi-directional many-to-one association to FinalPackage
-	@OneToMany(mappedBy="pkg")
-	private List<FinalPackage> finalPackages;
-
+	
+	
 	//bi-directional many-to-many association to Product
 	@ManyToMany
 	@JoinTable(
@@ -45,7 +50,24 @@ public class Package implements Serializable {
 	@JoinColumn(name="USER_idUSER", nullable=false)
 	private User user;
 
+	@Column(nullable=false)
+	private boolean showcased;
+
+	private List<Product> getProductsFromDTOs(List<ProductDTO> productDTOs) {
+		List<Product> out = new LinkedList<>();
+		for(ProductDTO p : productDTOs){
+			out .add(new Product(p));
+		}
+		return out;
+	}
+	
 	public Package() {
+		
+	}
+
+	public Package(PackageDTO pkg) {
+		setName(pkg.getName());
+		setProducts(getProductsFromDTOs(pkg.getProducts()));
 	}
 
 	public int getIdPACKAGE() {
@@ -64,28 +86,6 @@ public class Package implements Serializable {
 		this.name = name;
 	}
 
-	public List<FinalPackage> getFinalPackages() {
-		return this.finalPackages;
-	}
-
-	public void setFinalPackages(List<FinalPackage> finalPackages) {
-		this.finalPackages = finalPackages;
-	}
-
-	public FinalPackage addFinalPackage(FinalPackage finalPackage) {
-		getFinalPackages().add(finalPackage);
-		finalPackage.setPackage(this);
-
-		return finalPackage;
-	}
-
-	public FinalPackage removeFinalPackage(FinalPackage finalPackage) {
-		getFinalPackages().remove(finalPackage);
-		finalPackage.setPackage(null);
-
-		return finalPackage;
-	}
-
 	public List<Product> getProducts() {
 		return this.products;
 	}
@@ -100,6 +100,14 @@ public class Package implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public boolean isShowcased() {
+		return showcased;
+	}
+
+	public void setShowcased(boolean showcased) {
+		this.showcased = showcased;
 	}
 
 }
