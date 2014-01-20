@@ -48,6 +48,6 @@
 		<user-data-constraint> <description /> <transport-guarantee>CONFIDENTIAL</transport-guarantee> 
 		</user-data-constraint> </security-constraint> -->
 	<welcome-file-list>
-		<welcome-file>home.xhtml</welcome-file>
+		<welcome-file>index.xhtml</welcome-file>
 	</welcome-file-list>
 </web-app>

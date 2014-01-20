@@ -17,9 +17,8 @@
 				<p:message for="name" />
 
 				<h:outputLabel for="products">Products:</h:outputLabel>
-				<p:selectManyMenu id="products" value="#{packageBean.package.products}" var="p" showCheckBox="true">
+				<p:selectManyMenu id="products" value="#{packageBean.package.products}" converter="omnifaces.SelectItemsIndexConverter" showCheckbox="true">
 					<f:selectItems value="#{productBean.all}" var="product" itemLabel="#{product.name}" itemValue="#{product}" />
-					<p:column>#{p.name}</p:column>
 				</p:selectManyMenu>
 				<p:message for="products" />
 
