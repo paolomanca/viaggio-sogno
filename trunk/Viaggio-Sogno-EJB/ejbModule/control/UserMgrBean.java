@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,6 +22,7 @@ import model.User;
  * Session Bean implementation class UserBean
  */
 @Stateless
+@LocalBean
 public class UserMgrBean implements UserMgr {
 
 	@PersistenceContext
@@ -83,7 +85,7 @@ public class UserMgrBean implements UserMgr {
 	}
 
 
-	private User findByEmail(String email) {
+	protected User findByEmail(String email) {
 		return em.createQuery("SELECT t FROM User t where t.email = :email", User.class)
 				.setParameter("email", email).getSingleResult();
 	}

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dto.PackageDTO;
-import dto.ProductDTO;
 
 @Local
 public interface PackageMgr {
