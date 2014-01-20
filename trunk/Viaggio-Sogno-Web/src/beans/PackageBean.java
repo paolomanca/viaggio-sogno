@@ -16,12 +16,22 @@ public class PackageBean {
 	@EJB
 	private PackageMgr packageMgr;
 	
+	private PackageDTO pkg;
+	
+	public PackageBean() {
+		pkg = new PackageDTO();
+	}
+	
 	public List<PackageDTO> getShowcased() {
 		return packageMgr.listShowcasePackages();
 	}
 	
-	public void add(PackageDTO pkgDTO){
-		packageMgr.add(pkgDTO);
+	public PackageDTO getPackage() {
+		return pkg;
+	}
+	
+	public void add(){
+		packageMgr.add(pkg);
 	}
 
 }

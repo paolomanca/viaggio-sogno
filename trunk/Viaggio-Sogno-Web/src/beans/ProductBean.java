@@ -11,7 +11,7 @@ import dto.ProductDTO;
 import entitymanagers.PackageMgr;
 import entitymanagers.ProductMgr;
 
-@ManagedBean(name="packageBean")
+@ManagedBean(name="productBean")
 @RequestScoped
 public class ProductBean {
 	

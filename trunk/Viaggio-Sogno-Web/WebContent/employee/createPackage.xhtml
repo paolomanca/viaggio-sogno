@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+	<title>Package creation</title>
+</h:head>
+<h:body>
+	<h:form>
+		<p:panel header="Package Creation Form">
+			<h:panelGrid columns="3" id="newPackGrid">
+				<h:outputLabel for="name">Package name:</h:outputLabel>
+				<p:inputText id="name" value="#{packageBean.package.name}" />
+				<p:message for="name" />
+
+				<h:outputLabel for="products">Products:</h:outputLabel>
+				<p:selectManyMenu id="products" value="#{packageBean.package.products}" var="p" showCheckBox="true">
+					<f:selectItems value="#{productBean.all}" var="product" itemLabel="#{product.name}" itemValue="#{product}" />
+					<p:column>#{p.name}</p:column>
+				</p:selectManyMenu>
+				<p:message for="products" />
+
+				<h:outputLabel for="showcased">Showcased:</h:outputLabel>
+				<p:selectBooleanButton id="showcased" value="#{packageBean.package.showcased}" onLabel="Yes" offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+				<p:message for="showcased" />
+			</h:panelGrid>
+			<p:commandButton value="Create" update="newPackGrid" action="#{packageBean.add()}" />
+
+		</p:panel>
+	</h:form>
+</h:body>
+</html>
