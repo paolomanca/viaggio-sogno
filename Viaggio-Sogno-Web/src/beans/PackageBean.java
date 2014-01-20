@@ -20,4 +20,8 @@ public class PackageBean {
 		return packageMgr.listShowcasePackages();
 	}
 	
+	public void add(PackageDTO pkgDTO){
+		packageMgr.add(pkgDTO);
+	}
+
 }
