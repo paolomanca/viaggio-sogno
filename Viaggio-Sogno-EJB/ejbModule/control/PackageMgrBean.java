@@ -83,6 +83,7 @@ public class PackageMgrBean implements PackageMgr {
 		pkgDTO.setId(pkg.getIdPACKAGE());
 		pkgDTO.setName(pkg.getName());
 		pkgDTO.setProducts(Product.convertProductsToDTOs(pkg.getProducts()));
+		pkgDTO.setShowcased(pkg.isShowcased());
 		return pkgDTO;
 	}
 
