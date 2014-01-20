@@ -9,6 +9,6 @@ import dto.ProductDTO;
 @Local
 public interface ProductMgr {
 
-	List<ProductDTO> listProducts();
+	List<ProductDTO> listAllProducts();
 
 }
