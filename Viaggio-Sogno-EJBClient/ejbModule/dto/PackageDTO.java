@@ -12,7 +12,6 @@ public class PackageDTO {
 	@NotEmpty
     private String name;
     
-	@NotEmpty
 	private boolean showcased;
 	
 	private List<ProductDTO> products;
