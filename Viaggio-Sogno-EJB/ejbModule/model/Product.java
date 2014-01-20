@@ -192,7 +192,8 @@ public class Product implements Serializable {
 		out.setId(p.getIdPRODUCT());
 		out.setLocation(p.getLocation());
 		out.setName(p.getName());
-		out.setPrice(p.getPrice().intValue());
+		if ( p.getPrice() != null )
+			out.setPrice(p.getPrice().intValue());
 		out.setRating(p.getRating());
 		out.setType(p.getType());
 		return out;
