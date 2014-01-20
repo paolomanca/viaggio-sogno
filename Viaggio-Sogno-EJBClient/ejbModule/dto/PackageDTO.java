@@ -12,6 +12,9 @@ public class PackageDTO {
 	@NotEmpty
     private String name;
     
+	@NotEmpty
+	private boolean showcased;
+	
 	private List<ProductDTO> products;
 
 	public String getName() {
@@ -36,6 +39,14 @@ public class PackageDTO {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public boolean isShowcased() {
+		return showcased;
+	}
+
+	public void setShowcased(boolean showcased) {
+		this.showcased = showcased;
 	}
 
 }
