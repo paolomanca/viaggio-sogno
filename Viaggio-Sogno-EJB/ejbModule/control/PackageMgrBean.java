@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBContext;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,11 +15,11 @@ import javax.persistence.PersistenceContext;
 import model.Group;
 import model.Package;
 import model.Product;
-import model.User;
 import dto.PackageDTO;
 import entitymanagers.PackageMgr;
 
 @Stateless
+@LocalBean
 public class PackageMgrBean implements PackageMgr {
 	
 	@PersistenceContext
@@ -26,21 +27,19 @@ public class PackageMgrBean implements PackageMgr {
 	
 	@Resource
 	private EJBContext context;
+	
+	@EJB
+	private UserMgrBean usrMgr;
 
 	@Override
 	@RolesAllowed({Group._EMPLOYEE})
 	public void add(PackageDTO pkg) {
 		Package newPkg = new Package(pkg);
-		newPkg.setUser(findByEmail(context.getCallerPrincipal().getName()));
+		newPkg.setUser(usrMgr.findByEmail(context.getCallerPrincipal().getName()));
 		em.persist(new Package(pkg));
 		
 	}
 	
-	/*TODO this is horrible. find a way to inject the usermgrbean*/
-	private User findByEmail(String email) {
-		return em.createQuery("SELECT t FROM User t where t.email = :email", User.class)
-				.setParameter("email", email).getSingleResult();
-	}
 
 	@Override
 	@RolesAllowed({Group._EMPLOYEE})
