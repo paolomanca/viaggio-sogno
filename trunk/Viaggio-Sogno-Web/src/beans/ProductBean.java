@@ -19,7 +19,7 @@ public class ProductBean {
 	private ProductMgr productMgr;
 	
 	public List<ProductDTO> getAll() {
-		return productMgr.listProducts();
+		return productMgr.listAllProducts();
 	}
 	
 }
