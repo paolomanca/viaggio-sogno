@@ -67,6 +67,7 @@ public class Package implements Serializable {
 
 	public Package(PackageDTO pkg) {
 		setName(pkg.getName());
+		setShowcased(pkg.isShowcased());
 		setProducts(getProductsFromDTOs(pkg.getProducts()));
 	}
 
