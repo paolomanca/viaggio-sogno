@@ -5,7 +5,7 @@ INSERT INTO USER_GROUP (email, groupname) values ('a@a.a','EMPLOYEE');
 INSERT INTO PACKAGE (NAME, SHOWCASED, USER_idUSER) values ('vieni a ballare in puglia', true, 2);
 INSERT INTO PACKAGE (NAME, SHOWCASED, USER_idUSER) values ('vieni a ballare in salento', true, 2);
 INSERT INTO PACKAGE (NAME, SHOWCASED, USER_idUSER) values ('vieni a ballare sotto le stelle', false, 2);
-INSERT INTO PRODUCT (NAME, TYPE) values ('Gita in montagna', 'escursion');
+INSERT INTO PRODUCT (NAME, TYPE) values ('Gita in montagna', 'excursion');
 INSERT INTO PRODUCT (NAME, TYPE) values ('Volo dalla nonna', 'flight');
 INSERT INTO PRODUCT (NAME, TYPE) values ('Hotel da Zio Berto', 'hotel');
 
