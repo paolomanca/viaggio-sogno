@@ -20,6 +20,8 @@ import java.util.List;
 @NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	public static final String FIND_ALL = "Product.findAll";
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -218,6 +220,10 @@ public class Product implements Serializable {
 
 	public void setArrAirport(String arrAirport) {
 		this.arrAirport = arrAirport;
+	}
+
+	public ProductDTO getDTO() {
+		return convertProductToDTO(this);
 	}     
 
 }
