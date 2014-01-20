@@ -36,7 +36,7 @@ public class PackageMgrBean implements PackageMgr {
 	public void add(PackageDTO pkg) {
 		Package newPkg = new Package(pkg);
 		newPkg.setUser(usrMgr.findByEmail(context.getCallerPrincipal().getName()));
-		em.persist(new Package(pkg));
+		em.persist(newPkg);
 	}
 	
 
