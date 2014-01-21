@@ -31,4 +31,9 @@ public class ProductMgrBean implements ProductMgr {
 		return out;
 	}
 
+	@Override
+	public void add(ProductDTO productDTO) {
+		em.persist(new Product(productDTO));
+	}
+
 }
