@@ -30,6 +30,6 @@ public class RegisterBean {
 	
 	public String register() {
 		userMgr.addCustomer(user);
-		return "home?faces-redirect=true";
+		return "index?faces-redirect=true";
 	}
 }

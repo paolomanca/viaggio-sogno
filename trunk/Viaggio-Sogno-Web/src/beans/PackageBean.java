@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 
 import dto.PackageDTO;
 import entitymanagers.PackageMgr;
@@ -31,8 +30,9 @@ public class PackageBean {
 		return pkg;
 	}
 	
-	public void add(){		
+	public String add(){		
 		packageMgr.add(pkg);
+		return "index?faces-redirect=true";
 	}
 
 }

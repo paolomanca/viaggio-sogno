@@ -8,6 +8,10 @@
 <h:body>
 	<h1>Hello #{userBean.name}</h1>
 	<h:form>
+		<p:commandButton action="createPackage?faces-redirect=true" value="Create a package" />
+		<p:commandButton action="createFlight?faces-redirect=true" value="Create a flight" />
+		<p:commandButton action="createHotel?faces-redirect=true" value="Create a hotel" />
+		<p:commandButton action="createExcursion?faces-redirect=true" value="Create an excursion" />
 		<p:commandButton action="#{userBean.logout}" value="Logout" />
 	</h:form>
 </h:body>
