@@ -1,7 +1,13 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import dto.FinalPackageDTO;
+import dto.ProductDTO;
+
+import java.util.LinkedList;
 import java.util.List;
 
 
@@ -44,6 +50,15 @@ public class FinalPackage implements Serializable {
 	private List<Product> products;
 
 	public FinalPackage() {
+	}
+
+	public FinalPackage(FinalPackageDTO finalPkgDTO) {
+		this.idfinalPackage = finalPkgDTO.getId();
+		this.pkg = new Package(finalPkgDTO.getOriginalPackage());
+		this.products = new LinkedList<>();
+		for(ProductDTO pDTO : finalPkgDTO.getProducts()){
+			products.add(new Product(pDTO));
+		}
 	}
 
 	public int getIdfinalPackage() {

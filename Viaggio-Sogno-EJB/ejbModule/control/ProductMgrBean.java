@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import model.PackageHasProduct;
 import model.Product;
 import dto.ProductDTO;
 import entitymanagers.ProductMgr;
@@ -34,6 +35,12 @@ public class ProductMgrBean implements ProductMgr {
 	@Override
 	public void add(ProductDTO productDTO) {
 		em.persist(new Product(productDTO));
+	}
+
+	@Override
+	public List<ProductDTO> listByType(String type) {
+		return em.createQuery("SELECT t FROM Product t where t.type = :type", ProductDTO.class)
+		.setParameter("type", type).getResultList();
 	}
 
 }
