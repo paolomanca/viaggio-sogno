@@ -1,11 +1,10 @@
 package entitymanagers;
 
-import java.util.List;
 
 import javax.ejb.Local;
 
+import dto.FinalPackageDTO;
 import dto.PackageDTO;
-import dto.ProductDTO;
 
 @Local
 public interface FinalPackageMgr {
