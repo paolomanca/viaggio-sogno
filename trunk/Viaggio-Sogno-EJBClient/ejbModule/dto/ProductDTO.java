@@ -4,13 +4,11 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class ProductDTO {
 	
-	@NotEmpty
 	private int id;
 	
 	@NotEmpty
     private String name;
 	
-	@NotEmpty
     private int price;
 
 	@NotEmpty
@@ -23,7 +21,7 @@ public class ProductDTO {
 	
     private String depAirport;
 
-	private long flightLength;
+	private int flightLength;
 
 	private String location;
 
@@ -85,11 +83,11 @@ public class ProductDTO {
 		this.depAirport = depAirport;
 	}
 
-	public long getFlightLength() {
+	public int getFlightLength() {
 		return flightLength;
 	}
 
-	public void setFlightLength(long flightLength) {
+	public void setFlightLength(int flightLength) {
 		this.flightLength = flightLength;
 	}
 
