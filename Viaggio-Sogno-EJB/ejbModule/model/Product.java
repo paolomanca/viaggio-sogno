@@ -26,7 +26,7 @@ public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int idPRODUCT;
+	private int idproduct;
 
 	@Column(length=45)
 	private String description;
@@ -52,28 +52,11 @@ public class Product implements Serializable {
 	@Column(nullable=false, length=10)
 	private String type;
 
-	//bi-directional many-to-many association to Package
-	@ManyToMany(mappedBy="products")
-	private List<Package> packages;
-
-	//bi-directional many-to-many association to FinalPackage
-	@ManyToMany
-	@JoinTable(
-		name="FINAL_PACKAGE_has_PRODUCT"
-		, joinColumns={
-			@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
-			}
-		)
-	private List<FinalPackage> finalPackages;
-
 	public Product() {
 	}
 
 	public Product(ProductDTO p) {
-		this.idPRODUCT = p.getId();
+		this.idproduct = p.getId();
 		this.type = p.getType();
 		this.description = p.getDescription();
 		
@@ -88,12 +71,12 @@ public class Product implements Serializable {
 		
 	}
 
-	public int getIdPRODUCT() {
-		return this.idPRODUCT;
+	public int getIdproduct() {
+		return this.idproduct;
 	}
 
-	public void setIdPRODUCT(int idPRODUCT) {
-		this.idPRODUCT = idPRODUCT;
+	public void setIdproduct(int idproduct) {
+		this.idproduct = idproduct;
 	}
 
 	public String getDescription() {
@@ -110,14 +93,6 @@ public class Product implements Serializable {
 
 	public void setFrom(String depAirport) {
 		this.depAirport = depAirport;
-	}
-
-	public int getLength() {
-		return this.flightLength;
-	}
-
-	public void setLength(int length) {
-		this.flightLength = length;
 	}
 
 	public String getLocation() {
@@ -167,22 +142,6 @@ public class Product implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-
-	public List<Package> getPackages() {
-		return this.packages;
-	}
-
-	public void setPackages(List<Package> packages) {
-		this.packages = packages;
-	}
-
-	public List<FinalPackage> getFinalPackages() {
-		return this.finalPackages;
-	}
-
-	public void setFinalPackages(List<FinalPackage> finalPackages) {
-		this.finalPackages = finalPackages;
-	}
 	
 	public static List<ProductDTO> convertProductsToDTOs(List<Product> products) {
 		List<ProductDTO> out = new LinkedList<>();
@@ -198,7 +157,7 @@ public class Product implements Serializable {
 		out.setDepAirport(p.getDepAirport());
 		out.setDescription(p.getDescription());
 		out.setFlightLength(p.getFlightLength());
-		out.setId(p.getIdPRODUCT());
+		out.setId(p.getIdproduct());
 		out.setLocation(p.getLocation());
 		out.setName(p.getName());
 		if ( p.getPrice() != null )

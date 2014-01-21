@@ -17,32 +17,32 @@ public class FinalFlight implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int idFINAL_FLIGHT;
+	@Column(name="IDFINAL_FLIGHT", unique=true, nullable=false)
+	private int idfinalFlight;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
 	private Date departure;
 
-	//bi-directional many-to-one association to FinalPackage
-	@ManyToOne
-	@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
-	private FinalPackage finalPackage;
-
-	//bi-directional many-to-one association to Product
+	//uni-directional many-to-one association to Product
 	@ManyToOne
 	@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
 	private Product product;
 
+	//uni-directional many-to-one association to FinalPackage
+	@ManyToOne
+	@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
+	private FinalPackage finalPackage;
+
 	public FinalFlight() {
 	}
 
-	public int getIdFINAL_FLIGHT() {
-		return this.idFINAL_FLIGHT;
+	public int getIdfinalFlight() {
+		return this.idfinalFlight;
 	}
 
-	public void setIdFINAL_FLIGHT(int idFINAL_FLIGHT) {
-		this.idFINAL_FLIGHT = idFINAL_FLIGHT;
+	public void setIdfinalFlight(int idfinalFlight) {
+		this.idfinalFlight = idfinalFlight;
 	}
 
 	public Date getDeparture() {
@@ -53,20 +53,20 @@ public class FinalFlight implements Serializable {
 		this.departure = departure;
 	}
 
-	public FinalPackage getFinalPackage() {
-		return this.finalPackage;
-	}
-
-	public void setFinalPackage(FinalPackage finalPackage) {
-		this.finalPackage = finalPackage;
-	}
-
 	public Product getProduct() {
 		return this.product;
 	}
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public FinalPackage getFinalPackage() {
+		return this.finalPackage;
+	}
+
+	public void setFinalPackage(FinalPackage finalPackage) {
+		this.finalPackage = finalPackage;
 	}
 
 }

@@ -14,20 +14,22 @@ import javax.persistence.PersistenceContext;
 
 import model.Group;
 import model.Package;
+import model.PackageHasProduct;
 import model.Product;
 import dto.PackageDTO;
+import dto.ProductDTO;
 import entitymanagers.PackageMgr;
 
 @Stateless
 @LocalBean
 public class PackageMgrBean implements PackageMgr {
-	
+
 	@PersistenceContext
 	private EntityManager em;
-	
+
 	@Resource
 	private EJBContext context;
-	
+
 	@EJB
 	private UserMgrBean usrMgr;
 
@@ -37,8 +39,15 @@ public class PackageMgrBean implements PackageMgr {
 		Package newPkg = new Package(pkg);
 		newPkg.setUser(usrMgr.findByEmail(context.getCallerPrincipal().getName()));
 		em.persist(newPkg);
+		
+		for(ProductDTO prdDTO : pkg.getProducts()){
+			PackageHasProduct temp = new PackageHasProduct(newPkg, new Product(prdDTO));
+			em.persist(temp);
+			newPkg.addPackageHasProduct(temp);
+		}
+		
+		em.merge(newPkg);
 	}
-	
 
 	@Override
 	@RolesAllowed({Group._EMPLOYEE})
@@ -73,18 +82,29 @@ public class PackageMgrBean implements PackageMgr {
 	public List<PackageDTO> listAllPackages() {
 		List<PackageDTO> out = new LinkedList<>();
 		for(Package p : em.createNamedQuery(Package.FIND_ALL, Package.class).getResultList()){
-				out.add(convertToDTO(p));
+			out.add(convertToDTO(p));
 		};
 		return out;
 	}
-	
+
 	private PackageDTO convertToDTO(Package pkg) {
 		PackageDTO pkgDTO = new PackageDTO();
-		pkgDTO.setId(pkg.getIdPACKAGE());
+		pkgDTO.setId(pkg.getIdpackage());
 		pkgDTO.setName(pkg.getName());
-		pkgDTO.setProducts(Product.convertProductsToDTOs(pkg.getProducts()));
+		pkgDTO.setProducts(Product.convertProductsToDTOs(getPackageProducts(pkg)));
 		pkgDTO.setShowcased(pkg.isShowcased());
 		return pkgDTO;
+	}
+
+
+	private List<Product> getPackageProducts(Package pkg) {
+		List<Product> out = new LinkedList<>();
+		List<PackageHasProduct> pkgHsPrds = em.createQuery("SELECT t FROM PackageHasProduct t where t.pkg = :pkg", PackageHasProduct.class)
+				.setParameter("pkg", pkg).getResultList();
+		for(PackageHasProduct pkgHsPrd : pkgHsPrds ){
+			out.add(pkgHsPrd.getProduct());
+		}
+		return out;
 	}
 
 }

@@ -1,15 +1,24 @@
 package model;
 
 import java.io.Serializable;
-
-import javax.persistence.*;
-
-import dto.PackageDTO;
-import dto.ProductDTO;
-
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import model.PackageHasProduct;
+import dto.PackageDTO;
+import dto.ProductDTO;
 
 /**
  * The persistent class for the PACKAGE database table.
@@ -20,63 +29,43 @@ import java.util.List;
 @NamedQuery(name="Package.findAll", query="SELECT p FROM Package p")
 public class Package implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final String FIND_ALL = "Package.findAll";
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int idPACKAGE;
+	private int idpackage;
 
 	@Column(nullable=false, length=45)
 	private String name;
-	
-	
-	//bi-directional many-to-many association to Product
-	@ManyToMany
-	@JoinTable(
-		name="PACKAGE_has_PRODUCT"
-		, joinColumns={
-			@JoinColumn(name="PACKAGE_idPACKAGE", nullable=false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
-			}
-		)
-	private List<Product> products;
-
-	//bi-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="USER_idUSER", nullable=false)
-	private User user;
 
 	@Column(nullable=false)
 	private boolean showcased;
 
-	private List<Product> getProductsFromDTOs(List<ProductDTO> productDTOs) {
-		List<Product> out = new LinkedList<>();
-		for(ProductDTO p : productDTOs){
-			out .add(new Product(p));
-		}
-		return out;
-	}
-	
-	public Package() {
-		
+	//uni-directional many-to-one association to User
+	@ManyToOne
+	@JoinColumn(name="USER_idUSER", nullable=false)
+	private User user;
+
+	//bi-directional many-to-one association to PackageHasProduct
+	@OneToMany(mappedBy="pkg", cascade = CascadeType.ALL)
+	private List<PackageHasProduct> packageHasProducts = new LinkedList<>();
+
+	public Package() {		
 	}
 
 	public Package(PackageDTO pkg) {
 		setName(pkg.getName());
 		setShowcased(pkg.isShowcased());
-		setProducts(getProductsFromDTOs(pkg.getProducts()));
 	}
 
-	public int getIdPACKAGE() {
-		return this.idPACKAGE;
+	public int getIdpackage() {
+		return this.idpackage;
 	}
 
-	public void setIdPACKAGE(int idPACKAGE) {
-		this.idPACKAGE = idPACKAGE;
+	public void setIdpackage(int idpackage) {
+		this.idpackage = idpackage;
 	}
 
 	public String getName() {
@@ -85,14 +74,6 @@ public class Package implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public List<Product> getProducts() {
-		return this.products;
-	}
-
-	public void setProducts(List<Product> products) {
-		this.products = products;
 	}
 
 	public User getUser() {
@@ -109,6 +90,28 @@ public class Package implements Serializable {
 
 	public void setShowcased(boolean showcased) {
 		this.showcased = showcased;
+	}
+	
+	public List<PackageHasProduct> getPackageHasProducts() {
+		return this.packageHasProducts;
+	}
+
+	public void setPackageHasProducts(List<PackageHasProduct> packageHasProducts) {
+		this.packageHasProducts = packageHasProducts;
+	}
+
+	public PackageHasProduct addPackageHasProduct(PackageHasProduct packageHasProduct) {
+		getPackageHasProducts().add(packageHasProduct);
+		packageHasProduct.setPackage(this);
+
+		return packageHasProduct;
+	}
+
+	public PackageHasProduct removePackageHasProduct(PackageHasProduct packageHasProduct) {
+		getPackageHasProducts().remove(packageHasProduct);
+		packageHasProduct.setPackage(null);
+
+		return packageHasProduct;
 	}
 
 }
