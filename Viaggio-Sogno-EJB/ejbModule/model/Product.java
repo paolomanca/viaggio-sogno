@@ -142,14 +142,6 @@ public class Product implements Serializable {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
-	public static List<ProductDTO> convertProductsToDTOs(List<Product> products) {
-		List<ProductDTO> out = new LinkedList<>();
-		for(Product p : products){
-			out.add(convertProductToDTO(p));
-		}
-		return out;
-	}
 
 	private static ProductDTO convertProductToDTO(Product p) {
 		ProductDTO out = new ProductDTO();

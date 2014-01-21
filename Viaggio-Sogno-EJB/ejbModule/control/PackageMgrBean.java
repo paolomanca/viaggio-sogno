@@ -40,8 +40,16 @@ public class PackageMgrBean implements PackageMgr {
 		newPkg.setUser(usrMgr.findByEmail(context.getCallerPrincipal().getName()));
 		em.persist(newPkg);
 		
-		for(ProductDTO prdDTO : pkg.getProducts()){
+		for(ProductDTO prdDTO : pkg.getFirstChoices()){
 			PackageHasProduct temp = new PackageHasProduct(newPkg, new Product(prdDTO));
+			temp.setFirstChoice(true);
+			em.persist(temp);
+			newPkg.addPackageHasProduct(temp);
+		}
+		
+		for(ProductDTO prdDTO : pkg.getAlternatives()){
+			PackageHasProduct temp = new PackageHasProduct(newPkg, new Product(prdDTO));
+			temp.setFirstChoice(false);
 			em.persist(temp);
 			newPkg.addPackageHasProduct(temp);
 		}
@@ -91,18 +99,65 @@ public class PackageMgrBean implements PackageMgr {
 		PackageDTO pkgDTO = new PackageDTO();
 		pkgDTO.setId(pkg.getIdpackage());
 		pkgDTO.setName(pkg.getName());
-		pkgDTO.setProducts(Product.convertProductsToDTOs(getPackageProducts(pkg)));
+		pkgDTO.setFirstChoices(new LinkedList<ProductDTO>());
+		pkgDTO.setFirstChoices(new LinkedList<ProductDTO>());
+		for(PackageHasProduct pkgHsPrd : getPackageProducts(pkg)){
+			if(pkgHsPrd.getFirstChoice()){
+				pkgDTO.getFirstChoices().add(pkgHsPrd.getProduct().getDTO());
+			} else {
+				pkgDTO.getAlternatives().add(pkgHsPrd.getProduct().getDTO());
+			}
+		}
 		pkgDTO.setShowcased(pkg.isShowcased());
 		return pkgDTO;
 	}
 
-
-	private List<Product> getPackageProducts(Package pkg) {
-		List<Product> out = new LinkedList<>();
+	private List<PackageHasProduct> getPackageProducts(Package pkg) {
 		List<PackageHasProduct> pkgHsPrds = em.createQuery("SELECT t FROM PackageHasProduct t where t.pkg = :pkg", PackageHasProduct.class)
 				.setParameter("pkg", pkg).getResultList();
-		for(PackageHasProduct pkgHsPrd : pkgHsPrds ){
-			out.add(pkgHsPrd.getProduct());
+		return pkgHsPrds;
+	}
+
+	@Override
+	public List<ProductDTO> listFirstChoices(PackageDTO pkg) {
+		List<ProductDTO> out = new LinkedList<>();
+		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
+			if(pkgHsPrd.getFirstChoice()){
+				out.add(pkgHsPrd.getProduct().getDTO());
+			}
+		}
+		return out;
+	}
+
+	@Override
+	public List<ProductDTO> listAlternatives(PackageDTO pkg) {
+		List<ProductDTO> out = new LinkedList<>();
+		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
+			if(!pkgHsPrd.getFirstChoice()){
+				out.add(pkgHsPrd.getProduct().getDTO());
+			}
+		}
+		return out;
+	}
+
+	@Override
+	public List<ProductDTO> listFirstChoicesByType(PackageDTO pkg, String type) {
+		List<ProductDTO> out = new LinkedList<>();
+		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
+			if(pkgHsPrd.getFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
+				out.add(pkgHsPrd.getProduct().getDTO());
+			}
+		}
+		return out;
+	}
+
+	@Override
+	public List<ProductDTO> listAlternativesByType(PackageDTO pkg, String type) {
+		List<ProductDTO> out = new LinkedList<>();
+		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
+			if(pkgHsPrd.getFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
+				out.add(pkgHsPrd.getProduct().getDTO());
+			}
 		}
 		return out;
 	}
