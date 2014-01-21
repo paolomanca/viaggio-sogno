@@ -74,9 +74,18 @@ public class Product implements Serializable {
 
 	public Product(ProductDTO p) {
 		this.idPRODUCT = p.getId();
+		this.type = p.getType();
+		this.description = p.getDescription();
+		
 		this.arrAirport = p.getArrAirport();
 		this.depAirport = p.getDepAirport();
-		this.description = p.getDescription();
+		this.flightLength = p.getFlightLength();
+		
+		this.name = p.getName();
+		this.location = p.getLocation();
+		this.price = BigInteger.valueOf(p.getPrice());
+		this.rating = p.getRating();
+		
 	}
 
 	public int getIdPRODUCT() {
