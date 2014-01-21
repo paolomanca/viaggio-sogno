@@ -17,19 +17,19 @@ public class FinalExcursion implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int idFINAL_EXCURSION;
+	@Column(name="IDFINAL_EXCURSION", unique=true, nullable=false)
+	private int idfinalExcursion;
 
 	@Temporal(TemporalType.DATE)
 	@Column(nullable=false)
 	private Date date;
 
-	//bi-directional many-to-one association to FinalPackage
+	//uni-directional many-to-one association to FinalPackage
 	@ManyToOne
 	@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
 	private FinalPackage finalPackage;
 
-	//bi-directional many-to-one association to Product
+	//uni-directional many-to-one association to Product
 	@ManyToOne
 	@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
 	private Product product;
@@ -37,12 +37,12 @@ public class FinalExcursion implements Serializable {
 	public FinalExcursion() {
 	}
 
-	public int getIdFINAL_EXCURSION() {
-		return this.idFINAL_EXCURSION;
+	public int getIdfinalExcursion() {
+		return this.idfinalExcursion;
 	}
 
-	public void setIdFINAL_EXCURSION(int idFINAL_EXCURSION) {
-		this.idFINAL_EXCURSION = idFINAL_EXCURSION;
+	public void setIdfinalExcursion(int idfinalExcursion) {
+		this.idfinalExcursion = idfinalExcursion;
 	}
 
 	public Date getDate() {

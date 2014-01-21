@@ -132,7 +132,7 @@ public class UserMgrBean implements UserMgr {
 
 
 	private int getPrincipalID() {
-		return findByEmail(getPrincipalEmail()).getIdUSER();
+		return findByEmail(getPrincipalEmail()).getIduser();
 	}
 
 

@@ -17,8 +17,8 @@ public class FinalHotel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(unique=true, nullable=false)
-	private int idFINAL_HOTEL;
+	@Column(name="IDFINAL_HOTEL", unique=true, nullable=false)
+	private int idfinalHotel;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="check_in", nullable=false)
@@ -28,25 +28,25 @@ public class FinalHotel implements Serializable {
 	@Column(name="check_out", nullable=false)
 	private Date checkOut;
 
-	//bi-directional many-to-one association to FinalPackage
-	@ManyToOne
-	@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
-	private FinalPackage finalPackage;
-
-	//bi-directional many-to-one association to Product
+	//uni-directional many-to-one association to Product
 	@ManyToOne
 	@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
 	private Product product;
 
+	//uni-directional many-to-one association to FinalPackage
+	@ManyToOne
+	@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
+	private FinalPackage finalPackage;
+
 	public FinalHotel() {
 	}
 
-	public int getIdFINAL_HOTEL() {
-		return this.idFINAL_HOTEL;
+	public int getIdfinalHotel() {
+		return this.idfinalHotel;
 	}
 
-	public void setIdFINAL_HOTEL(int idFINAL_HOTEL) {
-		this.idFINAL_HOTEL = idFINAL_HOTEL;
+	public void setIdfinalHotel(int idfinalHotel) {
+		this.idfinalHotel = idfinalHotel;
 	}
 
 	public Date getCheckIn() {
@@ -65,20 +65,20 @@ public class FinalHotel implements Serializable {
 		this.checkOut = checkOut;
 	}
 
-	public FinalPackage getFinalPackage() {
-		return this.finalPackage;
-	}
-
-	public void setFinalPackage(FinalPackage finalPackage) {
-		this.finalPackage = finalPackage;
-	}
-
 	public Product getProduct() {
 		return this.product;
 	}
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public FinalPackage getFinalPackage() {
+		return this.finalPackage;
+	}
+
+	public void setFinalPackage(FinalPackage finalPackage) {
+		this.finalPackage = finalPackage;
 	}
 
 }

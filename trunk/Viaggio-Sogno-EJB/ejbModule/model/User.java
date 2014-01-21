@@ -26,7 +26,7 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)
-	private int idUSER;
+	private int iduser;
 
 	@Column(unique=true, nullable=false, length=45)
 	private String email;
@@ -66,12 +66,12 @@ public class User implements Serializable {
 		this.password = DigestUtils.sha512Hex(user.getPassword());
 	}
 
-	public int getIdUSER() {
-		return this.idUSER;
+	public int getIduser() {
+		return this.iduser;
 	}
 
-	public void setIdUSER(int idUSER) {
-		this.idUSER = idUSER;
+	public void setIduser(int iduser) {
+		this.iduser = iduser;
 	}
 
 	public String getEmail() {
