@@ -27,7 +27,7 @@
 				
 				<h:outputLabel for="price">Price:</h:outputLabel>
 				<p:inputText id="price" value="#{productBean.product.price}" />
-				<p:message for="fprice" />
+				<p:message for="price" />
 				
 			</h:panelGrid>
 			<p:commandButton value="Create" update="newFlightGrid" action="#{productBean.addFlight()}" />
