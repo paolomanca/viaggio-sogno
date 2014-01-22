@@ -7,5 +7,6 @@ INSERT INTO PACKAGE (NAME, SHOWCASED, USER_idUSER) values ('vieni a ballare in s
 INSERT INTO PACKAGE (NAME, SHOWCASED, USER_idUSER) values ('vieni a ballare sotto le stelle', false, 2);
 INSERT INTO PRODUCT (NAME, TYPE) values ('Gita in montagna', 'excursion');
 INSERT INTO PRODUCT (NAME, TYPE) values ('Volo dalla nonna', 'flight');
+INSERT INTO PRODUCT (NAME, TYPE) values ('Volo dalla mamma', 'flight');
 INSERT INTO PRODUCT (NAME, TYPE) values ('Hotel da Zio Berto', 'hotel');
 

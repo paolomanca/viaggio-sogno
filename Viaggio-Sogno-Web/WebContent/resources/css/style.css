@@ -1,0 +1,5 @@
+@CHARSET "US-ASCII";
+
+#newPackGrid tr, #newPackGrid td {
+	border: 0;
+}
