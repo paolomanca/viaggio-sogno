@@ -1,11 +1,8 @@
 package dto;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.hibernate.validator.constraints.NotEmpty;
-
-import dto.ProductDTO;
 
 public class FinalPackageDTO {
 	
