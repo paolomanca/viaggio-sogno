@@ -45,6 +45,8 @@ public class PackageBean {
 		
 	
 	public void setFirstChoicesFlight( List<ProductDTO> products ) {
+		System.out.println(products);
+
 		pkg.getFirstChoices().addAll(products);
 	}
 

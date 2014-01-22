@@ -26,10 +26,6 @@ public class ProductBean {
 	@EJB
 	private ProductMgr productMgr;
 	
-	public List<ProductDTO> getAll() {
-		return productMgr.listAllProducts();
-	}
-	
 	public String addFlight(){
 		getProduct().setType(FLIGHT);
 		productMgr.add(getProduct());
@@ -46,6 +42,10 @@ public class ProductBean {
 		getProduct().setType(EXCURSION);
 		productMgr.add(getProduct());
 		return "index?faces-redirect=true";
+	}
+
+	public List<ProductDTO> getAll() {
+		return productMgr.listAllProducts();
 	}
 
 	public ProductDTO getProduct() {
