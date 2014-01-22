@@ -12,15 +12,50 @@
 	<h:form>
 		<p:panel header="Package Creation Form">
 			<h:panelGrid columns="3" id="newPackGrid">
+			
+				<h3>First Choices</h3>
 				<h:outputLabel for="name">Package name:</h:outputLabel>
 				<p:inputText id="name" value="#{packageBean.package.name}" />
 				<p:message for="name" />
 
-				<h:outputLabel for="products">Products:</h:outputLabel>
-				<p:selectManyMenu id="products" value="#{packageBean.package.products}" converter="omnifaces.SelectItemsIndexConverter" showCheckbox="true">
-					<f:selectItems value="#{productBean.all}" var="product" itemLabel="#{product.name}" itemValue="#{product}" />
+				<h:outputLabel for="firstChoicesFlight">Flights:</h:outputLabel>
+				<p:selectManyMenu id="firstChoicesFlight" value="#{packageBean.firstChoicesFlight}" converter="omnifaces.SelectItemsIndexConverter" showCheckbox="true">
+					<f:selectItems value="#{productBean.flights}" var="product" itemLabel="#{product.name}" itemValue="#{product}" />
 				</p:selectManyMenu>
-				<p:message for="products" />
+				<p:message for="firstChoicesFlight" />
+				
+				<h:outputLabel for="firstChoicesHotel">Hotels:</h:outputLabel>
+				<p:selectManyMenu id="firstChoicesHotel" value="#{packageBean.firstChoicesHotel}" converter="omnifaces.SelectItemsIndexConverter" showCheckbox="true">
+					<f:selectItems value="#{productBean.hotels}" var="product" itemLabel="#{product.name}" itemValue="#{product}" />
+				</p:selectManyMenu>
+				<p:message for="firstChoicesHotel" />
+				
+				<h:outputLabel for="firstChoicesExcursion">Excursions:</h:outputLabel>
+				<p:selectManyMenu id="firstChoicesExcursion" value="#{packageBean.firstChoicesExcursion}" converter="omnifaces.SelectItemsIndexConverter" showCheckbox="true">
+					<f:selectItems value="#{productBean.excursions}" var="product" itemLabel="#{product.name}" itemValue="#{product}" />
+				</p:selectManyMenu>
+				<p:message for="firstChoicesExcursion" />
+				
+				
+				<h3>Alternatives</h3>
+
+				<h:outputLabel for="alternativesFlight">Flights:</h:outputLabel>
+				<p:selectManyMenu id="alternativesFlight" value="#{packageBean.alternativesFlight}" converter="omnifaces.SelectItemsIndexConverter" showCheckbox="true">
+					<f:selectItems value="#{productBean.flights}" var="product" itemLabel="#{product.name}" itemValue="#{product}" />
+				</p:selectManyMenu>
+				<p:message for="alternativesFlight" />
+				
+				<h:outputLabel for="alternativesHotel">Hotels:</h:outputLabel>
+				<p:selectManyMenu id="alternativesHotel" value="#{packageBean.alternativesHotel}" converter="omnifaces.SelectItemsIndexConverter" showCheckbox="true">
+					<f:selectItems value="#{productBean.hotels}" var="product" itemLabel="#{product.name}" itemValue="#{product}" />
+				</p:selectManyMenu>
+				<p:message for="alternativesHotel" />
+				
+				<h:outputLabel for="alternativesExcursion">Excursions:</h:outputLabel>
+				<p:selectManyMenu id="alternativesExcursion" value="#{packageBean.alternativesExcursion}" converter="omnifaces.SelectItemsIndexConverter" showCheckbox="true">
+					<f:selectItems value="#{productBean.excursions}" var="product" itemLabel="#{product.name}" itemValue="#{product}" />
+				</p:selectManyMenu>
+				<p:message for="alternativesExcursion" />
 
 				<h:outputLabel for="showcased">Showcased:</h:outputLabel>
 				<p:selectBooleanButton id="showcased" value="#{packageBean.package.showcased}" onLabel="Yes" offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
