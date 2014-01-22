@@ -7,7 +7,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class PackageDTO {
 	
-	@NotEmpty
 	private int id;	
 	
 	@NotEmpty

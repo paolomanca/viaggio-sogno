@@ -1,8 +1,13 @@
 package entitymanagers;
 
+import java.util.List;
+
 import javax.ejb.Local;
 
 import dto.FinalPackageDTO;
+import dto.FinalProductDTO;
+import dto.ProductDTO;
+import dto.UserDTO;
 
 @Local
 public interface FinalPackageMgr {
@@ -14,5 +19,41 @@ public interface FinalPackageMgr {
 	public void remove(FinalPackageDTO finalPkg);
 	
 	public FinalPackageDTO getByID(int ID);
+	
+	
+	/**
+	 * @return the list of final packages owned by the current user
+	 */
+	public List<FinalPackageDTO> listByUser();
+	
+	
+	/**
+	 * @return the list of final packages owned by the given user
+	 */
+	public List<FinalPackageDTO> listByUser(UserDTO user);
+	
+	
+	/**
+	 * @return the list of products in the given final package
+	 */
+	//public List<ProductDTO> listProducts(FinalPackageDTO finalPkg);
+	
+	
+	/**
+	 * @return the list of products of the given type in the given final package
+	 */
+	public List<ProductDTO> listProducts(FinalPackageDTO finalPkg, String type);
+
+	
+	/**
+	 * @return the list of final products in the given final package
+	 */
+	//public List<FinalProductDTO> listFinalProducts(FinalPackageDTO finalPkg);
+	
+	
+	/**
+	 * @return the list of final products of the given type in the given package
+	 */
+	public List<FinalProductDTO> listFinalProducts(FinalPackageDTO finalPkg, String type);
 
 }

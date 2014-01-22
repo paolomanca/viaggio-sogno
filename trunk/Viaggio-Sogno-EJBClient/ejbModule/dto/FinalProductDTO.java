@@ -1,5 +1,5 @@
 package dto;
 
-public class FinalProductDTO {
+public interface FinalProductDTO {
 
 }
