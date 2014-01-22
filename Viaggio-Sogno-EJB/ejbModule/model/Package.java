@@ -16,9 +16,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import model.PackageHasProduct;
 import dto.PackageDTO;
-import dto.ProductDTO;
 
 /**
  * The persistent class for the PACKAGE database table.

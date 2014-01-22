@@ -9,13 +9,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import model.PackageHasProduct;
 import model.Product;
 import dto.ProductDTO;
 import entitymanagers.ProductMgr;
 
 @Stateless
-public class ProductMgrBean implements ProductMgr {
+public class ProductMgrBean implements ProductMgr, DTOBuilder<Product, ProductDTO>{
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -27,7 +26,7 @@ public class ProductMgrBean implements ProductMgr {
 	public List<ProductDTO> listAllProducts() {
 		List<ProductDTO> out = new LinkedList<>();
 		for(Product p : em.createNamedQuery(Product.FIND_ALL, Product.class).getResultList()){
-				out.add(p.getDTO());
+				out.add(buildDTO(p));
 		};
 		return out;
 	}
@@ -42,8 +41,25 @@ public class ProductMgrBean implements ProductMgr {
 		List<ProductDTO> out = new LinkedList<>();
 		for(Product p : em.createQuery("SELECT t FROM Product t where t.type = :type", Product.class)
 				.setParameter("type", type).getResultList()){
-				out.add(p.getDTO());
+				out.add(buildDTO(p));
 		};
+		return out;
+	}
+
+	@Override
+	public ProductDTO buildDTO(Product in) {
+		ProductDTO out = new ProductDTO();
+		out.setArrAirport(in.getArrAirport());
+		out.setDepAirport(in.getDepAirport());
+		out.setDescription(in.getDescription());
+		out.setFlightLength(in.getFlightLength());
+		out.setId(in.getIdproduct());
+		out.setLocation(in.getLocation());
+		out.setName(in.getName());
+		if ( in.getPrice() != null )
+			out.setPrice(in.getPrice().intValue());
+		out.setRating(in.getRating());
+		out.setType(in.getType());
 		return out;
 	}
 

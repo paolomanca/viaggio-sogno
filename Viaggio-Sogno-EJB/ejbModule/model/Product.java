@@ -1,14 +1,17 @@
 package model;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 import dto.ProductDTO;
-
-import java.math.BigInteger;
-import java.util.LinkedList;
-import java.util.List;
 
 
 /**
@@ -143,22 +146,6 @@ public class Product implements Serializable {
 		this.type = type;
 	}
 
-	private static ProductDTO convertProductToDTO(Product p) {
-		ProductDTO out = new ProductDTO();
-		out.setArrAirport(p.getArrAirport());
-		out.setDepAirport(p.getDepAirport());
-		out.setDescription(p.getDescription());
-		out.setFlightLength(p.getFlightLength());
-		out.setId(p.getIdproduct());
-		out.setLocation(p.getLocation());
-		out.setName(p.getName());
-		if ( p.getPrice() != null )
-			out.setPrice(p.getPrice().intValue());
-		out.setRating(p.getRating());
-		out.setType(p.getType());
-		return out;
-	}
-
 	public String getDepAirport() {
 		return depAirport;
 	}
@@ -182,9 +169,5 @@ public class Product implements Serializable {
 	public void setArrAirport(String arrAirport) {
 		this.arrAirport = arrAirport;
 	}
-
-	public ProductDTO getDTO() {
-		return convertProductToDTO(this);
-	}     
 
 }

@@ -23,7 +23,7 @@ import model.User;
  */
 @Stateless
 @LocalBean
-public class UserMgrBean implements UserMgr {
+public class UserMgrBean implements UserMgr, DTOBuilder<User, UserDTO> {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -73,7 +73,7 @@ public class UserMgrBean implements UserMgr {
 	@Override
 	@RolesAllowed({Group._CUSTOMER,Group._EMPLOYEE})
 	public UserDTO getUserDTO() {
-		UserDTO userDTO = convertToDTO(getPrincipalUser());
+		UserDTO userDTO = buildDTO(getPrincipalUser());
 		return userDTO;
 	}
 
@@ -93,7 +93,7 @@ public class UserMgrBean implements UserMgr {
 
 	@Override
 	public UserDTO findByEmailDTO(String email) {
-		return convertToDTO(findByEmail(email));
+		return buildDTO(findByEmail(email));
 	}
 
 
@@ -140,12 +140,12 @@ public class UserMgrBean implements UserMgr {
 		return context.getCallerPrincipal().getName();
 	}
 
-
-	private UserDTO convertToDTO(User user) {
+	@Override
+	public UserDTO buildDTO(User in) {
 		UserDTO userDTO = new UserDTO();
-		userDTO.setEmail(user.getEmail());
-		userDTO.setFirstName(user.getFirstName());
-		userDTO.setLastName(user.getLastName());
+		userDTO.setEmail(in.getEmail());
+		userDTO.setFirstName(in.getFirstName());
+		userDTO.setLastName(in.getLastName());
 		return userDTO;
 	}
 }
