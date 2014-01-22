@@ -12,5 +12,7 @@ public interface FinalPackageMgr {
 	public void update(FinalPackageDTO finalPkg);
 	
 	public void remove(FinalPackageDTO finalPkg);
+	
+	public FinalPackageDTO getByID(int ID);
 
 }
