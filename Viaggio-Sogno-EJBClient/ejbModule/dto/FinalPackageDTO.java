@@ -12,6 +12,8 @@ public class FinalPackageDTO {
 	private PackageDTO originalPackage;
 	
 	private List<ProductDTO> products;
+	
+	private List<FinalProductDTO> finalProducts;
 
 	
 	public int getId() {

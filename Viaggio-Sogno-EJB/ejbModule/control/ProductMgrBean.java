@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.EJBContext;
+import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import dto.ProductDTO;
 import entitymanagers.ProductMgr;
 
 @Stateless
+@LocalBean
 public class ProductMgrBean implements ProductMgr, DTOBuilder<Product, ProductDTO>{
 	
 	@PersistenceContext
