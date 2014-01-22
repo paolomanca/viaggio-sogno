@@ -22,7 +22,7 @@ import entitymanagers.PackageMgr;
 
 @Stateless
 @LocalBean
-public class PackageMgrBean implements PackageMgr {
+public class PackageMgrBean implements PackageMgr, DTOBuilder<Package, PackageDTO> {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -32,6 +32,9 @@ public class PackageMgrBean implements PackageMgr {
 
 	@EJB
 	private UserMgrBean usrMgr;
+
+	@EJB
+	private ProductMgrBean prdMgr;
 
 	@Override
 	@RolesAllowed({Group._EMPLOYEE})
@@ -81,7 +84,7 @@ public class PackageMgrBean implements PackageMgr {
 		List<PackageDTO> out = new LinkedList<>();
 		for(Package p : em.createNamedQuery(Package.FIND_ALL, Package.class).getResultList()){
 			if(p.isShowcased())
-				out.add(convertToDTO(p));
+				out.add(buildDTO(p));
 		};
 		return out;
 	}
@@ -90,26 +93,9 @@ public class PackageMgrBean implements PackageMgr {
 	public List<PackageDTO> listAllPackages() {
 		List<PackageDTO> out = new LinkedList<>();
 		for(Package p : em.createNamedQuery(Package.FIND_ALL, Package.class).getResultList()){
-			out.add(convertToDTO(p));
+			out.add(buildDTO(p));
 		};
 		return out;
-	}
-
-	private PackageDTO convertToDTO(Package pkg) {
-		PackageDTO pkgDTO = new PackageDTO();
-		pkgDTO.setId(pkg.getIdpackage());
-		pkgDTO.setName(pkg.getName());
-		pkgDTO.setFirstChoices(new LinkedList<ProductDTO>());
-		pkgDTO.setFirstChoices(new LinkedList<ProductDTO>());
-		for(PackageHasProduct pkgHsPrd : getPackageProducts(pkg)){
-			if(pkgHsPrd.getFirstChoice()){
-				pkgDTO.getFirstChoices().add(pkgHsPrd.getProduct().getDTO());
-			} else {
-				pkgDTO.getAlternatives().add(pkgHsPrd.getProduct().getDTO());
-			}
-		}
-		pkgDTO.setShowcased(pkg.isShowcased());
-		return pkgDTO;
 	}
 
 	private List<PackageHasProduct> getPackageProducts(Package pkg) {
@@ -123,7 +109,7 @@ public class PackageMgrBean implements PackageMgr {
 		List<ProductDTO> out = new LinkedList<>();
 		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
 			if(pkgHsPrd.getFirstChoice()){
-				out.add(pkgHsPrd.getProduct().getDTO());
+				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}
 		return out;
@@ -134,7 +120,7 @@ public class PackageMgrBean implements PackageMgr {
 		List<ProductDTO> out = new LinkedList<>();
 		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
 			if(!pkgHsPrd.getFirstChoice()){
-				out.add(pkgHsPrd.getProduct().getDTO());
+				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}
 		return out;
@@ -145,7 +131,7 @@ public class PackageMgrBean implements PackageMgr {
 		List<ProductDTO> out = new LinkedList<>();
 		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
 			if(pkgHsPrd.getFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
-				out.add(pkgHsPrd.getProduct().getDTO());
+				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}
 		return out;
@@ -156,10 +142,29 @@ public class PackageMgrBean implements PackageMgr {
 		List<ProductDTO> out = new LinkedList<>();
 		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
 			if(pkgHsPrd.getFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
-				out.add(pkgHsPrd.getProduct().getDTO());
+				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}
 		return out;
+	}
+
+	@Override
+	public PackageDTO buildDTO(Package in) {
+		PackageDTO pkgDTO = new PackageDTO();
+		pkgDTO.setId(in.getIdpackage());
+		pkgDTO.setName(in.getName());
+		pkgDTO.setFirstChoices(new LinkedList<ProductDTO>());
+		pkgDTO.setFirstChoices(new LinkedList<ProductDTO>());
+		for(PackageHasProduct pkgHsPrd : getPackageProducts(in)){
+			if(pkgHsPrd.getFirstChoice()){
+
+				pkgDTO.getFirstChoices().add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
+			} else {
+				pkgDTO.getAlternatives().add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
+			}
+		}
+		pkgDTO.setShowcased(in.isShowcased());
+		return pkgDTO;
 	}
 
 }
