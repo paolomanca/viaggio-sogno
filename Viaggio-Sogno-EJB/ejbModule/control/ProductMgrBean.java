@@ -39,8 +39,12 @@ public class ProductMgrBean implements ProductMgr {
 
 	@Override
 	public List<ProductDTO> listByType(String type) {
-		return em.createQuery("SELECT t FROM Product t where t.type = :type", ProductDTO.class)
-		.setParameter("type", type).getResultList();
+		List<ProductDTO> out = new LinkedList<>();
+		for(Product p : em.createQuery("SELECT t FROM Product t where t.type = :type", Product.class)
+				.setParameter("type", type).getResultList()){
+				out.add(p.getDTO());
+		};
+		return out;
 	}
 
 }
