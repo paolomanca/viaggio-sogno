@@ -5,7 +5,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.bean.ViewScoped;
 
 import dto.ProductDTO;
 import entitymanagers.ProductMgr;
@@ -57,4 +56,16 @@ public class ProductBean {
 		this.product = product;
 	}
 	
+	public List<ProductDTO> getFlights() {
+		return productMgr.listByType(FLIGHT);
+	}
+	
+	public List<ProductDTO> getHotels() {
+		return productMgr.listByType(HOTEL);
+	}
+	
+	public List<ProductDTO> getExcursions() {
+		return productMgr.listByType(EXCURSION);
+	}
+
 }
