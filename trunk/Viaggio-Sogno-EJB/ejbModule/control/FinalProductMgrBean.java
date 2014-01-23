@@ -60,38 +60,26 @@ public class FinalProductMgrBean implements FinalProductMgr {
 	@Override
 	public void update(FinalProductDTO fP) {
 		if(fP instanceof FinalFlightDTO){
-			FinalFlightDTO fFDTO = (FinalFlightDTO)fP;
-			FinalFlight fF = new FinalFlight(fFDTO);
-			em.merge(fF);
+			em.merge(em.find(FinalFlight.class, fP.getId()));
 		} else
 		if(fP instanceof FinalHotelDTO){
-			FinalHotelDTO fHDTO = (FinalHotelDTO)fP;
-			FinalHotel fH = new FinalHotel(fHDTO);
-			em.merge(fH);
+			em.merge(em.find(FinalHotel.class, fP.getId()));
 		} else
 		if(fP instanceof FinalExcursionDTO){
-			FinalExcursionDTO fEDTO = (FinalExcursionDTO)fP;
-			FinalExcursion fE = new FinalExcursion(fEDTO);
-			em.merge(fE);
+			em.merge(em.find(FinalExcursion.class, fP.getId()));
 		}
 	}
 
 	@Override
 	public void remove(FinalProductDTO fP) {
 		if(fP instanceof FinalFlightDTO){
-			FinalFlightDTO fFDTO = (FinalFlightDTO)fP;
-			FinalFlight fF = new FinalFlight(fFDTO);
-			em.remove(fF);
+			em.remove(em.find(FinalFlight.class, fP.getId()));
 		} else
 		if(fP instanceof FinalHotelDTO){
-			FinalHotelDTO fHDTO = (FinalHotelDTO)fP;
-			FinalHotel fH = new FinalHotel(fHDTO);
-			em.remove(fH);
+			em.remove(em.find(FinalHotel.class, fP.getId()));
 		} else
 		if(fP instanceof FinalExcursionDTO){
-			FinalExcursionDTO fEDTO = (FinalExcursionDTO)fP;
-			FinalExcursion fE = new FinalExcursion(fEDTO);
-			em.remove(fE);
+			em.remove(em.find(FinalExcursion.class, fP.getId()));
 		}
 	}
 

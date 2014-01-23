@@ -84,8 +84,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	public void update(FinalPackageDTO finalPkgDTO) {
-		FinalPackage newFPkg = new FinalPackage(finalPkgDTO);
-		em.merge(newFPkg);
+		em.merge(em.find(FinalExcursion.class, finalPkgDTO.getId()));
 	}
 
 	@Override
@@ -95,12 +94,17 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	public FinalPackageDTO getByID(int ID) {
-		return buildDTO(em.find(FinalPackage.class, ID));
+		return buildDTO(em.createQuery("SELECT t FROM FinalPackage t where t.user = :user order by t.idfinalPackage", FinalPackage.class)
+				.setParameter("user", usrMgr.getPrincipalUser()).getResultList().get(ID), ID);
 	}
-	
-	public FinalPackageDTO buildDTO(FinalPackage in) {
+
+	private FinalPackageDTO buildDTO(FinalPackage in) {
+		return buildDTO(in, in.getIdfinalPackage());
+	}
+
+	public FinalPackageDTO buildDTO(FinalPackage in, int ID) {
 		FinalPackageDTO out = new FinalPackageDTO();
-		out.setId(in.getIdfinalPackage());
+		out.setId(ID);
 		out.setOriginalPackage(pkgMgr.buildDTO(in.getPackage()));
 		
 		List<ProductDTO> flightDTOs = new LinkedList<>();
@@ -161,11 +165,11 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@Override
 	public List<FinalPackageDTO> listByUser() {
 		List<FinalPackageDTO> out = new LinkedList<>();
-		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user", FinalPackage.class)
+		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user order by t.idfinalPackage", FinalPackage.class)
 		.setParameter("user", usrMgr.getPrincipalUser()).getResultList();
 		
-		for(FinalPackage fP : toConvert){
-			out.add(buildDTO(fP));
+		for(int i=0; i<toConvert.size(); i++){
+			out.add(buildDTO(toConvert.get(i), i+1));
 		}
 		
 		return out;
