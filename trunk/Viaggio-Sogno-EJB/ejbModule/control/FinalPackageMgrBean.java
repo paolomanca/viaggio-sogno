@@ -1,6 +1,5 @@
 package control;
 
-import java.awt.BufferCapabilities.FlipContents;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,13 +17,11 @@ import model.FinalFlight;
 import model.FinalHotel;
 import model.FinalPackage;
 import model.Group;
-import model.PackageHasProduct;
 import model.Product;
 import dto.FinalExcursionDTO;
 import dto.FinalFlightDTO;
 import dto.FinalHotelDTO;
 import dto.FinalPackageDTO;
-import dto.FinalProductDTO;
 import dto.ProductDTO;
 import dto.UserDTO;
 import entitymanagers.FinalPackageMgr;
