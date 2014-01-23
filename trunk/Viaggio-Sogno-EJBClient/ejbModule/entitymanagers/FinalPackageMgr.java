@@ -39,21 +39,13 @@ public interface FinalPackageMgr {
 	//public List<ProductDTO> listProducts(FinalPackageDTO finalPkg);
 	
 	
-	/**
-	 * @return the list of products of the given type in the given final package
-	 */
-	public List<ProductDTO> listProducts(FinalPackageDTO finalPkg, String type);
+	
 
 	
 	/**
 	 * @return the list of final products in the given final package
 	 */
 	//public List<FinalProductDTO> listFinalProducts(FinalPackageDTO finalPkg);
-	
-	
-	/**
-	 * @return the list of final products of the given type in the given package
-	 */
-	public List<FinalProductDTO> listFinalProducts(FinalPackageDTO finalPkg, String type);
+
 
 }

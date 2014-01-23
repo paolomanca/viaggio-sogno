@@ -11,6 +11,8 @@ public class FinalHotelDTO implements FinalProductDTO {
 	private Date checkIn;
 	
 	private Date checkOut;
+	
+	private FinalPackageDTO finalPackage;
 
 	public int getId() {
 		return id;
@@ -62,5 +64,12 @@ public class FinalHotelDTO implements FinalProductDTO {
 	
 	public int getRating() {
 		return product.getRating();
+	}
+
+	public void setFinalPackage(FinalPackageDTO finalPackage) {
+	}
+
+	public FinalPackageDTO getFinalPackage() {
+		return finalPackage;
 	}
 }

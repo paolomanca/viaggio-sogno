@@ -9,5 +9,9 @@ public interface FinalProductDTO {
 	public ProductDTO getProduct();
 	
 	public void setProduct(ProductDTO product);
+
+	public abstract void setFinalPackage(FinalPackageDTO finalPackage);
+
+	public abstract FinalPackageDTO getFinalPackage();
 	
 }

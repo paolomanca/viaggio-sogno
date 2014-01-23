@@ -8,6 +8,8 @@ public class FinalExcursionDTO implements FinalProductDTO {
 	
 	private ProductDTO product;
 	
+	private FinalPackageDTO finalPackage;
+	
 	private Date date;
 	
 	public int getId() {
@@ -48,5 +50,12 @@ public class FinalExcursionDTO implements FinalProductDTO {
 	
 	public String getLocation() {
 		return product.getLocation();
+	}
+
+	public void setFinalPackage(FinalPackageDTO finalPackage) {
+	}
+
+	public FinalPackageDTO getFinalPackage() {
+		return finalPackage;
 	}
 }
