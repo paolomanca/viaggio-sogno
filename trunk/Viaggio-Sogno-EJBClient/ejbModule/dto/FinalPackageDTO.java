@@ -83,6 +83,8 @@ public class FinalPackageDTO {
 		this.originalPackage = originalPackage;
 	}
 
-
+	public String getName(){
+		return originalPackage.getName();
+	}
 
 }
