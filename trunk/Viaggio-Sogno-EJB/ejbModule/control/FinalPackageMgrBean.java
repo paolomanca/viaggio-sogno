@@ -89,7 +89,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	public void remove(FinalPackageDTO finalPkgDTO) {
-		em.remove(new FinalPackage(finalPkgDTO));
+		em.remove(em.find(FinalExcursion.class, finalPkgDTO.getId()));
 	}
 
 	@Override
