@@ -5,8 +5,6 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dto.FinalPackageDTO;
-import dto.FinalProductDTO;
-import dto.ProductDTO;
 import dto.UserDTO;
 
 @Local
