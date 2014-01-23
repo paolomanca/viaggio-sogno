@@ -160,14 +160,29 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	public List<FinalPackageDTO> listByUser() {
-		// TODO Auto-generated method stub
-		return null;
+		List<FinalPackageDTO> out = new LinkedList<>();
+		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user", FinalPackage.class)
+		.setParameter("user", usrMgr.getPrincipalUser()).getResultList();
+		
+		for(FinalPackage fP : toConvert){
+			out.add(buildDTO(fP));
+		}
+		
+		return out;
 	}
 
 	@Override
+	@RolesAllowed({Group._EMPLOYEE})
 	public List<FinalPackageDTO> listByUser(UserDTO user) {
-		// TODO Auto-generated method stub
-		return null;
+		List<FinalPackageDTO> out = new LinkedList<>();
+		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user", FinalPackage.class)
+		.setParameter("user", user).getResultList();
+		
+		for(FinalPackage fP : toConvert){
+			out.add(buildDTO(fP));
+		}
+		
+		return out;
 	}
 
 }
