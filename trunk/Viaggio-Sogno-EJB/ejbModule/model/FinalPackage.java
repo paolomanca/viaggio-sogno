@@ -30,15 +30,15 @@ public class FinalPackage implements Serializable {
 	private User user;
 	
 	//bi-directional many-to-one association to FinalExcursion
-	@OneToMany(mappedBy="finalPackage")
+	@OneToMany(mappedBy="finalPackage", cascade=CascadeType.ALL)
 	private List<FinalExcursion> finalExcursions;
 
 	//bi-directional many-to-one association to FinalFlight
-	@OneToMany(mappedBy="finalPackage")
+	@OneToMany(mappedBy="finalPackage", cascade=CascadeType.ALL)
 	private List<FinalFlight> finalFlights;
 
 	//bi-directional many-to-one association to FinalHotel
-	@OneToMany(mappedBy="finalPackage")
+	@OneToMany(mappedBy="finalPackage", cascade=CascadeType.ALL)
 	private List<FinalHotel> finalHotels;
 
 	//uni-directional many-to-one association to Package

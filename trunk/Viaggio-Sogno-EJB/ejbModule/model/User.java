@@ -41,11 +41,11 @@ public class User implements Serializable {
 	private String password;
 
 	//bi-directional many-to-one association to FinalPackage
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<FinalPackage> finalPackages;
 
 	//bi-directional many-to-one association to Package
-	@OneToMany(mappedBy="user")
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<Package> packages;
 	
 	@ElementCollection(targetClass = Group.class)
