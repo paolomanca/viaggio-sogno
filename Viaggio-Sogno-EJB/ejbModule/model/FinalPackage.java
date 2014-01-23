@@ -30,6 +30,18 @@ public class FinalPackage implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="USER_idUSER", nullable=false)
 	private User user;
+	
+	//bi-directional many-to-one association to FinalExcursion
+	@OneToMany(mappedBy="finalPackage")
+	private List<FinalExcursion> finalExcursions;
+
+	//bi-directional many-to-one association to FinalFlight
+	@OneToMany(mappedBy="finalPackage")
+	private List<FinalFlight> finalFlights;
+
+	//bi-directional many-to-one association to FinalHotel
+	@OneToMany(mappedBy="finalPackage")
+	private List<FinalHotel> finalHotels;
 
 	//uni-directional many-to-one association to Package
 	@ManyToOne
@@ -56,9 +68,6 @@ public class FinalPackage implements Serializable {
 		this.idfinalPackage = finalPkgDTO.getId();
 		this.pkg = new Package(finalPkgDTO.getOriginalPackage());
 		this.products = new LinkedList<>();
-		for(ProductDTO pDTO : finalPkgDTO.getProducts()){
-			products.add(new Product(pDTO));
-		}
 	}
 
 	public int getIdfinalPackage() {
@@ -67,6 +76,30 @@ public class FinalPackage implements Serializable {
 
 	public void setIdfinalPackage(int idfinalPackage) {
 		this.idfinalPackage = idfinalPackage;
+	}
+
+	public List<FinalExcursion> getFinalExcursions() {
+		return finalExcursions;
+	}
+
+	public void setFinalExcursions(List<FinalExcursion> finalExcursions) {
+		this.finalExcursions = finalExcursions;
+	}
+
+	public List<FinalFlight> getFinalFlights() {
+		return finalFlights;
+	}
+
+	public void setFinalFlights(List<FinalFlight> finalFlights) {
+		this.finalFlights = finalFlights;
+	}
+
+	public List<FinalHotel> getFinalHotels() {
+		return finalHotels;
+	}
+
+	public void setFinalHotels(List<FinalHotel> finalHotels) {
+		this.finalHotels = finalHotels;
 	}
 
 	public User getUser() {

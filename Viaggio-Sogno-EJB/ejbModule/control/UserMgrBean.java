@@ -23,7 +23,7 @@ import model.User;
  */
 @Stateless
 @LocalBean
-public class UserMgrBean implements UserMgr, DTOBuilder<User, UserDTO> {
+public class UserMgrBean implements UserMgr {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -140,7 +140,6 @@ public class UserMgrBean implements UserMgr, DTOBuilder<User, UserDTO> {
 		return context.getCallerPrincipal().getName();
 	}
 
-	@Override
 	public UserDTO buildDTO(User in) {
 		UserDTO userDTO = new UserDTO();
 		userDTO.setEmail(in.getEmail());

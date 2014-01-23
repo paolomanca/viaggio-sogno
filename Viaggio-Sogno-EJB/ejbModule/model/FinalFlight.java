@@ -1,7 +1,11 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import dto.FinalFlightDTO;
+
 import java.util.Date;
 
 
@@ -35,6 +39,11 @@ public class FinalFlight implements Serializable {
 	private FinalPackage finalPackage;
 
 	public FinalFlight() {
+	}
+
+	public FinalFlight(FinalFlightDTO fP) {
+		this.idfinalFlight = fP.getId();
+		this.departure = fP.getDeparture();
 	}
 
 	public int getIdfinalFlight() {

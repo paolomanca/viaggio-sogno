@@ -1,7 +1,11 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import dto.FinalExcursionDTO;
+
 import java.util.Date;
 
 
@@ -35,6 +39,11 @@ public class FinalExcursion implements Serializable {
 	private Product product;
 
 	public FinalExcursion() {
+	}
+
+	public FinalExcursion(FinalExcursionDTO fEDTO) {
+		this.idfinalExcursion = fEDTO.getId();
+		this.date = fEDTO.getDate();
 	}
 
 	public int getIdfinalExcursion() {

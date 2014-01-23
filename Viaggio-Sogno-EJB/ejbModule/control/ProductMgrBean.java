@@ -16,7 +16,7 @@ import entitymanagers.ProductMgr;
 
 @Stateless
 @LocalBean
-public class ProductMgrBean implements ProductMgr, DTOBuilder<Product, ProductDTO>{
+public class ProductMgrBean implements ProductMgr {
 	
 	@PersistenceContext
 	private EntityManager em;
@@ -48,7 +48,6 @@ public class ProductMgrBean implements ProductMgr, DTOBuilder<Product, ProductDT
 		return out;
 	}
 
-	@Override
 	public ProductDTO buildDTO(Product in) {
 		ProductDTO out = new ProductDTO();
 		out.setArrAirport(in.getArrAirport());

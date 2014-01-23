@@ -26,6 +26,10 @@ public class Product implements Serializable {
 	
 	public static final String FIND_ALL = "Product.findAll";
 
+	public static final String FLIGHT = "FLIGHT";
+	public static final String HOTEL = "HOTEL";
+	public static final String EXCURSION = "EXCURSION";
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(unique=true, nullable=false)

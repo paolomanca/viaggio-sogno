@@ -22,7 +22,7 @@ import entitymanagers.PackageMgr;
 
 @Stateless
 @LocalBean
-public class PackageMgrBean implements PackageMgr, DTOBuilder<Package, PackageDTO> {
+public class PackageMgrBean implements PackageMgr {
 
 	@PersistenceContext
 	private EntityManager em;
@@ -148,7 +148,6 @@ public class PackageMgrBean implements PackageMgr, DTOBuilder<Package, PackageDT
 		return out;
 	}
 
-	@Override
 	public PackageDTO buildDTO(Package in) {
 		PackageDTO pkgDTO = new PackageDTO();
 		pkgDTO.setId(in.getIdpackage());
