@@ -18,14 +18,6 @@ public class FinalExcursionDTO implements FinalProductDTO {
 		this.id = id;
 	}
 
-	public ProductDTO getProduct() {
-		return product;
-	}
-
-	public void setProduct(ProductDTO product) {
-		this.product = product;
-	}
-
 	public Date getDate() {
 		return date;
 	}
@@ -34,4 +26,27 @@ public class FinalExcursionDTO implements FinalProductDTO {
 		this.date = date;
 	}
 
+	public ProductDTO getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductDTO product) {
+		this.product = product;
+	}
+
+	public int getPrice() {
+		return product.getPrice();
+	}
+	
+	public String getName() {
+		return product.getName();
+	}
+	
+	public String getDescription() {
+		return product.getDescription();
+	}
+	
+	public String getLocation() {
+		return product.getLocation();
+	}
 }
