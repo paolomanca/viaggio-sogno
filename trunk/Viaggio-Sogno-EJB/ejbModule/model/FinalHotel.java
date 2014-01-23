@@ -1,7 +1,11 @@
 package model;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import dto.FinalHotelDTO;
+
 import java.util.Date;
 
 
@@ -39,6 +43,12 @@ public class FinalHotel implements Serializable {
 	private FinalPackage finalPackage;
 
 	public FinalHotel() {
+	}
+
+	public FinalHotel(FinalHotelDTO fHDTO) {
+		this.idfinalHotel = fHDTO.getId();
+		this.checkIn = fHDTO.getCheckIn();
+		this.checkOut = fHDTO.getCheckOut();
 	}
 
 	public int getIdfinalHotel() {
