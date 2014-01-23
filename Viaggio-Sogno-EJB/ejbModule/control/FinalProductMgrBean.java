@@ -18,7 +18,6 @@ import dto.FinalFlightDTO;
 import dto.FinalHotelDTO;
 import dto.FinalProductDTO;
 import entitymanagers.FinalProductMgr;
-import entitymanagers.ProductMgr;
 
 @Stateless
 @LocalBean
@@ -29,9 +28,6 @@ public class FinalProductMgrBean implements FinalProductMgr {
 
 	@Resource
 	private EJBContext context;
-	
-	@EJB
-	private FinalPackageMgrBean fPakMgr;
 
 	@EJB
 	private ProductMgrBean prdMgr;
@@ -103,7 +99,6 @@ public class FinalProductMgrBean implements FinalProductMgr {
 		FinalFlightDTO out = new FinalFlightDTO();
 		out.setId(in.getIdfinalFlight());
 		out.setDeparture(in.getDeparture());
-		out.setFinalPackage(fPakMgr.buildDTO(in.getFinalPackage()));
 		out.setProduct(prdMgr.buildDTO(in.getProduct()));
 		return out;
 	}
@@ -113,7 +108,6 @@ public class FinalProductMgrBean implements FinalProductMgr {
 		out.setId(in.getIdfinalHotel());
 		out.setCheckIn(in.getCheckIn());
 		out.setCheckOut(in.getCheckOut());
-		out.setFinalPackage(fPakMgr.buildDTO(in.getFinalPackage()));
 		out.setProduct(prdMgr.buildDTO(in.getProduct()));
 		return out;
 	}
@@ -122,7 +116,6 @@ public class FinalProductMgrBean implements FinalProductMgr {
 		FinalExcursionDTO out = new FinalExcursionDTO();
 		out.setId(in.getIdfinalExcursion());
 		out.setDate(in.getDate());
-		out.setFinalPackage(fPakMgr.buildDTO(in.getFinalPackage()));
 		out.setProduct(prdMgr.buildDTO(in.getProduct()));
 		return out;
 	}
