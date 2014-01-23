@@ -84,12 +84,12 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	public void update(FinalPackageDTO finalPkgDTO) {
-		em.merge(em.find(FinalExcursion.class, finalPkgDTO.getId()));
+		em.merge(em.find(FinalPackage.class, finalPkgDTO.getId()));
 	}
 
 	@Override
 	public void remove(FinalPackageDTO finalPkgDTO) {
-		em.remove(em.find(FinalExcursion.class, finalPkgDTO.getId()));
+		em.remove(em.find(FinalPackage.class, finalPkgDTO.getId()));
 	}
 
 	@Override
