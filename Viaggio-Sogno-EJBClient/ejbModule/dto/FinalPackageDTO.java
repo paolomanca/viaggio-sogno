@@ -11,10 +11,61 @@ public class FinalPackageDTO {
 	@NotEmpty
 	private PackageDTO originalPackage;
 	
-	private List<ProductDTO> products;
+	private List<ProductDTO> flights;
+	private List<ProductDTO> hotels;
+	private List<ProductDTO> excursions;
 	
-	private List<FinalProductDTO> finalProducts;
+	private List<FinalFlightDTO> finalFlights;
+	private List<FinalHotelDTO> finalHotels;
+	private List<FinalExcursionDTO> finalExcursions;
 
+	public List<ProductDTO> getFlights() {
+		return flights;
+	}
+
+	public void setFlights(List<ProductDTO> flights) {
+		this.flights = flights;
+	}
+
+	public List<ProductDTO> getHotels() {
+		return hotels;
+	}
+
+	public void setHotels(List<ProductDTO> hotels) {
+		this.hotels = hotels;
+	}
+
+	public List<ProductDTO> getExcursions() {
+		return excursions;
+	}
+
+	public void setExcursions(List<ProductDTO> excursions) {
+		this.excursions = excursions;
+	}
+
+	public List<FinalFlightDTO> getFinalFlights() {
+		return finalFlights;
+	}
+
+	public void setFinalFlights(List<FinalFlightDTO> finalFlights) {
+		this.finalFlights = finalFlights;
+	}
+
+	public List<FinalHotelDTO> getFinalHotels() {
+		return finalHotels;
+	}
+
+	public void setFinalHotels(List<FinalHotelDTO> finalHotels) {
+		this.finalHotels = finalHotels;
+	}
+
+	public List<FinalExcursionDTO> getFinalExcursions() {
+		return finalExcursions;
+	}
+
+	public void setFinalExcursions(List<FinalExcursionDTO> finalExcursions) {
+		this.finalExcursions = finalExcursions;
+	}
 	
 	public int getId() {
 		return id;
@@ -22,14 +73,6 @@ public class FinalPackageDTO {
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public List<ProductDTO> getProducts() {
-		return products;
-	}
-
-	public void setProducts(List<ProductDTO> products) {
-		this.products = products;
 	}
 
 	public PackageDTO getOriginalPackage() {
