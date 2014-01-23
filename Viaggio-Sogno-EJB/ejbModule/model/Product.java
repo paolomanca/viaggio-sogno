@@ -35,7 +35,7 @@ public class Product implements Serializable {
 	@Column(unique=true, nullable=false)
 	private int idproduct;
 
-	@Column(length=45)
+	@Column(length=600)
 	private String description;
 
 	@Column(length=45)
