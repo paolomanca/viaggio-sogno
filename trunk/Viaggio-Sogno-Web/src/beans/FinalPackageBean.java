@@ -80,5 +80,8 @@ public class FinalPackageBean {
 		return pkg.getFinalExcursions();
 	}
 
+	public List<FinalPackageDTO> getOwn() {
+		return finalPackageMgr.listByUser();
+	}
 
 }

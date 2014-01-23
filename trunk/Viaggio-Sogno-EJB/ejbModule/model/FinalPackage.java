@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import dto.FinalPackageDTO;
-import dto.ProductDTO;
-
 import java.util.LinkedList;
 import java.util.List;
 
