@@ -8,20 +8,16 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import dto.FinalExcursionDTO;
+import dto.FinalFlightDTO;
+import dto.FinalHotelDTO;
 import dto.FinalPackageDTO;
-import dto.FinalProductDTO;
-import dto.PackageDTO;
 import dto.ProductDTO;
 import entitymanagers.FinalPackageMgr;
-import entitymanagers.PackageMgr;
 
 @ManagedBean(name="finalPackageBean")
 @RequestScoped
 public class FinalPackageBean {
-	
-	private static final String FLIGHT = "flight";
-	private static final String HOTEL = "hotel";
-	private static final String EXCURSION = "excursion";
 	
 	@EJB
 	private FinalPackageMgr finalPackageMgr;
@@ -31,9 +27,6 @@ public class FinalPackageBean {
 	@ManagedProperty(value = "#{param.id}")
 	private int id;
 	
-	public FinalPackageBean() {
-
-	}
 	
 	@PostConstruct
 	public void init() {
@@ -64,11 +57,27 @@ public class FinalPackageBean {
 	}
 	
 	public List<ProductDTO> getFlights() {
-		return finalPackageMgr.listProducts(pkg, FLIGHT);
+		return pkg.getFlights();
 	}
 	
-	public List<FinalProductDTO> getFinalFlights() {
-		return finalPackageMgr.listFinalProducts(pkg, FLIGHT);
+	public List<FinalFlightDTO> getFinalFlights() {
+		return pkg.getFinalFlights();
+	}
+	
+	public List<ProductDTO> getHotels() {
+		return pkg.getHotels();
+	}
+	
+	public List<FinalHotelDTO> getFinalHotels() {
+		return pkg.getFinalHotels();
+	}
+	
+	public List<ProductDTO> getExcursions() {
+		return pkg.getExcursions();
+	}
+	
+	public List<FinalExcursionDTO> getFinalExcursions() {
+		return pkg.getFinalExcursions();
 	}
 
 

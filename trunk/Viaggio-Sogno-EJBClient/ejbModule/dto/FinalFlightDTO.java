@@ -34,4 +34,20 @@ public class FinalFlightDTO implements FinalProductDTO {
 		this.product = product;
 	}
 	
+	public int getPrice() {
+		return product.getPrice();
+	}
+	
+	public String getDepAirport() {
+		return product.getDepAirport();
+	}
+	
+	public String getArrAirport() {
+		return product.getArrAirport();
+	}
+	
+	public int getFlightLength() {
+		return product.getFlightLength();
+	}
+	
 }

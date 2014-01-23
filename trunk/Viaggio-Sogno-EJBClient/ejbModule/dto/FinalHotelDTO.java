@@ -20,18 +20,6 @@ public class FinalHotelDTO implements FinalProductDTO {
 		this.id = id;
 	}
 
-	public ProductDTO getProduct() {
-		return product;
-	}
-
-	public void setProduct(ProductDTO product) {
-		this.product = product;
-	}
-
-	public Date getCheckIn() {
-		return checkIn;
-	}
-
 	public void setCheckIn(Date checkIn) {
 		this.checkIn = checkIn;
 	}
@@ -44,4 +32,35 @@ public class FinalHotelDTO implements FinalProductDTO {
 		this.checkOut = checkOut;
 	}
 
+	public ProductDTO getProduct() {
+		return product;
+	}
+
+	public void setProduct(ProductDTO product) {
+		this.product = product;
+	}
+
+	public String getName() {
+		return product.getName();
+	}
+
+	public int getPrice() {
+		return product.getPrice();
+	}
+
+	public String getLocation() {
+		return product.getLocation();
+	}
+
+	public String getDescription() {
+		return product.getDescription();
+	}
+
+	public Date getCheckIn() {
+		return checkIn;
+	}
+	
+	public int getRating() {
+		return product.getRating();
+	}
 }
