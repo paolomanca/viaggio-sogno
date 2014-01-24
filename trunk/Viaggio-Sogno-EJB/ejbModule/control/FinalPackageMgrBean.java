@@ -83,16 +83,19 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
+	@RolesAllowed({Group._CUSTOMER})
 	public void update(FinalPackageDTO finalPkgDTO) {
-		em.merge(em.find(FinalPackage.class, finalPkgDTO.getId()));
+		em.merge(fromRelativeID(finalPkgDTO.getId()));
 	}
 
 	@Override
+	@RolesAllowed({Group._CUSTOMER})
 	public void remove(FinalPackageDTO finalPkgDTO) {
-		em.remove(em.find(FinalPackage.class, finalPkgDTO.getId()));
+		em.remove(fromRelativeID(finalPkgDTO.getId()));
 	}
 
 	@Override
+	@RolesAllowed({Group._CUSTOMER})
 	public FinalPackageDTO getByID(int ID) {
 		return buildDTO(em.createQuery("SELECT t FROM FinalPackage t where t.user = :user order by t.idfinalPackage", FinalPackage.class)
 				.setParameter("user", usrMgr.getPrincipalUser()).getResultList().get(ID), ID);
@@ -168,8 +171,8 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user order by t.idfinalPackage", FinalPackage.class)
 		.setParameter("user", usrMgr.getPrincipalUser()).getResultList();
 		
-		for(FinalPackage fP : toConvert){
-			out.add(buildDTO(fP));
+		for(int i=0; i<toConvert.size(); i++){
+			out.add(buildDTO(toConvert.get(i), i+1));
 		}
 		
 		return out;
@@ -187,6 +190,11 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		}
 		
 		return out;
+	}
+
+	private FinalPackage fromRelativeID(int id) {
+		return em.createQuery("SELECT t FROM FinalPackage t where t.user = :user order by t.idfinalPackage", FinalPackage.class)
+				.setParameter("user", usrMgr.getPrincipalUser()).getResultList().get(id);
 	}
 
 }
