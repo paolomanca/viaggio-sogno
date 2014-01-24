@@ -12,115 +12,129 @@
 </h:head>
 <h:body>
 
-	<f:facet name="last">
-		<h:outputStylesheet library="css" name="style.css" />
-	</f:facet>
 
-	<p:dataTable var="flight" value="#{finalPackageBean.flights}">
-		<p:column headerText="From">
-			<h:outputText value="#{flight.depAirport}" />
-		</p:column>
+	<p:panel header="Customize Package">
+		<p:panel header="Products">
+			<p:dataTable var="flight" value="#{finalPackageBean.flights}">
+			
+			<f:facet name="header">Flights</f:facet>
+			
+				<p:column headerText="From">
+					<h:outputText value="#{flight.depAirport}" />
+				</p:column>
 
-		<p:column headerText="To">
-			<h:outputText value="#{flight.arrAirport}" />
-		</p:column>
-		
-		<p:column headerText="Length">
-			<h:outputText value="#{flight.flightLength}" />
-		</p:column>
-		
-		<p:column headerText="Price">
-			<h:outputText value="#{flight.price}" />
-		</p:column>
+				<p:column headerText="To">
+					<h:outputText value="#{flight.arrAirport}" />
+				</p:column>
 
-	</p:dataTable>
+				<p:column headerText="Length">
+					<h:outputText value="#{flight.flightLength}" />
+				</p:column>
 
-	<p:dataTable var="hotel" value="#{finalPackageBean.hotels}">
-		<p:column headerText="Name">
-			<h:outputText value="#{hotel.name}" />
-		</p:column>
+				<p:column headerText="Price">
+					<h:outputText value="#{flight.price}" />
+				</p:column>
 
-		<p:column headerText="Rating">
-			<h:outputText value="#{hotel.rating}" />
-		</p:column>
+			</p:dataTable>
 
-		<p:column headerText="Location">
-			<h:outputText value="#{hotel.location}" />
-		</p:column>
+			<p:dataTable var="hotel" value="#{finalPackageBean.hotels}">
+			<f:facet name="header">Hotels</f:facet>
+				<p:column headerText="Name">
+					<h:outputText value="#{hotel.name}" />
+				</p:column>
 
-		<p:column headerText="Price">
-			<h:outputText value="#{hotel.price}" />
-		</p:column>
+				<p:column headerText="Rating">
+					<h:outputText value="#{hotel.rating}" />
+				</p:column>
 
-	</p:dataTable>
-	
-	<p:dataTable var="excursion" value="#{finalPackageBean.excursions}">
-		<p:column headerText="Name">
-			<h:outputText value="#{excursion.name}" />
-		</p:column>
+				<p:column headerText="Location">
+					<h:outputText value="#{hotel.location}" />
+				</p:column>
 
-		<p:column headerText="Location">
-			<h:outputText value="#{hotel.location}" />
-		</p:column>
+				<p:column headerText="Price">
+					<h:outputText value="#{hotel.price}" />
+				</p:column>
 
-		<p:column headerText="Price">
-			<h:outputText value="#{hotel.price}" />
-		</p:column>
+			</p:dataTable>
 
-	</p:dataTable>
+			<p:dataTable var="excursion" value="#{finalPackageBean.excursions}">
+			<f:facet name="header">Excursions</f:facet>
+				<p:column headerText="Name">
+					<h:outputText value="#{excursion.name}" />
+				</p:column>
 
-	<p:dataTable var="flight" value="#{finalPackageBean.finalFlights}">
-		<p:column headerText="From">
-			<h:outputText value="#{flight.depAirport}" />
-		</p:column>
+				<p:column headerText="Location">
+					<h:outputText value="#{hotel.location}" />
+				</p:column>
 
-		<p:column headerText="To">
-			<h:outputText value="#{flight.arrAirport}" />
-		</p:column>
-		
-		<p:column headerText="Length">
-			<h:outputText value="#{flight.flightLength}" />
-		</p:column>
-		
-		<p:column headerText="Price">
-			<h:outputText value="#{flight.price}" />
-		</p:column>
+				<p:column headerText="Price">
+					<h:outputText value="#{hotel.price}" />
+				</p:column>
 
-	</p:dataTable>
+			</p:dataTable>
+			
+		</p:panel>
+	<p:panel header="Final Products">
+			<p:dataTable var="flight" value="#{finalPackageBean.finalFlights}">
+				<f:facet name="header">Flights</f:facet>
+			
+				<p:column headerText="From">
+					<h:outputText value="#{flight.depAirport}" />
+				</p:column>
 
-	<p:dataTable var="finalHotel" value="#{finalPackageBean.finalHotels}">
-		<p:column headerText="Name">
-			<h:outputText value="#{finalHotel.name}" />
-		</p:column>
+				<p:column headerText="To">
+					<h:outputText value="#{flight.arrAirport}" />
+				</p:column>
 
-		<p:column headerText="Rating">
-			<h:outputText value="#{finalHotel.rating}" />
-		</p:column>
+				<p:column headerText="Length">
+					<h:outputText value="#{flight.flightLength}" />
+				</p:column>
 
-		<p:column headerText="Location">
-			<h:outputText value="#{finalHotel.location}" />
-		</p:column>
+				<p:column headerText="Price">
+					<h:outputText value="#{flight.price}" />
+				</p:column>
 
-		<p:column headerText="Price">
-			<h:outputText value="#{finalHotel.price}" />
-		</p:column>
+			</p:dataTable>
 
-	</p:dataTable>
-	
-	<p:dataTable var="finalExcursion" value="#{finalPackageBean.finalExcursions}">
-		<p:column headerText="Name">
-			<h:outputText value="#{finalExcursion.name}" />
-		</p:column>
+			<p:dataTable var="finalHotel" value="#{finalPackageBean.finalHotels}">
+				<f:facet name="header">Hotels</f:facet>
+			
+				<p:column headerText="Name">
+					<h:outputText value="#{finalHotel.name}" />
+				</p:column>
 
-		<p:column headerText="Location">
-			<h:outputText value="#{finalExcursion.location}" />
-		</p:column>
+				<p:column headerText="Rating">
+					<h:outputText value="#{finalHotel.rating}" />
+				</p:column>
 
-		<p:column headerText="Price">
-			<h:outputText value="#{finalExcursion.price}" />
-		</p:column>
+				<p:column headerText="Location">
+					<h:outputText value="#{finalHotel.location}" />
+				</p:column>
 
-	</p:dataTable>
+				<p:column headerText="Price">
+					<h:outputText value="#{finalHotel.price}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<p:dataTable var="finalExcursion"
+				value="#{finalPackageBean.finalExcursions}">
+				<f:facet name="header">Excursions</f:facet>
+				<p:column headerText="Name">
+					<h:outputText value="#{finalExcursion.name}" />
+				</p:column>
+
+				<p:column headerText="Location">
+					<h:outputText value="#{finalExcursion.location}" />
+				</p:column>
+
+				<p:column headerText="Price">
+					<h:outputText value="#{finalExcursion.price}" />
+				</p:column>
+
+			</p:dataTable>
+		</p:panel>
+	</p:panel>
 
 </h:body>
 </html>
