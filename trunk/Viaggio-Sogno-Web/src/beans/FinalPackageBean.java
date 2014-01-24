@@ -42,6 +42,12 @@ public class FinalPackageBean {
 		finalPackageMgr.add(pkg);
 		return "index?faces-redirect=true";
 	}
+	
+	public String remove(FinalPackageDTO finalPkg) {
+		finalPackageMgr.remove(finalPkg);
+		return "index?faces-redirect=true";
+
+	}
 
 	public int getId() {
 		return id;

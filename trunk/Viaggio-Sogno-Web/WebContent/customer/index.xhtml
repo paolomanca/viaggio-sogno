@@ -8,18 +8,28 @@
 <h:body>
 	<h1>Hello #{userBean.name}</h1>
 	<h:form>
+
 		<p:dataTable var="pkg" value="#{packageBean.showcased}">
 			<p:column headerText="Name">
 				<h:outputText value="#{pkg.name}" />
 			</p:column>
 		</p:dataTable>
 		<p:dataTable var="finalPkg" value="#{finalPackageBean.own}">
+			<p:column headerText="ID">
+				<h:outputText value="#{finalPkg.id}" />
+			</p:column>
 			<p:column headerText="Name">
 				<h:outputText value="#{finalPkg.name}" />
 			</p:column>
-			<p:column headerText="Name">
-				<h:outputText value="#{finalPkg.id}" />
+			<p:column>
+					<p:button value="Customize" outcome="showFinalPackage">
+						<f:param name="id" value="#{finalPkg.id}" />
+					</p:button>
+
+				<p:commandButton value="Remove"
+					actionListener="#{finalPackageBean.remove(finalPkg)}" />
 			</p:column>
+
 		</p:dataTable>
 
 		<p:commandButton action="#{userBean.logout}" value="Logout" />
