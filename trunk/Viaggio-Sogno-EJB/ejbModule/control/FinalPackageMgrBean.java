@@ -168,8 +168,8 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user order by t.idfinalPackage", FinalPackage.class)
 		.setParameter("user", usrMgr.getPrincipalUser()).getResultList();
 		
-		for(int i=0; i<toConvert.size(); i++){
-			out.add(buildDTO(toConvert.get(i), i+1));
+		for(FinalPackage fP : toConvert){
+			out.add(buildDTO(fP));
 		}
 		
 		return out;
