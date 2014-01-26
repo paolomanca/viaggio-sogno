@@ -26,6 +26,10 @@ public class FinalPackageDTO {
 	public void setFlights(List<ProductDTO> flights) {
 		this.flights = flights;
 	}
+	
+	public void removeFlight(ProductDTO flight) {
+		this.flights.remove(flight);
+	}
 
 	public List<ProductDTO> getHotels() {
 		return hotels;
@@ -33,6 +37,10 @@ public class FinalPackageDTO {
 
 	public void setHotels(List<ProductDTO> hotels) {
 		this.hotels = hotels;
+	}
+	
+	public void removeHotel(ProductDTO hotel) {
+		this.hotels.remove(hotel);
 	}
 
 	public List<ProductDTO> getExcursions() {
@@ -42,6 +50,10 @@ public class FinalPackageDTO {
 	public void setExcursions(List<ProductDTO> excursions) {
 		this.excursions = excursions;
 	}
+	
+	public void removeExcursion(ProductDTO excursion) {
+		this.excursions.remove(excursion);
+	}
 
 	public List<FinalFlightDTO> getFinalFlights() {
 		return finalFlights;
@@ -49,6 +61,10 @@ public class FinalPackageDTO {
 
 	public void setFinalFlights(List<FinalFlightDTO> finalFlights) {
 		this.finalFlights = finalFlights;
+	}
+	
+	public void removeFinalProduct(FinalFlightDTO flight) {
+		this.finalFlights.remove(flight);
 	}
 
 	public List<FinalHotelDTO> getFinalHotels() {
@@ -58,6 +74,10 @@ public class FinalPackageDTO {
 	public void setFinalHotels(List<FinalHotelDTO> finalHotels) {
 		this.finalHotels = finalHotels;
 	}
+	
+	public void removeFinalProduct(FinalHotelDTO hotel) {
+		this.finalHotels.remove(hotel);
+	}
 
 	public List<FinalExcursionDTO> getFinalExcursions() {
 		return finalExcursions;
@@ -65,6 +85,10 @@ public class FinalPackageDTO {
 
 	public void setFinalExcursions(List<FinalExcursionDTO> finalExcursions) {
 		this.finalExcursions = finalExcursions;
+	}
+	
+	public void removeFinalProduct(FinalExcursionDTO excursion) {
+		this.finalExcursions.remove(excursion);
 	}
 	
 	public int getId() {

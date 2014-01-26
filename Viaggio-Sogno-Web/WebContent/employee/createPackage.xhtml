@@ -1,177 +1,164 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
+	<ui:define name="page-title">Edit Profile</ui:define>
+	<ui:define name="content">
 
-	<title>Package creation</title>
+		<p:panelGrid id="newPackGrid">
 
-</h:head>
-<h:body>
+			<p:row>
+				<p:column>
+					<h:outputLabel for="name">Package name:</h:outputLabel>
+				</p:column>
+				<p:column>
+					<p:inputText id="name" value="#{packageBean.package.name}" />
+				</p:column>
+				<p:column>
+					<p:message for="name" />
+				</p:column>
+			</p:row>
 
-	<f:facet name="last">
-		<h:outputStylesheet library="css" name="style.css" />
-	</f:facet>
+			<p:row>
+				<p:column colspan="3">
+					<h3>First Choices</h3>
+				</p:column>
+			</p:row>
 
-	<h:form>
-		<p:panel header="Package Creation Form">
-			<p:panelGrid id="newPackGrid">
+			<p:row>
+				<p:column>
+					<h:outputLabel for="firstChoicesFlight">Flights:</h:outputLabel>
+				</p:column>
+				<p:column>
+					<p:selectManyMenu id="firstChoicesFlight"
+						value="#{packageBean.firstChoicesFlight}"
+						converter="omnifaces.SelectItemsConverter" showCheckbox="true">
+						<f:selectItems value="#{productBean.flights}" var="product"
+							itemLabel="#{product.name}" itemValue="#{product}" />
+					</p:selectManyMenu>
+				</p:column>
+				<p:column>
+					<p:message for="firstChoicesFlight" />
+				</p:column>
+			</p:row>
 
-				<p:row>
-					<p:column>
-						<h:outputLabel for="name">Package name:</h:outputLabel>
-					</p:column>
-					<p:column>
-						<p:inputText id="name" value="#{packageBean.package.name}" />
-					</p:column>
-					<p:column>
-						<p:message for="name" />
-					</p:column>
-				</p:row>
+			<p:row>
+				<p:column>
+					<h:outputLabel for="firstChoicesHotel">Hotels:</h:outputLabel>
+				</p:column>
+				<p:column>
+					<p:selectManyMenu id="firstChoicesHotel"
+						value="#{packageBean.firstChoicesHotel}"
+						converter="omnifaces.SelectItemsIndexConverter"
+						showCheckbox="true">
+						<f:selectItems value="#{productBean.hotels}" var="product"
+							itemLabel="#{product.name}" itemValue="#{product}" />
+					</p:selectManyMenu>
+				</p:column>
+				<p:column>
+					<p:message for="firstChoicesHotel" />
+				</p:column>
+			</p:row>
 
-				<p:row>
-					<p:column colspan="3">
-						<h3>First Choices</h3>
-					</p:column>
-				</p:row>
+			<p:row>
+				<p:column>
+					<h:outputLabel for="firstChoicesExcursion">Excursions:</h:outputLabel>
+				</p:column>
+				<p:column>
+					<p:selectManyMenu id="firstChoicesExcursion"
+						value="#{packageBean.firstChoicesExcursion}"
+						converter="omnifaces.SelectItemsIndexConverter"
+						showCheckbox="true">
+						<f:selectItems value="#{productBean.excursions}" var="product"
+							itemLabel="#{product.name}" itemValue="#{product}" />
+					</p:selectManyMenu>
+				</p:column>
+				<p:column>
+					<p:message for="firstChoicesExcursion" />
+				</p:column>
+			</p:row>
 
-				<p:row>
-					<p:column>
-						<h:outputLabel for="firstChoicesFlight">Flights:</h:outputLabel>
-					</p:column>
-					<p:column>
-						<p:selectManyMenu id="firstChoicesFlight"
-							value="#{packageBean.firstChoicesFlight}"
-							converter="omnifaces.SelectItemsConverter"
-							showCheckbox="true">
-							<f:selectItems value="#{productBean.flights}" var="product"
-								itemLabel="#{product.name}" itemValue="#{product}" />
-						</p:selectManyMenu>
-					</p:column>
-					<p:column>
-						<p:message for="firstChoicesFlight" />
-					</p:column>
-				</p:row>
+			<p:row>
+				<p:column colspan="3">
+					<h3>Alternatives</h3>
+				</p:column>
+			</p:row>
 
-				<p:row>
-					<p:column>
-						<h:outputLabel for="firstChoicesHotel">Hotels:</h:outputLabel>
-					</p:column>
-					<p:column>
-						<p:selectManyMenu id="firstChoicesHotel"
-							value="#{packageBean.firstChoicesHotel}"
-							converter="omnifaces.SelectItemsIndexConverter"
-							showCheckbox="true">
-							<f:selectItems value="#{productBean.hotels}" var="product"
-								itemLabel="#{product.name}" itemValue="#{product}" />
-						</p:selectManyMenu>
-					</p:column>
-					<p:column>
-						<p:message for="firstChoicesHotel" />
-					</p:column>
-				</p:row>
+			<p:row>
+				<p:column>
+					<h:outputLabel for="alternativesFlight">Flights:</h:outputLabel>
+				</p:column>
+				<p:column>
+					<p:selectManyMenu id="alternativesFlight"
+						value="#{packageBean.alternativesFlight}"
+						converter="omnifaces.SelectItemsIndexConverter"
+						showCheckbox="true">
+						<f:selectItems value="#{productBean.flights}" var="product"
+							itemLabel="#{product.name}" itemValue="#{product}" />
+					</p:selectManyMenu>
+				</p:column>
+				<p:column>
+					<p:message for="alternativesFlight" />
+				</p:column>
+			</p:row>
 
-				<p:row>
-					<p:column>
-						<h:outputLabel for="firstChoicesExcursion">Excursions:</h:outputLabel>
-					</p:column>
-					<p:column>
-						<p:selectManyMenu id="firstChoicesExcursion"
-							value="#{packageBean.firstChoicesExcursion}"
-							converter="omnifaces.SelectItemsIndexConverter"
-							showCheckbox="true">
-							<f:selectItems value="#{productBean.excursions}" var="product"
-								itemLabel="#{product.name}" itemValue="#{product}" />
-						</p:selectManyMenu>
-					</p:column>
-					<p:column>
-						<p:message for="firstChoicesExcursion" />
-					</p:column>
-				</p:row>
+			<p:row>
+				<p:column>
+					<h:outputLabel for="alternativesHotel">Hotels:</h:outputLabel>
+				</p:column>
+				<p:column>
+					<p:selectManyMenu id="alternativesHotel"
+						value="#{packageBean.alternativesHotel}"
+						converter="omnifaces.SelectItemsIndexConverter"
+						showCheckbox="true">
+						<f:selectItems value="#{productBean.hotels}" var="product"
+							itemLabel="#{product.name}" itemValue="#{product}" />
+					</p:selectManyMenu>
+				</p:column>
+				<p:column>
+					<p:message for="alternativesHotel" />
+				</p:column>
+			</p:row>
 
-				<p:row>
-					<p:column colspan="3">
-						<h3>Alternatives</h3>
-					</p:column>
-				</p:row>
+			<p:row>
+				<p:column>
+					<h:outputLabel for="alternativesExcursion">Excursions:</h:outputLabel>
+				</p:column>
+				<p:column>
+					<p:selectManyMenu id="alternativesExcursion"
+						value="#{packageBean.alternativesExcursion}"
+						converter="omnifaces.SelectItemsIndexConverter"
+						showCheckbox="true">
+						<f:selectItems value="#{productBean.excursions}" var="product"
+							itemLabel="#{product.name}" itemValue="#{product}" />
+					</p:selectManyMenu>
+				</p:column>
+				<p:column>
+					<p:message for="alternativesExcursion" />
+				</p:column>
+			</p:row>
 
-				<p:row>
-					<p:column>
-						<h:outputLabel for="alternativesFlight">Flights:</h:outputLabel>
-					</p:column>
-					<p:column>
-						<p:selectManyMenu id="alternativesFlight"
-							value="#{packageBean.alternativesFlight}"
-							converter="omnifaces.SelectItemsIndexConverter"
-							showCheckbox="true">
-							<f:selectItems value="#{productBean.flights}" var="product"
-								itemLabel="#{product.name}" itemValue="#{product}" />
-						</p:selectManyMenu>
-					</p:column>
-					<p:column>
-						<p:message for="alternativesFlight" />
-					</p:column>
-				</p:row>
+			<p:row>
+				<p:column>
+					<h:outputLabel for="showcased">Showcased:</h:outputLabel>
+				</p:column>
+				<p:column>
+					<p:selectBooleanButton id="showcased"
+						value="#{packageBean.package.showcased}" onLabel="Yes"
+						offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
+				</p:column>
+				<p:column>
+					<p:message for="showcased" />
+				</p:column>
+			</p:row>
 
-				<p:row>
-					<p:column>
-						<h:outputLabel for="alternativesHotel">Hotels:</h:outputLabel>
-					</p:column>
-					<p:column>
-						<p:selectManyMenu id="alternativesHotel"
-							value="#{packageBean.alternativesHotel}"
-							converter="omnifaces.SelectItemsIndexConverter"
-							showCheckbox="true">
-							<f:selectItems value="#{productBean.hotels}" var="product"
-								itemLabel="#{product.name}" itemValue="#{product}" />
-						</p:selectManyMenu>
-					</p:column>
-					<p:column>
-						<p:message for="alternativesHotel" />
-					</p:column>
-				</p:row>
+		</p:panelGrid>
 
-				<p:row>
-					<p:column>
-						<h:outputLabel for="alternativesExcursion">Excursions:</h:outputLabel>
-					</p:column>
-					<p:column>
-						<p:selectManyMenu id="alternativesExcursion"
-							value="#{packageBean.alternativesExcursion}"
-							converter="omnifaces.SelectItemsIndexConverter"
-							showCheckbox="true">
-							<f:selectItems value="#{productBean.excursions}" var="product"
-								itemLabel="#{product.name}" itemValue="#{product}" />
-						</p:selectManyMenu>
-					</p:column>
-					<p:column>
-						<p:message for="alternativesExcursion" />
-					</p:column>
-				</p:row>
+		<p:commandButton value="Create" update="newPackGrid"
+			action="#{packageBean.add()}" />
 
-				<p:row>
-					<p:column>
-						<h:outputLabel for="showcased">Showcased:</h:outputLabel>
-					</p:column>
-					<p:column>
-						<p:selectBooleanButton id="showcased"
-							value="#{packageBean.package.showcased}" onLabel="Yes"
-							offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" />
-					</p:column>
-					<p:column>
-						<p:message for="showcased" />
-					</p:column>
-				</p:row>
-
-			</p:panelGrid>
-
-			<p:commandButton value="Create" update="newPackGrid"
-				action="#{packageBean.add()}" />
-
-		</p:panel>
-	</h:form>
-</h:body>
-</html>
+	</ui:define>
+</ui:composition>

@@ -26,6 +26,10 @@ public class FinalHotelDTO implements FinalProductDTO {
 		this.checkIn = checkIn;
 	}
 
+	public Date getCheckIn() {
+		return checkIn;
+	}
+
 	public Date getCheckOut() {
 		return checkOut;
 	}
@@ -40,6 +44,13 @@ public class FinalHotelDTO implements FinalProductDTO {
 
 	public void setProduct(ProductDTO product) {
 		this.product = product;
+	}
+
+	public void setFinalPackage(FinalPackageDTO finalPackage) {
+	}
+
+	public FinalPackageDTO getFinalPackage() {
+		return finalPackage;
 	}
 
 	public String getName() {
@@ -58,18 +69,7 @@ public class FinalHotelDTO implements FinalProductDTO {
 		return product.getDescription();
 	}
 
-	public Date getCheckIn() {
-		return checkIn;
-	}
-	
 	public int getRating() {
 		return product.getRating();
-	}
-
-	public void setFinalPackage(FinalPackageDTO finalPackage) {
-	}
-
-	public FinalPackageDTO getFinalPackage() {
-		return finalPackage;
 	}
 }

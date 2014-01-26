@@ -1,0 +1,113 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="act" value="#{finalHotelBean.act}" required="true" />
+		<f:viewParam name="fPkgID" value="#{finalHotelBean.fPkgID}"
+			required="true" />
+		<f:viewParam name="fPrID" value="#{finalHotelBean.fPrID}" />
+	</f:metadata>
+
+	<ui:define name="page-title">Edit product</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:menuitem value="Package" outcome="showFinalPackage">
+			<f:param name="fPkgID" value="#{param['fPkgID']}" />
+		</p:menuitem>
+		<p:menuitem value="Hotel" />
+	</ui:define>
+
+	<ui:define name="content">
+
+
+
+		<h:form id="HotelForm">
+			<p:panel>
+				<p:panelGrid id="hotelGrid" styleClass="no-border-grid">
+
+					<p:row>
+						<p:column>
+							<h:outputLabel for="name">Name:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="name"
+								value="#{finalHotelBean.finalProduct.name}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="location">Location:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="location"
+								value="#{finalHotelBean.finalProduct.location}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="rating">Rating:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="rating"
+								value="#{finalHotelBean.finalProduct.rating}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="rating">Description:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="description"
+								value="#{finalHotelBean.finalProduct.description}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<p:separator />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="checkIn" value="Check in" />
+						</p:column>
+						<p:column>
+							<p:calendar id="checkIn"
+								value="#{finalHotelBean.finalProduct.checkIn}" />
+						</p:column>
+						<p:column>
+							<p:message for="checkIn" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="checkOut" value="Check out" />
+						</p:column>
+						<p:column>
+							<p:calendar id="checkOut"
+								value="#{finalHotelBean.finalProduct.checkOut}" />
+						</p:column>
+						<p:column>
+							<p:message for="checkOut" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:spacer height="40px" width="5px" />
+
+				<p:commandButton value="Update" update="hotelGrid"
+					action="#{finalHotelBean.update()}"
+					rendered="#{param['act'] == 'edit'}" />
+
+				<p:commandButton value="Finalize" update="hotelGrid"
+					action="#{finalHotelBean.add()}"
+					rendered="#{param['act'] == 'create'}" />
+
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

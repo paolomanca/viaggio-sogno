@@ -1,0 +1,102 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="act" value="#{finalFlightBean.act}" required="true" />
+		<f:viewParam name="fPkgID" value="#{finalFlightBean.fPkgID}"
+			required="true" />
+		<f:viewParam name="fPrID" value="#{finalFlightBean.fPrID}" />
+		<f:viewParam name="prID" value="#{finalFlightBean.prID}" />
+	</f:metadata>
+
+	<ui:define name="page-title">Final Flight</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:menuitem value="Package" outcome="showFinalPackage">
+			<f:param name="fPkgID" value="#{param['fPkgID']}" />
+		</p:menuitem>
+		<p:menuitem value="Flight" />
+	</ui:define>
+
+	<ui:define name="content">
+
+
+
+		<h:form id="flightForm">
+			<p:panel>
+				<p:panelGrid id="flightGrid" styleClass="no-border-grid">
+
+					<p:row>
+						<p:column>
+							<h:outputLabel for="depAirport">From:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="depAirport"
+								value="#{finalFlightBean.finalProduct.depAirport}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="arrAirport">To:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="arrAirport"
+								value="#{finalFlightBean.finalProduct.arrAirport}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="flightLength">Length:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="flightLength"
+								value="#{finalFlightBean.finalProduct.flightLength}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="price">Price:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="price"
+								value="#{finalFlightBean.finalProduct.price}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<p:separator />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="departure" value="Departure" />
+						</p:column>
+						<p:column>
+							<p:calendar id="departure"
+								value="#{finalFlightBean.finalProduct.departure}"
+								pattern="dd/MM/yyyy HH:mm" />
+						</p:column>
+						<p:column>
+							<p:message for="departure" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:spacer height="40px" width="5px" />
+
+				<p:commandButton value="Update" update="flightGrid"
+					action="#{finalFlightBean.update()}"
+					rendered="#{param['act'] == 'edit'}" />
+
+				<p:commandButton value="Finalize" update="flightGrid"
+					action="#{finalFlightBean.add()}"
+					rendered="#{param['act'] == 'create'}" />
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

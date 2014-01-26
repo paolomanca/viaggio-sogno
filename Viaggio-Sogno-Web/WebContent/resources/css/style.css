@@ -1,5 +1,28 @@
-@CHARSET "US-ASCII";
+.ui-widget, .ui-widget .ui-widget {
+    font-size: 96%;
+ }
+ 
+ .mainPanel .ui-panel-titlebar:first-child .ui-panel-title {
+ 	float: left;
+ }
+ 
+.mainPanel .ui-panel-titlebar:first-child .ui-menubutton {
+ 	display: inline-block;
+ 	float: right;
+ }
+ 
+ .hide-column-names table thead tr {
+    display: none;
+}
 
-#newPackGrid tr, #newPackGrid td {
+.ui-datatable td:first-child, .ui-datatable th:first-child  {
+	width: 50px;
+}
+
+.ui-datatable td {
+	width: 15%;
+}
+
+.no-border-grid tr, .no-border-grid td {
 	border: 0;
 }
