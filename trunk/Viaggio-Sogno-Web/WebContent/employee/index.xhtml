@@ -1,18 +1,24 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui">
 
-<h:body>
-	<h1>Hello #{userBean.name}</h1>
-	<h:form>
-		<p:commandButton action="createPackage?faces-redirect=true" value="Create a package" />
-		<p:commandButton action="createFlight?faces-redirect=true" value="Create a flight" />
-		<p:commandButton action="createHotel?faces-redirect=true" value="Create a hotel" />
-		<p:commandButton action="createExcursion?faces-redirect=true" value="Create an excursion" />
-		<p:commandButton action="#{userBean.logout}" value="Logout" />
-	</h:form>
-</h:body>
-</html>
+	<ui:define name="page-title">AdminPanel</ui:define>
+	<ui:define name="content">
+
+		<h:form>
+			<p:commandButton action="createPackage?faces-redirect=true"
+				value="Create a package" />
+			<p:commandButton action="createFlight?faces-redirect=true"
+				value="Create a flight" />
+			<p:commandButton action="createHotel?faces-redirect=true"
+				value="Create a hotel" />
+			<p:commandButton action="createExcursion?faces-redirect=true"
+				value="Create an excursion" />
+			<p:commandButton action="#{userBean.logout}" value="Logout" />
+		</h:form>
+		
+	</ui:define>
+</ui:composition>

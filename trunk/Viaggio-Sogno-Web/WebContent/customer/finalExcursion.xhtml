@@ -1,0 +1,100 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="act" value="#{finalExcursionBean.act}" required="true" />
+		<f:viewParam name="fPkgID" value="#{finalExcursionBean.fPkgID}"
+			required="true" />
+		<f:viewParam name="fPrID" value="#{finalExcursionBean.fPrID}" />
+	</f:metadata>
+
+	<ui:define name="page-title">Final Excursion</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:menuitem value="Package" outcome="showFinalPackage">
+			<f:param name="fPkgID" value="#{param['fPkgID']}" />
+		</p:menuitem>
+		<p:menuitem value="Excursion" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="excursionForm">
+			<p:panel>
+				<p:panelGrid id="excursionGrid" styleClass="no-border-grid">
+
+					<p:row>
+						<p:column>
+							<h:outputLabel for="name">Name:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="name"
+								value="#{finalExcursionBean.finalProduct.name}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="location">Location:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="location"
+								value="#{finalExcursionBean.finalProduct.location}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="description">Description:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="description"
+								value="#{finalExcursionBean.finalProduct.description}" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputLabel for="price">Price:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="price"
+								value="#{finalFlightBean.finalProduct.price}" />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column colspan="3">
+							<p:separator />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<h:outputLabel for="date" value="Date" />
+						</p:column>
+						<p:column>
+							<p:calendar id="date"
+								value="#{finalExcursionBean.finalProduct.date}"
+								pattern="dd/MM/yyyy HH:mm" />
+						</p:column>
+						<p:column>
+							<p:message for="date" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+
+				<p:spacer height="40px" width="5px" />
+
+				<p:commandButton value="Update" update="excursionGrid"
+					action="#{finalExcursionBean.update()}"
+					rendered="#{param['act'] == 'edit'}" />
+
+				<p:commandButton value="Finalize" update="excursionGrid"
+					action="#{finalExcursionBean.add()}"
+					rendered="#{param['act'] == 'create'}" />
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

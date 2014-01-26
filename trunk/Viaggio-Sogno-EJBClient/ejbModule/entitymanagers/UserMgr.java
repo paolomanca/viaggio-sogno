@@ -22,5 +22,7 @@ public interface UserMgr {
 	public UserDTO findByEmailDTO(String email);
 	
 	public UserDTO getUserDTO();
+	
+	//public boolean isRole(String role);
 
 }

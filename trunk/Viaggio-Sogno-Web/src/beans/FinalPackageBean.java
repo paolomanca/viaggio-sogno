@@ -22,19 +22,20 @@ public class FinalPackageBean {
 	@EJB
 	private FinalPackageMgr finalPackageMgr;
 	
+	@ManagedProperty(value = "#{param.fPkgID}")
+	private int fPkgID;
+
 	private FinalPackageDTO pkg;
-	
-	@ManagedProperty(value = "#{param.id}")
-	private int id;
-	
 	
 	@PostConstruct
 	public void init() {
 		
-		if( id <= 0 )
+		if( fPkgID <= 0 ) {
 			pkg = new FinalPackageDTO();
-		else 
-			pkg = finalPackageMgr.getByID(id);
+		
+		} else {
+			pkg = finalPackageMgr.getByID(fPkgID);
+		}
 
 	}
 	
@@ -45,16 +46,51 @@ public class FinalPackageBean {
 	
 	public String remove(FinalPackageDTO finalPkg) {
 		finalPackageMgr.remove(finalPkg);
+
 		return "index?faces-redirect=true";
-
+	}
+	
+	public void removeFlight( ProductDTO flight ) {
+		pkg.removeFlight(flight);
+		finalPackageMgr.update(pkg);
+	}
+	
+	
+	public void removeHotel( ProductDTO hotel ) {
+		System.out.println("Paolo: " + hotel);
+		System.out.println("Paolo: " + pkg.getHotels());
+		pkg.removeHotel(hotel);
+		System.out.println("Paolo: " + pkg.getHotels());
+		
+		finalPackageMgr.update(pkg);
+	}
+	
+	public void removeExcursion( ProductDTO excursion ) {
+		pkg.removeExcursion(excursion);
+		finalPackageMgr.update(pkg);
+	}
+	
+	public void removeFinalProduct( FinalFlightDTO finalFlight ) {
+		pkg.removeFinalProduct(finalFlight);
+		finalPackageMgr.update(pkg);
 	}
 
-	public int getId() {
-		return id;
+	public void removeFinalProduct( FinalHotelDTO finalHotel ) {
+		pkg.removeFinalProduct(finalHotel);
+		finalPackageMgr.update(pkg);
+	}
+	
+	public void removeFinalProduct( FinalExcursionDTO finalExcursion ) {
+		pkg.removeFinalProduct(finalExcursion);
+		finalPackageMgr.update(pkg);
+	}
+	
+	public int getfPkgID() {
+		return fPkgID;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setfPkgID(int id) {
+		this.fPkgID = id;
 	}
 	
 

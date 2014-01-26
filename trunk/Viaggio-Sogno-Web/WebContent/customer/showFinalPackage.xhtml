@@ -1,24 +1,32 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
+	<ui:define name="page-title">Customize package</ui:define>
 
-	<title>Show Final Package</title>
+	<ui:define name="breadcrumb">
+		<p:menuitem value="Package customization" outcome="index" />
+	</ui:define>
 
-</h:head>
-<h:body>
+	<ui:define name="content">
 
+	<f:metadata>
+		<f:viewParam name="fPkgID" value="#{finalPackageBean.fPkgID}" required="true" />
+	</f:metadata>
+	
+		<h:form id="customizePack">
 
-	<p:panel header="Customize Package">
-		<p:panel header="Products">
 			<p:dataTable var="flight" value="#{finalPackageBean.flights}">
-			
-			<f:facet name="header">Flights</f:facet>
-			
+
+				<f:facet name="header">Flights</f:facet>
+
+				<p:column headerText="ID">
+					<h:outputText value="#{flight.id}" />
+				</p:column>
+
 				<p:column headerText="From">
 					<h:outputText value="#{flight.depAirport}" />
 				</p:column>
@@ -35,10 +43,74 @@
 					<h:outputText value="#{flight.price}" />
 				</p:column>
 
+				<p:column>
+					<p:menuButton value="Actions">
+						<p:menuitem value="Finalize" outcome="finalFlight">
+							<f:param name="act" value="create" />
+							<f:param name="fPkgID" value="#{param['fPkgID']}" />
+							<f:param name="prID" value="#{flight.id}" />
+						</p:menuitem>
+						<p:menuitem value="Remove"
+							action="#{finalPackage.removeFlight(flight)}" />
+					</p:menuButton>
+				</p:column>
+
 			</p:dataTable>
 
-			<p:dataTable var="hotel" value="#{finalPackageBean.hotels}">
-			<f:facet name="header">Hotels</f:facet>
+			<p:dataTable var="finalFlight"
+				value="#{finalPackageBean.finalFlights}">
+
+				<f:facet name="header">Final Flights</f:facet>
+
+				<p:column headerText="ID">
+					<h:outputText value="#{finalFlight.id}" />
+				</p:column>
+
+				<p:column headerText="From">
+					<h:outputText value="#{finalFlight.depAirport}" />
+				</p:column>
+
+				<p:column headerText="To">
+					<h:outputText value="#{finalFlight.arrAirport}" />
+				</p:column>
+
+				<p:column headerText="Date">
+					<h:outputText value="#{finalFlight.departure}" />
+				</p:column>
+
+				<p:column headerText="Length">
+					<h:outputText value="#{finalFlight.flightLength}" />
+				</p:column>
+
+				<p:column headerText="Price">
+					<h:outputText value="#{finalFlight.price}" />
+				</p:column>
+
+				<p:column>
+					<p:menuButton value="Actions">
+						<p:menuitem value="Modify" outcome="finalFlight">
+							<f:param name="act" value="edit" />
+							<f:param name="fPkgID" value="#{param['fPkgID']}" />
+							<f:param name="fPrID" value="#{finalFlight.id}" />
+						</p:menuitem>
+						<p:menuitem value="Remove"
+							action="#{finalPackageBean.removeFinalProduct(finalFlight)}" />
+					</p:menuButton>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:spacer height="50px" />
+
+			<p:dataTable id="hotels" var="hotel"
+				value="#{finalPackageBean.hotels}">
+
+				<f:facet name="header">Hotels</f:facet>
+
+				<p:column headerText="ID">
+					<h:outputText value="#{hotel.id}" />
+				</p:column>
+
 				<p:column headerText="Name">
 					<h:outputText value="#{hotel.name}" />
 				</p:column>
@@ -55,50 +127,27 @@
 					<h:outputText value="#{hotel.price}" />
 				</p:column>
 
-			</p:dataTable>
-
-			<p:dataTable var="excursion" value="#{finalPackageBean.excursions}">
-			<f:facet name="header">Excursions</f:facet>
-				<p:column headerText="Name">
-					<h:outputText value="#{excursion.name}" />
-				</p:column>
-
-				<p:column headerText="Location">
-					<h:outputText value="#{hotel.location}" />
-				</p:column>
-
-				<p:column headerText="Price">
-					<h:outputText value="#{hotel.price}" />
-				</p:column>
-
-			</p:dataTable>
-			
-		</p:panel>
-	<p:panel header="Final Products">
-			<p:dataTable var="flight" value="#{finalPackageBean.finalFlights}">
-				<f:facet name="header">Flights</f:facet>
-			
-				<p:column headerText="From">
-					<h:outputText value="#{flight.depAirport}" />
-				</p:column>
-
-				<p:column headerText="To">
-					<h:outputText value="#{flight.arrAirport}" />
-				</p:column>
-
-				<p:column headerText="Length">
-					<h:outputText value="#{flight.flightLength}" />
-				</p:column>
-
-				<p:column headerText="Price">
-					<h:outputText value="#{flight.price}" />
+				<p:column>
+					<p:menuButton value="Actions">
+						<p:menuitem value="Finalize" outcome="finalHotel">
+							<f:param name="act" value="create" />
+							<f:param name="fPkgID" value="#{param['fPkgID']}" />
+							<f:param name="prID" value="#{hotel.id}" />
+						</p:menuitem>
+						<p:menuitem value="Remove"
+							action="#{finalPackageBean.removeHotel(hotel)}" update="hotels" />
+					</p:menuButton>
 				</p:column>
 
 			</p:dataTable>
 
 			<p:dataTable var="finalHotel" value="#{finalPackageBean.finalHotels}">
-				<f:facet name="header">Hotels</f:facet>
-			
+
+				<f:facet name="header">Final Hotels</f:facet>
+
+				<p:column headerText="ID">
+					<h:outputText value="#{finalHotel.id}" />
+				</p:column>
 				<p:column headerText="Name">
 					<h:outputText value="#{finalHotel.name}" />
 				</p:column>
@@ -111,15 +160,77 @@
 					<h:outputText value="#{finalHotel.location}" />
 				</p:column>
 
+				<p:column headerText="Check in">
+					<h:outputText value="#{finalHotel.checkIn}" />
+				</p:column>
+
+				<p:column headerText="Check out">
+					<h:outputText value="#{finalHotel.checkOut}" />
+				</p:column>
+
 				<p:column headerText="Price">
 					<h:outputText value="#{finalHotel.price}" />
+				</p:column>
+
+				<p:column>
+					<p:menuButton value="Actions">
+						<p:menuitem value="Modify" outcome="finalHotel">
+							<f:param name="act" value="edit" />
+							<f:param name="fPkgID" value="#{param['fPkgID']}" />
+							<f:param name="fPrID" value="#{finalHotel.id}" />
+						</p:menuitem>
+						<p:menuitem value="Remove"
+							action="#{finalPackageBean.removeFinalProduct(finalHotel)}" />
+					</p:menuButton>
+				</p:column>
+
+			</p:dataTable>
+
+			<p:spacer height="50px" />
+
+			<p:dataTable var="excursion" value="#{finalPackageBean.excursions}">
+
+				<f:facet name="header">Excursions</f:facet>
+
+				<p:column headerText="ID">
+					<h:outputText value="#{excursion.id}" />
+				</p:column>
+				<p:column headerText="Name">
+					<h:outputText value="#{excursion.name}" />
+				</p:column>
+
+				<p:column headerText="Location">
+					<h:outputText value="#{excursion.location}" />
+				</p:column>
+
+				<p:column headerText="Price">
+					<h:outputText value="#{excursion.price}" />
+				</p:column>
+
+				<p:column>
+					<p:menuButton value="Actions">
+						<p:menuitem value="Finalize" outcome="finalExcursion">
+							<f:param name="act" value="create" />
+							<f:param name="fPkgID" value="#{param['fPkgID']}" />
+							<f:param name="prID" value="#{excursion.id}" />
+
+						</p:menuitem>
+						<p:menuitem value="Remove"
+							action="#{finalPackageBean.removeFinalProduct(finalExcursion)}" />
+					</p:menuButton>
 				</p:column>
 
 			</p:dataTable>
 
 			<p:dataTable var="finalExcursion"
 				value="#{finalPackageBean.finalExcursions}">
-				<f:facet name="header">Excursions</f:facet>
+
+				<f:facet name="header">Final Excursions</f:facet>
+
+
+				<p:column headerText="ID">
+					<h:outputText value="#{finalExcursion.id}" />
+				</p:column>
 				<p:column headerText="Name">
 					<h:outputText value="#{finalExcursion.name}" />
 				</p:column>
@@ -128,13 +239,28 @@
 					<h:outputText value="#{finalExcursion.location}" />
 				</p:column>
 
+				<p:column headerText="Date">
+					<h:outputText value="#{finalExcursion.date}" />
+				</p:column>
+
 				<p:column headerText="Price">
 					<h:outputText value="#{finalExcursion.price}" />
 				</p:column>
 
-			</p:dataTable>
-		</p:panel>
-	</p:panel>
+				<p:column>
+					<p:menuButton value="Actions">
+						<p:menuitem value="Modify" outcome="finalExcursion">
+							<f:param name="act" value="edit" />
+							<f:param name="fPkgID" value="#{param['fPkgID']}" />
+							<f:param name="fPrID" value="#{finalExcursion.id}" />
+						</p:menuitem>
+						<p:menuitem value="Remove"
+							action="#{finalPackageBean.removeFinalProduct(finalExcursion)}" />
+					</p:menuButton>
+				</p:column>
 
-</h:body>
-</html>
+			</p:dataTable>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

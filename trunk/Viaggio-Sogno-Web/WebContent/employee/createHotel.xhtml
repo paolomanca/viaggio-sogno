@@ -1,18 +1,16 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
-<h:head>
-	<title>Product creation</title>
-</h:head>
-<h:body>
-	<h:form>
+	<ui:define name="page-title">Product creation</ui:define>
+	<ui:define name="content">
+
 		<p:panel header="Hotel product Creation Form">
 			<h:panelGrid columns="3" id="newHotelGrid">
-				
+
 				<h:outputLabel for="name">Name:</h:outputLabel>
 				<p:inputText id="name" value="#{productBean.product.name}" />
 				<p:message for="name" />
@@ -20,23 +18,25 @@
 				<h:outputLabel for="location">Location:</h:outputLabel>
 				<p:inputText id="location" value="#{productBean.product.location}" />
 				<p:message for="location" />
-				
+
 				<h:outputLabel for="description">Description:</h:outputLabel>
-				<p:inputText id="description" value="#{productBean.product.description}" />
+				<p:inputText id="description"
+					value="#{productBean.product.description}" />
 				<p:message for="description" />
 
 				<h:outputLabel for="rating">Rating:</h:outputLabel>
 				<p:inputText id="rating" value="#{productBean.product.rating}" />
 				<p:message for="rating" />
-				
+
 				<h:outputLabel for="price">Price:</h:outputLabel>
 				<p:inputText id="price" value="#{productBean.product.price}" />
 				<p:message for="price" />
-				
+
 			</h:panelGrid>
-			<p:commandButton value="Create" update="newHotelGrid" action="#{productBean.addHotel()}" />
+			<p:commandButton value="Create" update="newHotelGrid"
+				action="#{productBean.addHotel()}" />
 
 		</p:panel>
-	</h:form>
-</h:body>
-</html>
+
+	</ui:define>
+</ui:composition>
