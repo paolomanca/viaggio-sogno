@@ -108,4 +108,10 @@ public class FinalProductMgrBean implements FinalProductMgr {
 		return out;
 	}
 
+	@Override
+	public FinalProductDTO getByID(int id, String type) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -6,6 +6,7 @@
 		<class>model.FinalFlight</class>
 		<class>model.FinalHotel</class>
 		<class>model.FinalPackage</class>
+		<class>model.IdPool</class>
 		<class>model.Package</class>
 		<class>model.PackageHasProduct</class>
 		<class>model.PackageHasProductPK</class>

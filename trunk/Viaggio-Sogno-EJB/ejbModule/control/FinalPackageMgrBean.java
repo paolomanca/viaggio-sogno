@@ -18,6 +18,7 @@ import model.FinalHotel;
 import model.FinalPackage;
 import model.Group;
 import model.Product;
+import model.User;
 import dto.FinalExcursionDTO;
 import dto.FinalFlightDTO;
 import dto.FinalHotelDTO;
@@ -78,7 +79,10 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 			newFPkg.getFinalExcursions().add(new FinalExcursion(fEDTO));
 		}
 		
-		newFPkg.setUser(usrMgr.findByEmail(context.getCallerPrincipal().getName()));
+		User current = usrMgr.findByEmail(context.getCallerPrincipal().getName());
+		
+		newFPkg.setUser(current);
+		newFPkg.setIdfinalPackageRelative(current.nextID());
 		em.persist(newFPkg);
 	}
 
@@ -92,13 +96,13 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@RolesAllowed({Group._CUSTOMER})
 	public void remove(FinalPackageDTO finalPkgDTO) {
 		em.remove(fromRelativeID(finalPkgDTO.getId()));
+		usrMgr.getPrincipalUser().freeID(finalPkgDTO.getId());
 	}
 
 	@Override
 	@RolesAllowed({Group._CUSTOMER})
 	public FinalPackageDTO getByID(int ID) {
-		return buildDTO(em.createQuery("SELECT t FROM FinalPackage t where t.user = :user order by t.idfinalPackage", FinalPackage.class)
-				.setParameter("user", usrMgr.getPrincipalUser()).getResultList().get(ID), ID);
+		return buildDTO(fromRelativeID(ID), ID);
 	}
 
 	private FinalPackageDTO buildDTO(FinalPackage in) {
@@ -168,11 +172,11 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@Override
 	public List<FinalPackageDTO> listByUser() {
 		List<FinalPackageDTO> out = new LinkedList<>();
-		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user order by t.idfinalPackage", FinalPackage.class)
+		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user", FinalPackage.class)
 		.setParameter("user", usrMgr.getPrincipalUser()).getResultList();
 		
-		for(int i=0; i<toConvert.size(); i++){
-			out.add(buildDTO(toConvert.get(i), i+1));
+		for(FinalPackage pkg : toConvert){
+			out.add(buildDTO(pkg, pkg.getIdfinalPackageRelative()));
 		}
 		
 		return out;
@@ -193,8 +197,8 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	private FinalPackage fromRelativeID(int id) {
-		return em.createQuery("SELECT t FROM FinalPackage t where t.user = :user order by t.idfinalPackage", FinalPackage.class)
-				.setParameter("user", usrMgr.getPrincipalUser()).getResultList().get(id);
+		return em.createQuery("SELECT t FROM FinalPackage t where t.user = :user and t.idfinalPackageRelative = :id ", FinalPackage.class)
+				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();
 	}
 
 }

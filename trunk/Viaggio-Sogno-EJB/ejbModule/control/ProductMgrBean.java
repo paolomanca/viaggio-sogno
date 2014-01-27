@@ -64,4 +64,10 @@ public class ProductMgrBean implements ProductMgr {
 		return out;
 	}
 
+	@Override
+	public ProductDTO getByID(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

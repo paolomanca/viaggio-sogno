@@ -23,6 +23,9 @@ public class FinalPackage implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="IDFINAL_PACKAGE", unique=true, nullable=false)
 	private int idfinalPackage;
+	
+	@Column(name="IDFINAL_PACKAGE_RELATIVE", nullable=false)
+	private int idfinalPackageRelative;
 
 	//uni-directional many-to-one association to User
 	@ManyToOne
@@ -122,6 +125,14 @@ public class FinalPackage implements Serializable {
 
 	public void setProducts(List<Product> products) {
 		this.products = products;
+	}
+
+	public int getIdfinalPackageRelative() {
+		return idfinalPackageRelative;
+	}
+
+	public void setIdfinalPackageRelative(int idfinalPackageRelative) {
+		this.idfinalPackageRelative = idfinalPackageRelative;
 	}
 
 }
