@@ -23,6 +23,6 @@ public interface UserMgr {
 	
 	public UserDTO getUserDTO();
 	
-	//public boolean isRole(String role);
+	public boolean isRole(String role);
 
 }
