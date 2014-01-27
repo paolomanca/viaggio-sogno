@@ -138,7 +138,9 @@
 							<f:param name="prID" value="#{hotel.id}" />
 						</p:menuitem>
 						<p:menuitem value="Remove"
-							action="#{finalPackageBean.removeHotel(hotel)}" update="hotels" />
+							action="#{finalPackageBean.removeHotel(hotel)}" update="hotels">
+							<f:param name="fPkgID" value="#{param['fPkgID']}" />
+							</p:menuitem>
 					</p:menuButton>
 				</p:column>
 
