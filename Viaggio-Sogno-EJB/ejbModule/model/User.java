@@ -55,6 +55,10 @@ public class User implements Serializable {
 	@Column(name="groupname")
 	private List<Group> groups;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(unique=true, nullable=false)
+	private IdPool idPool = new IdPool();
+	
 	public User(){
 		
 	}
@@ -152,6 +156,14 @@ public class User implements Serializable {
 
 	public void setGroups(List<Group> groups) {
 		this.groups = groups;
+	}
+	
+	public int nextID(){
+		return idPool.nextAvailable();
+	}
+	
+	public void freeID(int toBeFreed){
+		idPool.free(toBeFreed);
 	}
 
 }
