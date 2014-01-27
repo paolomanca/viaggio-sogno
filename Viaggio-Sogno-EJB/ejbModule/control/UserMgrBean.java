@@ -148,4 +148,9 @@ public class UserMgrBean implements UserMgr {
 		userDTO.setLastName(in.getLastName());
 		return userDTO;
 	}
+
+	@Override
+	public boolean isRole(String role) {
+		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+	}
 }

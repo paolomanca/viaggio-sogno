@@ -25,6 +25,9 @@ public class FinalFlight implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="IDFINAL_FLIGHT", unique=true, nullable=false)
 	private int idfinalFlight;
+	
+	@Column(name="IDFINAL_FLIGHT_RELATIVE", nullable=false)
+	private int idfinalFlightRelative;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
@@ -78,6 +81,14 @@ public class FinalFlight implements Serializable {
 
 	public void setFinalPackage(FinalPackage finalPackage) {
 		this.finalPackage = finalPackage;
+	}
+
+	public int getIdfinalFlightRelative() {
+		return idfinalFlightRelative;
+	}
+
+	public void setIdfinalFlightRelative(int idfinalFlightRelative) {
+		this.idfinalFlightRelative = idfinalFlightRelative;
 	}
 
 }

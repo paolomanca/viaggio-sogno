@@ -26,6 +26,9 @@ public class FinalExcursion implements Serializable {
 	@Column(name="IDFINAL_EXCURSION", unique=true, nullable=false)
 	private int idfinalExcursion;
 
+	@Column(name="IDFINAL_EXCURSION_RELATIVE", nullable=false)
+	private int idfinalExcursionRelative;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(nullable=false)
 	private Date date;
@@ -78,6 +81,14 @@ public class FinalExcursion implements Serializable {
 
 	public void setProduct(Product product) {
 		this.product = product;
+	}
+
+	public int getIdfinalExcursionRelative() {
+		return idfinalExcursionRelative;
+	}
+
+	public void setIdfinalExcursionRelative(int idfinalExcursionRelative) {
+		this.idfinalExcursionRelative = idfinalExcursionRelative;
 	}
 
 }

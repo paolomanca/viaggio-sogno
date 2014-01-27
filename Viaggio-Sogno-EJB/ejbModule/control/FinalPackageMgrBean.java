@@ -23,6 +23,7 @@ import dto.FinalExcursionDTO;
 import dto.FinalFlightDTO;
 import dto.FinalHotelDTO;
 import dto.FinalPackageDTO;
+import dto.FinalProductDTO;
 import dto.ProductDTO;
 import dto.UserDTO;
 import entitymanagers.FinalPackageMgr;
@@ -86,10 +87,37 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		em.persist(newFPkg);
 	}
 
+	/*TODO free final products ids if removed*/
 	@Override
 	@RolesAllowed({Group._CUSTOMER})
 	public void update(FinalPackageDTO finalPkgDTO) {
-		em.merge(fromRelativeID(finalPkgDTO.getId()));
+		FinalPackage fP = fromRelativeID(finalPkgDTO.getId());
+		fP.setProducts(new LinkedList<Product>());			
+		fP.setFinalFlights(new LinkedList<FinalFlight>());
+		fP.setFinalHotels(new LinkedList<FinalHotel>());
+		fP.setFinalExcursions(new LinkedList<FinalExcursion>());
+		
+		for(ProductDTO pDTO : finalPkgDTO.getFlights()){
+			fP.getProducts().add(em.find(Product.class, pDTO.getId()));
+		}
+		for(ProductDTO pDTO : finalPkgDTO.getHotels()){
+			fP.getProducts().add(em.find(Product.class, pDTO.getId()));
+		}
+		for(ProductDTO pDTO : finalPkgDTO.getExcursions()){
+			fP.getProducts().add(em.find(Product.class, pDTO.getId()));
+		}
+		
+		for(FinalFlightDTO fFDTO : finalPkgDTO.getFinalFlights()){
+			fP.getFinalFlights().add(fnPrdMgr.flightFromRelativeID(fFDTO.getId()));
+		}
+		for(FinalHotelDTO fHDTO : finalPkgDTO.getFinalHotels()){
+			fP.getFinalHotels().add(fnPrdMgr.hotelFromRelativeID(fHDTO.getId()));
+		}
+		for(FinalExcursionDTO fEDTO : finalPkgDTO.getFinalExcursions()){
+			fP.getFinalExcursions().add(fnPrdMgr.excursionFromRelativeID(fEDTO.getId()));
+		}
+		
+		em.merge(fP);
 	}
 
 	@Override
@@ -199,6 +227,11 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	private FinalPackage fromRelativeID(int id) {
 		return em.createQuery("SELECT t FROM FinalPackage t where t.user = :user and t.idfinalPackageRelative = :id ", FinalPackage.class)
 				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();
+	}
+
+	@Override
+	public void finalize(FinalProductDTO finalProduct) {
+		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
 	}
 
 }
