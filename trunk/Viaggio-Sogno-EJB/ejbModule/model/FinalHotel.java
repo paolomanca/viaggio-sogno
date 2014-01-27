@@ -26,6 +26,9 @@ public class FinalHotel implements Serializable {
 	@Column(name="IDFINAL_HOTEL", unique=true, nullable=false)
 	private int idfinalHotel;
 
+	@Column(name="IDFINAL_HOTEL_RELATIVE", nullable=false)
+	private int idfinalHotelRelative;
+	
 	@Temporal(TemporalType.DATE)
 	@Column(name="check_in", nullable=false)
 	private Date checkIn;
@@ -91,6 +94,14 @@ public class FinalHotel implements Serializable {
 
 	public void setFinalPackage(FinalPackage finalPackage) {
 		this.finalPackage = finalPackage;
+	}
+
+	public int getIdfinalHotelRelative() {
+		return idfinalHotelRelative;
+	}
+
+	public void setIdfinalHotelRelative(int idfinalHotelRelative) {
+		this.idfinalHotelRelative = idfinalHotelRelative;
 	}
 
 }
