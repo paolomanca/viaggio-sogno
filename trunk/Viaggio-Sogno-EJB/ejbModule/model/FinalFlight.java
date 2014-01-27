@@ -19,6 +19,8 @@ import java.util.Date;
 public class FinalFlight implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String TYPE = Product.FLIGHT;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="IDFINAL_FLIGHT", unique=true, nullable=false)
