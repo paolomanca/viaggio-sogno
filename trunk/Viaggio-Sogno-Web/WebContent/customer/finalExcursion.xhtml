@@ -6,10 +6,11 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<f:metadata>
-		<f:viewParam name="act" value="#{finalExcursionBean.act}" required="true" />
-		<f:viewParam name="fPkgID" value="#{finalExcursionBean.fPkgID}"
+		<f:viewParam name="act" value="#{finalProductBean.act}"
 			required="true" />
-		<f:viewParam name="fPrID" value="#{finalExcursionBean.fPrID}" />
+		<f:viewParam name="fPkgID" value="#{finalProductBean.fPkgID}"
+			required="true" />
+		<f:viewParam name="fPrID" value="#{finalProductBean.fPrID}" />
 	</f:metadata>
 
 	<ui:define name="page-title">Final Excursion</ui:define>
@@ -33,7 +34,7 @@
 						</p:column>
 						<p:column colspan="2">
 							<h:outputText id="name"
-								value="#{finalExcursionBean.finalProduct.name}" />
+								value="#{finalProductBean.finalProduct.name}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -42,7 +43,7 @@
 						</p:column>
 						<p:column colspan="2">
 							<h:outputText id="location"
-								value="#{finalExcursionBean.finalProduct.location}" />
+								value="#{finalProductBean.finalProduct.location}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -51,7 +52,7 @@
 						</p:column>
 						<p:column colspan="2">
 							<h:outputText id="description"
-								value="#{finalExcursionBean.finalProduct.description}" />
+								value="#{finalProductBean.finalProduct.description}" />
 						</p:column>
 					</p:row>
 
@@ -75,7 +76,7 @@
 						</p:column>
 						<p:column>
 							<p:calendar id="date"
-								value="#{finalExcursionBean.finalProduct.date}"
+								value="#{finalProductBean.finalProduct.date}"
 								pattern="dd/MM/yyyy HH:mm" />
 						</p:column>
 						<p:column>
@@ -87,12 +88,22 @@
 				<p:spacer height="40px" width="5px" />
 
 				<p:commandButton value="Update" update="excursionGrid"
-					action="#{finalExcursionBean.update()}"
-					rendered="#{param['act'] == 'edit'}" />
+					action="#{finalProductBean.update()}"
+					rendered="#{param['act'] == 'edit'}">
+					<f:param name="act" value="#{param['act']}" />
+					<f:param name="type" value="#{param['type']}" />
+					<f:param name="fPrID" value="#{param['fPrID']}" />
+				</p:commandButton>
 
 				<p:commandButton value="Finalize" update="excursionGrid"
-					action="#{finalExcursionBean.add()}"
-					rendered="#{param['act'] == 'create'}" />
+					action="#{finalProductBean.add()}"
+					rendered="#{param['act'] == 'create'}">
+					<f:param name="act" value="#{param['act']}" />
+					<f:param name="type" value="#{param['type']}" />
+					<f:param name="fPkgID" value="#{param['fPkgID']}" />
+					<f:param name="prID" value="#{param['prID']}" />
+				</p:commandButton>
+				
 			</p:panel>
 		</h:form>
 

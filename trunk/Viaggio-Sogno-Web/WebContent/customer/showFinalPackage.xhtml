@@ -47,6 +47,7 @@
 					<p:menuButton value="Actions">
 						<p:menuitem value="Finalize" outcome="finalFlight">
 							<f:param name="act" value="create" />
+							<f:param name="type" value="FLIGHT" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
 							<f:param name="prID" value="#{flight.id}" />
 						</p:menuitem>
@@ -90,6 +91,7 @@
 					<p:menuButton value="Actions">
 						<p:menuitem value="Modify" outcome="finalFlight">
 							<f:param name="act" value="edit" />
+							<f:param name="type" value="FLIGHT" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
 							<f:param name="fPrID" value="#{finalFlight.id}" />
 						</p:menuitem>
@@ -131,6 +133,7 @@
 					<p:menuButton value="Actions">
 						<p:menuitem value="Finalize" outcome="finalHotel">
 							<f:param name="act" value="create" />
+							<f:param name="type" value="HOTEL" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
 							<f:param name="prID" value="#{hotel.id}" />
 						</p:menuitem>
@@ -176,6 +179,7 @@
 					<p:menuButton value="Actions">
 						<p:menuitem value="Modify" outcome="finalHotel">
 							<f:param name="act" value="edit" />
+							<f:param name="type" value="HOTEL" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
 							<f:param name="fPrID" value="#{finalHotel.id}" />
 						</p:menuitem>
@@ -211,6 +215,7 @@
 					<p:menuButton value="Actions">
 						<p:menuitem value="Finalize" outcome="finalExcursion">
 							<f:param name="act" value="create" />
+							<f:param name="type" value="EXCURSION" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
 							<f:param name="prID" value="#{excursion.id}" />
 
@@ -251,6 +256,7 @@
 					<p:menuButton value="Actions">
 						<p:menuitem value="Modify" outcome="finalExcursion">
 							<f:param name="act" value="edit" />
+							<f:param name="type" value="EXCURSION" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
 							<f:param name="fPrID" value="#{finalExcursion.id}" />
 						</p:menuitem>

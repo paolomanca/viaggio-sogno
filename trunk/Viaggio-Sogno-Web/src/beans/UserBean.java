@@ -38,12 +38,12 @@ public class UserBean {
 	
 	public String logout() {
 	    FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-	    return "/index.xhtml";
+	    return "logout";
 	}
 	
 	public String update(){
 		usrMgr.updateSelf(user);
-		return "/user/index?faces-redirect=true";
+		return "/costumer/index?faces-redirect=true";
 	}
 	
 }
