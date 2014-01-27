@@ -100,11 +100,20 @@
 
 				<p:commandButton value="Update" update="hotelGrid"
 					action="#{finalHotelBean.update()}"
-					rendered="#{param['act'] == 'edit'}" />
+					rendered="#{param['act'] == 'edit'}">
+					<f:param name="act" value="#{param['act']}" />
+					<f:param name="type" value="#{param['type']}" />
+					<f:param name="fPrID" value="#{param['fPrID']}" />
+				</p:commandButton>
 
 				<p:commandButton value="Finalize" update="hotelGrid"
 					action="#{finalHotelBean.add()}"
-					rendered="#{param['act'] == 'create'}" />
+					rendered="#{param['act'] == 'create'}">
+					<f:param name="act" value="#{param['act']}" />
+					<f:param name="type" value="#{param['type']}" />
+					<f:param name="fPkgID" value="#{param['fPkgID']}" />
+					<f:param name="prID" value="#{param['prID']}" />
+				</p:commandButton>
 
 			</p:panel>
 		</h:form>

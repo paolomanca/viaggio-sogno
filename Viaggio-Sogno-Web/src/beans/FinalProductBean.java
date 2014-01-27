@@ -1,15 +1,18 @@
 package beans;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import dto.FinalExcursionDTO;
+import dto.FinalFlightDTO;
+import dto.FinalHotelDTO;
 import dto.FinalProductDTO;
 import entitymanagers.FinalPackageMgr;
 import entitymanagers.FinalProductMgr;
 import entitymanagers.ProductMgr;
-
 
 @ManagedBean(name = "finalProductBean")
 @RequestScoped
@@ -17,27 +20,62 @@ public class FinalProductBean {
 
 	@EJB
 	protected FinalProductMgr fPrMgr;
-	
+
 	@EJB
 	protected ProductMgr prMgr;
 
 	@EJB
 	protected FinalPackageMgr fPkgMgr;
-	
-	@ManagedProperty(value = "#{param.fPrID}")
+
+	@ManagedProperty(value = "#{param.prID}")
 	protected int prID;
-	
+
 	@ManagedProperty(value = "#{param.fPrID}")
 	protected int fPrID;
-	
+
 	@ManagedProperty(value = "#{param.fPkgID}")
 	protected int fPkgID;
-	
+
 	protected FinalProductDTO finalProduct;
 
 	@ManagedProperty(value = "#{param.act}")
 	protected String act;
 
+	@ManagedProperty(value = "#{param.type}")
+	protected String type;
+
+	@PostConstruct
+	private void init() {
+
+		if (act != null && type != null) {
+			if (!act.equalsIgnoreCase("create")) {
+				finalProduct = fPrMgr.getByID(fPrID, type.toUpperCase());
+			} else {
+				
+				switch (type) {
+				case "FLIGHT":
+					finalProduct = new FinalFlightDTO();
+					break;
+				case "HOTEL":
+					finalProduct = new FinalHotelDTO();
+					break;
+				case "EXCURSION":
+					finalProduct = new FinalExcursionDTO();
+					break;
+				}
+
+			}
+		}
+
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
 
 	public int getPrID() {
 		return prID;
@@ -79,9 +117,8 @@ public class FinalProductBean {
 		this.act = act;
 	}
 
-
 	public String add() {
-		fPrMgr.add(finalProduct);
+		fPkgMgr.finalize(finalProduct);
 		return "customer/showFinalPackage";
 	}
 	
@@ -89,10 +126,10 @@ public class FinalProductBean {
 		fPrMgr.update(finalProduct);
 		return "customer/showFinalPackage";
 	}
-	
+
 	public String remove() {
 		fPrMgr.remove(finalProduct);
 		return "customer/showFinalPackage";
 	}
-	
+
 }

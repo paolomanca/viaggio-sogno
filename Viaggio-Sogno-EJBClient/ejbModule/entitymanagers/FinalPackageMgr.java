@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.Local;
 
 import dto.FinalPackageDTO;
+import dto.FinalProductDTO;
 import dto.UserDTO;
 
 @Local
@@ -15,6 +16,8 @@ public interface FinalPackageMgr {
 	public void update(FinalPackageDTO finalPkg);
 	
 	public void remove(FinalPackageDTO finalPkg);
+	
+	public void finalize(FinalProductDTO finalProduct);
 	
 	public FinalPackageDTO getByID(int ID);
 	
@@ -30,20 +33,7 @@ public interface FinalPackageMgr {
 	 */
 	public List<FinalPackageDTO> listByUser(UserDTO user);
 	
-	
-	/**
-	 * @return the list of products in the given final package
-	 */
-	//public List<ProductDTO> listProducts(FinalPackageDTO finalPkg);
-	
-	
-	
 
-	
-	/**
-	 * @return the list of final products in the given final package
-	 */
-	//public List<FinalProductDTO> listFinalProducts(FinalPackageDTO finalPkg);
 
 
 }
