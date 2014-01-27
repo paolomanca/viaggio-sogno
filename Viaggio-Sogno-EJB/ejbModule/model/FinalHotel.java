@@ -19,6 +19,8 @@ import java.util.Date;
 public class FinalHotel implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String TYPE = Product.HOTEL;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="IDFINAL_HOTEL", unique=true, nullable=false)
