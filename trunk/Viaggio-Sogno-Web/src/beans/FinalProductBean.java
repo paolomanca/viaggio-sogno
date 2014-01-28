@@ -121,17 +121,17 @@ public class FinalProductBean {
 
 	public String add() {
 		fPkgMgr.finalize(finalProduct);
-		return "customer/showFinalPackage";
+		return "finalPackage?act=show&amp;fPkgID=" + fPkgID + "&amp;faces-redirect=true";
 	}
 	
 	public String update() {
 		fPrMgr.update(finalProduct);
-		return "customer/showFinalPackage";
+		return "finalPackage?act=show&amp;fPkgID=" + fPkgID + "&amp;faces-redirect=true";
 	}
 
 	public String remove() {
 		fPrMgr.remove(finalProduct);
-		return "customer/showFinalPackage";
+		return "finalPackage?act=show&amp;fPkgID=" + fPkgID + "&amp;faces-redirect=true";
 	}
 
 }

@@ -50,6 +50,8 @@ public class FinalPackageBean {
 
 	private FinalPackageDTO fPkg;
 	
+	private ProductDTO selectedProduct;
+	
 	@PostConstruct
 	public void init() {
 		
@@ -70,16 +72,16 @@ public class FinalPackageBean {
 		return "index?faces-redirect=true";
 	}
 	
-	public String swap(ProductDTO newProduct) {
+	public String swap() {
 		
 		if ( prID >= 0 ) {
 			ProductDTO oldProduct = prMgr.getByID(prID);
-			fPkgMgr.swap(fPkg, oldProduct, newProduct);
+			fPkgMgr.swap(fPkg, oldProduct, selectedProduct);
 		}
 		
 		if ( fPrID >= 0 ) {
 			FinalProductDTO oldProduct = fPrMgr.getByID(prID);
-			fPkgMgr.swap(oldProduct, newProduct);
+			fPkgMgr.swap(oldProduct, selectedProduct);
 		}
 		
 		
@@ -99,6 +101,7 @@ public class FinalPackageBean {
 	}
 	
 	public void removeFinalProduct( FinalProductDTO finalProduct ) {
+		System.out.println(finalProduct);
 		fPkg.removeFinalProduct(finalProduct);
 		fPkgMgr.update(fPkg);
 	}
@@ -143,6 +146,8 @@ public class FinalPackageBean {
 	public List<ProductDTO> getOptions(String type) {
 		List<ProductDTO> out = new LinkedList<ProductDTO>();
 
+		System.out.println(fPkg);
+		
 		List<ProductDTO> first = pkgMgr.listFirstChoicesByType(fPkg.getOriginalPackage(), type);
 		List<ProductDTO> alter = pkgMgr.listAlternativesByType(fPkg.getOriginalPackage(), type);
 		
@@ -190,6 +195,14 @@ public class FinalPackageBean {
 
 	public void setAct(String act) {
 		this.act = act;
+	}
+
+	public ProductDTO getSelectedProduct() {
+		return selectedProduct;
+	}
+
+	public void setSelectedProduct(ProductDTO selectedProduct) {
+		this.selectedProduct = selectedProduct;
 	}
 
 }

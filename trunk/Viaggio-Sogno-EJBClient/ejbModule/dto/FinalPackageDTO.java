@@ -105,6 +105,8 @@ public class FinalPackageDTO {
 	
 	public void removeFinalProduct(FinalProductDTO finalProduct) {
 
+		System.out.println(finalExcursions);
+		
 		switch (finalProduct.getProduct().getType()) {
 		case "FLIGHT":
 			finalFlights.remove(finalProduct);

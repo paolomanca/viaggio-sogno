@@ -1,0 +1,173 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="page-title">Final product</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:menuitem value="Package" outcome="finalPackage">
+			<f:param name="act" value="show" />
+			<f:param name="fPkgID" value="#{param['fPkgID']}" />
+		</p:menuitem>
+		<p:menuitem value="#{param['type']}" disabled="true" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<o:form id="finalProductForm" includeRequestParams="true">
+			<p:panel>
+				<p:panelGrid id="finalProductGrid" styleClass="no-border-grid">
+
+					<p:row
+						rendered="#{param['type'] == 'HOTEL' || param['type'] == 'EXCURSION'}">
+						<p:column>
+							<h:outputLabel for="name">Name:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="name"
+								value="#{finalProductBean.finalProduct.name}" />
+						</p:column>
+					</p:row>
+
+					<p:row
+						rendered="#{param['type'] == 'HOTEL' || param['type'] == 'EXCURSION'}">
+						<p:column>
+							<h:outputLabel for="location">Location:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="location"
+								value="#{finalProductBean.finalProduct.location}" />
+						</p:column>
+					</p:row>
+
+					<p:row rendered="#{param['type'] == 'FLIGHT'}">
+						<p:column>
+							<h:outputLabel for="depAirport">From:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="depAirport"
+								value="#{finalProductBean.finalProduct.depAirport}" />
+						</p:column>
+					</p:row>
+					<p:row rendered="#{param['type'] == 'FLIGHT'}">
+						<p:column>
+							<h:outputLabel for="arrAirport">To:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="arrAirport"
+								value="#{finalProductBean.finalProduct.arrAirport}" />
+						</p:column>
+					</p:row>
+					<p:row rendered="#{param['type'] == 'FLIGHT'}">
+						<p:column>
+							<h:outputLabel for="flightLength">Length:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="flightLength"
+								value="#{finalProductBean.finalProduct.flightLength}" />
+						</p:column>
+					</p:row>
+
+					<p:row rendered="#{param['type'] == 'HOTEL'}">
+						<p:column>
+							<h:outputLabel for="rating">Rating:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="rating"
+								value="#{finalProductBean.finalProduct.rating}" />
+						</p:column>
+					</p:row>
+
+					<p:row
+						rendered="#{param['type'] == 'HOTEL' || param['type'] == 'EXCURSION'}">
+						<p:column>
+							<h:outputLabel for="rating">Description:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="description"
+								value="#{finalProductBean.finalProduct.description}" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column>
+							<h:outputLabel for="price">Price:</h:outputLabel>
+						</p:column>
+						<p:column colspan="2">
+							<h:outputText id="price"
+								value="#{finalProductBean.finalProduct.price} €" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="3">
+							<p:separator />
+						</p:column>
+					</p:row>
+
+					<p:row rendered="#{param['type'] == 'FLIGHT'}">
+						<p:column>
+							<h:outputLabel for="departure" value="Departure" />
+						</p:column>
+						<p:column>
+							<p:calendar id="departure"
+								value="#{finalProductBean.finalProduct.departure}"
+								pattern="dd/MM/yyyy HH:mm" />
+						</p:column>
+						<p:column>
+							<p:message for="departure" />
+						</p:column>
+					</p:row>
+
+					<p:row rendered="#{param['type'] == 'HOTEL'}">
+						<p:column>
+							<h:outputLabel for="checkIn" value="Check in" />
+						</p:column>
+						<p:column>
+							<p:calendar id="checkIn"
+								value="#{finalProductBean.finalProduct.checkIn}" />
+						</p:column>
+						<p:column>
+							<p:message for="checkIn" />
+						</p:column>
+					</p:row>
+
+					<p:row rendered="#{param['type'] == 'HOTEL'}">
+						<p:column>
+							<h:outputLabel for="checkOut" value="Check out" />
+						</p:column>
+						<p:column>
+							<p:calendar id="checkOut"
+								value="#{finalProductBean.finalProduct.checkOut}" />
+						</p:column>
+						<p:column>
+							<p:message for="checkOut" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="3">
+							<p:separator height="5px" />
+						</p:column>
+					</p:row>
+
+					<p:row>
+						<p:column colspan="3">
+							<p:commandButton value="Update"
+								action="#{finalProductBean.update()}"
+								rendered="#{param['act'] == 'edit'}" ajax="false" />
+
+							<p:commandButton value="Finalize" update="hotelGrid"
+								action="#{finalProductBean.add()}"
+								rendered="#{param['act'] == 'create'}" ajax="false" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
+		</o:form>
+
+	</ui:define>
+</ui:composition>

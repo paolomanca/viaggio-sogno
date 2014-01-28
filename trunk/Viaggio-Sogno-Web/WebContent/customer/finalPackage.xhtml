@@ -3,7 +3,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 
 	<ui:define name="page-title">Customize package</ui:define>
 
@@ -13,19 +13,13 @@
 
 	<ui:define name="content">
 
-		<f:metadata>
-			<f:viewParam name="fPkgID" value="#{finalPackageBean.fPkgID}"
-				required="true" />
-		</f:metadata>
+		<o:form id="customizePack" includeRequestParams="true">
 
-		<h:form id="customizePack">
-
+			<h3>Flights</h3>
 			<p:dataTable var="flight" value="#{finalPackageBean.flights}"
 				rendered="#{not empty finalPackageBean.flights}">
 
-				<f:facet name="header">Flights</f:facet>
-
-				<p:column headerText="ID">
+				<p:column headerText="ID" width="35" style="text-align: center">
 					<h:outputText value="#{flight.id}" />
 				</p:column>
 
@@ -45,13 +39,13 @@
 					<h:outputText value="#{flight.flightLength}" />
 				</p:column>
 
-				<p:column headerText="Price">
+				<p:column headerText="Price" width="100" style="text-align: center">
 					<h:outputText value="#{flight.price}" />
 				</p:column>
 
-				<p:column>
+				<p:column width="150" style="text-align: center">
 					<p:menuButton value="Actions">
-						<p:menuitem value="Finalize" outcome="finalFlight">
+						<p:menuitem value="Finalize" outcome="finalProduct">
 							<f:param name="act" value="create" />
 							<f:param name="type" value="FLIGHT" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
@@ -71,9 +65,7 @@
 				value="#{finalPackageBean.finalFlights}"
 				rendered="#{not empty finalPackageBean.finalFlights}">
 
-				<f:facet name="header" rendered="#{empty finalPackageBean.flights}">Flights</f:facet>
-
-				<p:column headerText="ID">
+				<p:column headerText="ID" width="35" style="text-align: center">
 					<h:outputText value="#{finalFlight.id}" />
 				</p:column>
 
@@ -95,13 +87,13 @@
 					<h:outputText value="#{finalFlight.flightLength}" />
 				</p:column>
 
-				<p:column headerText="Price">
+				<p:column headerText="Price" width="100" style="text-align: center">
 					<h:outputText value="#{finalFlight.price}" />
 				</p:column>
 
-				<p:column>
+				<p:column width="150" style="text-align: center">
 					<p:menuButton value="Actions">
-						<p:menuitem value="Modify" outcome="finalFlight">
+						<p:menuitem value="Modify" outcome="finalProduct">
 							<f:param name="act" value="edit" />
 							<f:param name="type" value="FLIGHT" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
@@ -117,14 +109,13 @@
 
 			</p:dataTable>
 
-			<p:spacer height="50px" />
+			<p:spacer height="30px" />
 
+			<h3>Hotels</h3>
 			<p:dataTable var="hotel" value="#{finalPackageBean.hotels}"
 				rendered="#{not empty finalPackageBean.hotels}">
 
-				<f:facet name="header">Hotels</f:facet>
-
-				<p:column headerText="ID">
+				<p:column headerText="ID" width="35" style="text-align: center">
 					<h:outputText value="#{hotel.id}" />
 				</p:column>
 
@@ -148,13 +139,13 @@
 					<h:outputText value="n.f." />
 				</p:column>
 
-				<p:column headerText="Price">
+				<p:column headerText="Price" width="100" style="text-align: center">
 					<h:outputText value="#{hotel.price}" />
 				</p:column>
 
-				<p:column>
+				<p:column width="150" style="text-align: center">
 					<p:menuButton value="Actions">
-						<p:menuitem value="Finalize" outcome="finalHotel">
+						<p:menuitem value="Finalize" outcome="finalProduct">
 							<f:param name="act" value="create" />
 							<f:param name="type" value="HOTEL" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
@@ -173,9 +164,7 @@
 			<p:dataTable var="finalHotel" value="#{finalPackageBean.finalHotels}"
 				rendered="#{not empty finalPackageBean.finalHotels}">
 
-				<f:facet name="header" rendered="#{empty finalPackageBean.hotels}">Hotels</f:facet>
-
-				<p:column headerText="ID">
+				<p:column headerText="ID" width="35" style="text-align: center">
 					<h:outputText value="#{finalHotel.id}" />
 				</p:column>
 				<p:column headerText="Name">
@@ -202,13 +191,13 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Price">
+				<p:column headerText="Price" width="100" style="text-align: center">
 					<h:outputText value="#{finalHotel.price}" />
 				</p:column>
 
-				<p:column>
+				<p:column width="150" style="text-align: center">
 					<p:menuButton value="Actions">
-						<p:menuitem value="Modify" outcome="finalHotel">
+						<p:menuitem value="Modify" outcome="finalProduct">
 							<f:param name="act" value="edit" />
 							<f:param name="type" value="HOTEL" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
@@ -224,14 +213,13 @@
 
 			</p:dataTable>
 
-			<p:spacer height="50px" />
+			<p:spacer height="30px" />
 
+			<h3>Excursions</h3>
 			<p:dataTable var="excursion" value="#{finalPackageBean.excursions}"
 				rendered="#{not empty finalPackageBean.excursions}">
 
-				<f:facet name="header">Excursions</f:facet>
-
-				<p:column headerText="ID">
+				<p:column headerText="ID" width="35" style="text-align: center">
 					<h:outputText value="#{excursion.id}" />
 				</p:column>
 				<p:column headerText="Name">
@@ -246,13 +234,13 @@
 					<h:outputText value="n.f." />
 				</p:column>
 
-				<p:column headerText="Price">
+				<p:column headerText="Price" width="100" style="text-align: center">
 					<h:outputText value="#{excursion.price}" />
 				</p:column>
 
-				<p:column>
+				<p:column width="150" style="text-align: center">
 					<p:menuButton value="Actions">
-						<p:menuitem value="Finalize" outcome="finalExcursion">
+						<p:menuitem value="Finalize" outcome="finalProduct">
 							<f:param name="act" value="create" />
 							<f:param name="type" value="EXCURSION" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
@@ -270,11 +258,7 @@
 				value="#{finalPackageBean.finalExcursions}"
 				rendered="#{not empty finalPackageBean.finalExcursions}">
 
-				<f:facet name="header"
-					rendered="#{empty finalPackageBean.excursions}">Excursions</f:facet>
-
-
-				<p:column headerText="ID">
+				<p:column headerText="ID" width="35" style="text-align: center">
 					<h:outputText value="#{finalExcursion.id}" />
 				</p:column>
 				<p:column headerText="Name">
@@ -291,13 +275,13 @@
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Price">
+				<p:column headerText="Price" width="100" style="text-align: center">
 					<h:outputText value="#{finalExcursion.price}" />
 				</p:column>
 
-				<p:column>
+				<p:column width="150" style="text-align: center">
 					<p:menuButton value="Actions">
-						<p:menuitem value="Modify" outcome="finalExcursion">
+						<p:menuitem value="Modify" outcome="finalProduct">
 							<f:param name="act" value="edit" />
 							<f:param name="type" value="EXCURSION" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
@@ -309,7 +293,7 @@
 				</p:column>
 
 			</p:dataTable>
-		</h:form>
+		</o:form>
 
 	</ui:define>
 </ui:composition>
