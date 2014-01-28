@@ -6,16 +6,16 @@
 	xmlns:p="http://primefaces.org/ui">
 
 	<f:metadata>
-		<f:viewParam name="act" value="#{finalHotelBean.act}" required="true" />
-		<f:viewParam name="fPkgID" value="#{finalHotelBean.fPkgID}"
+		<f:viewParam name="act" value="#{finalProductBean.act}" required="true" />
+		<f:viewParam name="fPkgID" value="#{finalProductBean.fPkgID}"
 			required="true" />
-		<f:viewParam name="fPrID" value="#{finalHotelBean.fPrID}" />
+		<f:viewParam name="fPrID" value="#{finalProductBean.fPrID}" />
 	</f:metadata>
 
 	<ui:define name="page-title">Edit product</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:menuitem value="Package" outcome="showFinalPackage">
+		<p:menuitem value="Package" outcome="finalPackage">
 			<f:param name="fPkgID" value="#{param['fPkgID']}" />
 		</p:menuitem>
 		<p:menuitem value="Hotel" />
@@ -35,7 +35,7 @@
 						</p:column>
 						<p:column colspan="2">
 							<h:outputText id="name"
-								value="#{finalHotelBean.finalProduct.name}" />
+								value="#{finalProductBean.finalProduct.name}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -44,7 +44,7 @@
 						</p:column>
 						<p:column colspan="2">
 							<h:outputText id="location"
-								value="#{finalHotelBean.finalProduct.location}" />
+								value="#{finalProductBean.finalProduct.location}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -53,7 +53,7 @@
 						</p:column>
 						<p:column colspan="2">
 							<h:outputText id="rating"
-								value="#{finalHotelBean.finalProduct.rating}" />
+								value="#{finalProductBean.finalProduct.rating}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -62,7 +62,7 @@
 						</p:column>
 						<p:column colspan="2">
 							<h:outputText id="description"
-								value="#{finalHotelBean.finalProduct.description}" />
+								value="#{finalProductBean.finalProduct.description}" />
 						</p:column>
 					</p:row>
 					<p:row>
@@ -76,7 +76,7 @@
 						</p:column>
 						<p:column>
 							<p:calendar id="checkIn"
-								value="#{finalHotelBean.finalProduct.checkIn}" />
+								value="#{finalProductBean.finalProduct.checkIn}" />
 						</p:column>
 						<p:column>
 							<p:message for="checkIn" />
@@ -88,7 +88,7 @@
 						</p:column>
 						<p:column>
 							<p:calendar id="checkOut"
-								value="#{finalHotelBean.finalProduct.checkOut}" />
+								value="#{finalProductBean.finalProduct.checkOut}" />
 						</p:column>
 						<p:column>
 							<p:message for="checkOut" />
@@ -99,7 +99,7 @@
 				<p:spacer height="40px" width="5px" />
 
 				<p:commandButton value="Update" update="hotelGrid"
-					action="#{finalHotelBean.update()}"
+					action="#{finalProductBean.update()}"
 					rendered="#{param['act'] == 'edit'}">
 					<f:param name="act" value="#{param['act']}" />
 					<f:param name="type" value="#{param['type']}" />
@@ -107,7 +107,7 @@
 				</p:commandButton>
 
 				<p:commandButton value="Finalize" update="hotelGrid"
-					action="#{finalHotelBean.add()}"
+					action="#{finalProductBean.add()}"
 					rendered="#{param['act'] == 'create'}">
 					<f:param name="act" value="#{param['act']}" />
 					<f:param name="type" value="#{param['type']}" />

@@ -21,7 +21,8 @@
 
 				<p:column>
 					<p:menuButton value="Actions">
-						<p:menuitem value="Customize" outcome="showFinalPackage">
+						<p:menuitem value="Customize" outcome="finalPackage">
+							<f:param name="act" value="show" />
 							<f:param name="fPkgID" value="#{finalPkg.id}" />
 						</p:menuitem>
 						<p:menuitem value="Remove"
