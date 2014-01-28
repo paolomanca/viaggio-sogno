@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import dto.FinalPackageDTO;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -133,6 +134,28 @@ public class FinalPackage implements Serializable {
 
 	public void setIdfinalPackageRelative(int idfinalPackageRelative) {
 		this.idfinalPackageRelative = idfinalPackageRelative;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idfinalPackage;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof FinalPackage))
+			return false;
+		FinalPackage other = (FinalPackage) obj;
+		if (idfinalPackage != other.idfinalPackage)
+			return false;
+		return true;
 	}
 
 }

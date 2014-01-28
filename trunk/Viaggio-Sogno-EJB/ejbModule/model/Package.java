@@ -112,4 +112,27 @@ public class Package implements Serializable {
 		return packageHasProduct;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idpackage;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof Package))
+			return false;
+		Package other = (Package) obj;
+		if (idpackage != other.idpackage)
+			return false;
+		return true;
+	}
+
+	
 }

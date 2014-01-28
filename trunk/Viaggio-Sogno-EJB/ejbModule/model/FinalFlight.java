@@ -91,4 +91,26 @@ public class FinalFlight implements Serializable {
 		this.idfinalFlightRelative = idfinalFlightRelative;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idfinalFlight;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof FinalFlight))
+			return false;
+		FinalFlight other = (FinalFlight) obj;
+		if (idfinalFlight != other.idfinalFlight)
+			return false;
+		return true;
+	}
+
 }

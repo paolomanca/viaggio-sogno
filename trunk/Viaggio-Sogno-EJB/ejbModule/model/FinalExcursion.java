@@ -91,4 +91,26 @@ public class FinalExcursion implements Serializable {
 		this.idfinalExcursionRelative = idfinalExcursionRelative;
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + idfinalExcursion;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof FinalExcursion))
+			return false;
+		FinalExcursion other = (FinalExcursion) obj;
+		if (idfinalExcursion != other.idfinalExcursion)
+			return false;
+		return true;
+	}
+
 }

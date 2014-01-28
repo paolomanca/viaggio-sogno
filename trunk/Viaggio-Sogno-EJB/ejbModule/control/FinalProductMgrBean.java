@@ -7,6 +7,7 @@ import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import model.FinalExcursion;
@@ -157,6 +158,42 @@ public class FinalProductMgrBean implements FinalProductMgr {
 	public FinalExcursion excursionFromRelativeID(int id) {
 		return em.createQuery("SELECT t FROM FinalExcursion t WHERE t.idfinalExcursionRelative = :id AND t.finalPackage.user = :user ", FinalExcursion.class)
 				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
+	}
+
+	/* oh my */
+	@Override
+	public FinalProductDTO getByID(int id) {
+		FinalFlight possibleFlight;
+		FinalHotel possibleHotel;
+		FinalExcursion possibleExcursion;
+		
+		try{
+			possibleFlight = flightFromRelativeID(id);
+		} catch (NoResultException e){
+			possibleFlight = null;
+		}
+		try{
+			possibleHotel = hotelFromRelativeID(id);
+		} catch (NoResultException e){
+			possibleHotel = null;
+		}
+		try{
+			possibleExcursion = excursionFromRelativeID(id);
+		} catch (NoResultException e){
+			possibleExcursion = null;
+		}
+		
+		if(possibleFlight!=null){
+			return buildFlightDTO(possibleFlight);
+		} else
+		if(possibleHotel!=null){
+			return buildHotelDTO(possibleHotel);
+		} else
+		if(possibleExcursion!=null){
+			return buildExcursionDTO(possibleExcursion);
+		} else {
+			throw new IllegalArgumentException("No final products with ID: "+id);
+		}
 	}
 
 }
