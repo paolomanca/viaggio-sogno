@@ -151,6 +151,6 @@ public class UserMgrBean implements UserMgr {
 
 	@Override
 	public boolean isRole(String role) {
-		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+		return context.isCallerInRole(role);
 	}
 }
