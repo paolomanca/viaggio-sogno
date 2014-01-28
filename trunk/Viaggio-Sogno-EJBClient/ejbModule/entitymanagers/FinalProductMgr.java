@@ -13,6 +13,8 @@ public interface FinalProductMgr {
 
 	public void remove(FinalProductDTO fP);
 	
+	public FinalProductDTO getByID(int id);
+	
 	public FinalProductDTO getByID(int id, String type);
 
 }
