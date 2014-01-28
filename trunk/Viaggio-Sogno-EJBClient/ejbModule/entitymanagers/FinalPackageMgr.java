@@ -6,6 +6,7 @@ import javax.ejb.Local;
 
 import dto.FinalPackageDTO;
 import dto.FinalProductDTO;
+import dto.ProductDTO;
 import dto.UserDTO;
 
 @Local
@@ -18,6 +19,10 @@ public interface FinalPackageMgr {
 	public void remove(FinalPackageDTO finalPkg);
 	
 	public void finalize(FinalProductDTO finalProduct);
+	
+	public void swap( ProductDTO oldProduct, ProductDTO newProduct);
+	
+	public void swap( FinalProductDTO oldProduct, ProductDTO newProduct);
 	
 	public FinalPackageDTO getByID(int ID);
 	
