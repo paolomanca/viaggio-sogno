@@ -3,23 +3,43 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 
 	<ui:define name="page-title">Home</ui:define>
 
 	<ui:define name="content">
 
-		<h:form id="ownFinalPackages">
-			<p:dataTable var="finalPkg" value="#{finalPackageBean.own}">
+		<o:form id="showcasedPackages">
 
-				<p:column headerText="ID">
+			<p:carousel value="#{packageBean.showcased}" var="package"
+				easing="easeOutBounce">
+				<h:panelGrid columns="1" cellpadding="5">
+				
+					<h:outputText value="#{package.name}" />
+					
+					<p:commandButton value="View package" outcome="package">
+						<f:param name="action" var="show" />
+						<f:param name="pkgID" var="#{package.id}" />
+					</p:commandButton>
+
+				</h:panelGrid>
+			</p:carousel>
+
+		</o:form>
+		
+		<p:spacer height="30px" />
+
+		<o:form id="ownFinalPackages">
+			<p:dataTable var="finalPkg" value="#{finalPackageBean.own}" styleClass="TD-id-action">
+
+				<p:column headerText="ID" width="35" style="text-align: center">
 					<h:outputText value="#{finalPkg.id}" />
 				</p:column>
 				<p:column headerText="Name">
 					<h:outputText value="#{finalPkg.name}" />
 				</p:column>
 
-				<p:column>
+				<p:column width="150" style="text-align: center">
 					<p:menuButton value="Actions">
 						<p:menuitem value="Customize" outcome="finalPackage">
 							<f:param name="act" value="show" />
@@ -32,7 +52,7 @@
 				</p:column>
 
 			</p:dataTable>
-		</h:form>
+		</o:form>
 
 	</ui:define>
 </ui:composition>

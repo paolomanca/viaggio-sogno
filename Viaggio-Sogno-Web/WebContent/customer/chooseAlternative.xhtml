@@ -8,7 +8,8 @@
 	<ui:define name="page-title">Choose Alternative product</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:menuitem value="Package" outcome="showFinalPackage">
+		<p:menuitem value="Package" outcome="finalPackage">
+			<f:param name="act" value="show" />
 			<f:param name="fPkgID" value="#{param['fPkgID']}" />
 		</p:menuitem>
 		<p:menuitem value="Choose Alternative" />
@@ -19,9 +20,9 @@
 		<h:form id="alternativesForm">
 			<p:panel>
 
-				<p:dataTable id="alternativeFlights" var="flight"
-					value="#{finalPackageBean.getOptionsFlight}" rowKey="#{flight.id}"
-					selection="selected" selectionMode="single">
+				<p:dataTable id="alternativeFlights"
+					value="#{finalPackageBean.optionsFlight}" var="flight" rowKey="#{flight.id}"
+					selection="#{finalPackageBean.selectedProduct}" selectionMode="single">
 
 					<f:facet name="header">Flights</f:facet>
 
@@ -44,9 +45,10 @@
 					<p:column headerText="Price">
 						<h:outputText value="#{flight.price}" />
 					</p:column>
-					
+
 					<f:facet name="footer">
-						<p:commandButton value="Swap" action="#{finalPackageBean.swap(selected)}" />
+						<p:commandButton value="Swap"
+							action="#{finalPackageBean.swap()}" />
 					</f:facet>
 				</p:dataTable>
 

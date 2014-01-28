@@ -15,14 +15,11 @@
     display: none;
 }
 
-.ui-datatable td:first-child, .ui-datatable th:first-child  {
-	width: 50px;
-}
-
-.ui-datatable td {
-	width: 15%;
-}
-
 .no-border-grid tr, .no-border-grid td {
 	border: 0;
+}
+
+#showcasedPackages .ui-carousel {
+	margin:0 auto;
+	display: block;
 }
