@@ -231,7 +231,31 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	public void finalize(FinalProductDTO finalProduct) {
-		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+		FinalPackage current = fromRelativeID(finalProduct.getFinalPackage().getId());
+		Product finalizedPrd = em.find(Product.class, finalProduct.getId());
+		
+		if(finalProduct instanceof FinalFlightDTO){
+			FinalFlight fF = new FinalFlight((FinalFlightDTO) finalProduct);
+			fF.setIdfinalFlightRelative(usrMgr.getPrincipalUser().nextID());
+			fF.setFinalPackage(current);
+			fF.setProduct(finalizedPrd);
+			current.getFinalFlights().add(fF);
+		} else if(finalProduct instanceof FinalHotelDTO){
+			FinalHotel fH = (FinalHotel) finalProduct;
+			fH.setIdfinalHotelRelative(usrMgr.getPrincipalUser().nextID());
+			fH.setFinalPackage(current);
+			fH.setProduct(finalizedPrd);
+			current.getFinalHotels().add(fH);			
+		} else if(finalProduct instanceof FinalExcursionDTO){
+			FinalExcursion fE = (FinalExcursion) finalProduct;
+			fE.setIdfinalExcursionRelative(usrMgr.getPrincipalUser().nextID());
+			fE.setFinalPackage(current);
+			fE.setProduct(finalizedPrd);
+			current.getFinalExcursions().add(fE);			
+		}
+		
+		current.getProducts().remove(finalizedPrd);
+		em.merge(current);
 	}
 
 }

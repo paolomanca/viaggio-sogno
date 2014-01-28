@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -43,7 +42,7 @@ public class IdPool {
 		}
 	}
 	
-	public void free(int ID){
+	public synchronized void free(int ID){
 		pool.add(ID);
 	}
 
