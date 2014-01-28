@@ -20,9 +20,9 @@ public interface FinalPackageMgr {
 	
 	public void finalize(FinalProductDTO finalProduct);
 	
-	public void swap( ProductDTO oldProduct, ProductDTO newProduct);
+	public void swap(FinalPackageDTO finalPackage, ProductDTO oldProduct, ProductDTO newProduct);
 	
-	public void swap( FinalProductDTO oldProduct, ProductDTO newProduct);
+	public void swap(FinalProductDTO oldProduct, ProductDTO newProduct);
 	
 	public FinalPackageDTO getByID(int ID);
 	

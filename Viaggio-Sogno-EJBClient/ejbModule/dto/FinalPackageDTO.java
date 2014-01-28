@@ -5,16 +5,16 @@ import java.util.List;
 import org.hibernate.validator.constraints.NotEmpty;
 
 public class FinalPackageDTO {
-	
-	private int id;	
-    	
+
+	private int id;
+
 	@NotEmpty
 	private PackageDTO originalPackage;
-	
+
 	private List<ProductDTO> flights;
 	private List<ProductDTO> hotels;
 	private List<ProductDTO> excursions;
-	
+
 	private List<FinalFlightDTO> finalFlights;
 	private List<FinalHotelDTO> finalHotels;
 	private List<FinalExcursionDTO> finalExcursions;
@@ -26,10 +26,6 @@ public class FinalPackageDTO {
 	public void setFlights(List<ProductDTO> flights) {
 		this.flights = flights;
 	}
-	
-	public void removeFlight(ProductDTO flight) {
-		this.flights.remove(flight);
-	}
 
 	public List<ProductDTO> getHotels() {
 		return hotels;
@@ -37,10 +33,6 @@ public class FinalPackageDTO {
 
 	public void setHotels(List<ProductDTO> hotels) {
 		this.hotels = hotels;
-	}
-	
-	public void removeHotel(ProductDTO hotel) {
-		this.hotels.remove(hotel);
 	}
 
 	public List<ProductDTO> getExcursions() {
@@ -50,10 +42,7 @@ public class FinalPackageDTO {
 	public void setExcursions(List<ProductDTO> excursions) {
 		this.excursions = excursions;
 	}
-	
-	public void removeExcursion(ProductDTO excursion) {
-		this.excursions.remove(excursion);
-	}
+
 
 	public List<FinalFlightDTO> getFinalFlights() {
 		return finalFlights;
@@ -61,10 +50,6 @@ public class FinalPackageDTO {
 
 	public void setFinalFlights(List<FinalFlightDTO> finalFlights) {
 		this.finalFlights = finalFlights;
-	}
-	
-	public void removeFinalProduct(FinalFlightDTO flight) {
-		this.finalFlights.remove(flight);
 	}
 
 	public List<FinalHotelDTO> getFinalHotels() {
@@ -74,10 +59,6 @@ public class FinalPackageDTO {
 	public void setFinalHotels(List<FinalHotelDTO> finalHotels) {
 		this.finalHotels = finalHotels;
 	}
-	
-	public void removeFinalProduct(FinalHotelDTO hotel) {
-		this.finalHotels.remove(hotel);
-	}
 
 	public List<FinalExcursionDTO> getFinalExcursions() {
 		return finalExcursions;
@@ -86,11 +67,7 @@ public class FinalPackageDTO {
 	public void setFinalExcursions(List<FinalExcursionDTO> finalExcursions) {
 		this.finalExcursions = finalExcursions;
 	}
-	
-	public void removeFinalProduct(FinalExcursionDTO excursion) {
-		this.finalExcursions.remove(excursion);
-	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -107,8 +84,38 @@ public class FinalPackageDTO {
 		this.originalPackage = originalPackage;
 	}
 
-	public String getName(){
+	public String getName() {
 		return originalPackage.getName();
+	}
+
+	public void removeProduct(ProductDTO product) {
+		switch (product.getType()) {
+		case "FLIGHT":
+			flights.remove(product);
+			break;
+		case "HOTEL":
+			hotels.remove(product);
+			break;
+		case "EXCURSION":
+			excursions.remove(product);
+			break;
+		}
+
+	}
+	
+	public void removeFinalProduct(FinalProductDTO finalProduct) {
+
+		switch (finalProduct.getProduct().getType()) {
+		case "FLIGHT":
+			finalFlights.remove(finalProduct);
+			break;
+		case "HOTEL":
+			finalHotels.remove(finalProduct);
+			break;
+		case "EXCURSION":
+			finalExcursions.remove(finalProduct);
+			break;
+		}
 	}
 
 }

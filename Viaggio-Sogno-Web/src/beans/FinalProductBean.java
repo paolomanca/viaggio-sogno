@@ -48,9 +48,7 @@ public class FinalProductBean {
 	private void init() {
 
 		if (act != null && type != null) {
-			if (!act.equalsIgnoreCase("create")) {
-				finalProduct = fPrMgr.getByID(fPrID, type.toUpperCase());
-			} else {
+			if (act.equalsIgnoreCase("create")) {
 				
 				switch (type) {
 				case "FLIGHT":
@@ -63,7 +61,11 @@ public class FinalProductBean {
 					finalProduct = new FinalExcursionDTO();
 					break;
 				}
+				
+				finalProduct.setProduct(prMgr.getByID(prID));
 
+			} else {
+				finalProduct = fPrMgr.getByID(fPrID, type.toUpperCase());
 			}
 		}
 

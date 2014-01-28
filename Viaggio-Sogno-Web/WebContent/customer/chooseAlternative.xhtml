@@ -1,0 +1,57 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="page-title">Choose Alternative product</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:menuitem value="Package" outcome="showFinalPackage">
+			<f:param name="fPkgID" value="#{param['fPkgID']}" />
+		</p:menuitem>
+		<p:menuitem value="Choose Alternative" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<h:form id="alternativesForm">
+			<p:panel>
+
+				<p:dataTable id="alternativeFlights" var="flight"
+					value="#{finalPackageBean.getOptionsFlight}" rowKey="#{flight.id}"
+					selection="selected" selectionMode="single">
+
+					<f:facet name="header">Flights</f:facet>
+
+					<p:column headerText="ID">
+						<h:outputText value="#{flight.id}" />
+					</p:column>
+
+					<p:column headerText="From">
+						<h:outputText value="#{flight.depAirport}" />
+					</p:column>
+
+					<p:column headerText="To">
+						<h:outputText value="#{flight.arrAirport}" />
+					</p:column>
+
+					<p:column headerText="Length">
+						<h:outputText value="#{flight.flightLength}" />
+					</p:column>
+
+					<p:column headerText="Price">
+						<h:outputText value="#{flight.price}" />
+					</p:column>
+					
+					<f:facet name="footer">
+						<p:commandButton value="Swap" action="#{finalPackageBean.swap(selected)}" />
+					</f:facet>
+				</p:dataTable>
+
+			</p:panel>
+		</h:form>
+
+	</ui:define>
+</ui:composition>

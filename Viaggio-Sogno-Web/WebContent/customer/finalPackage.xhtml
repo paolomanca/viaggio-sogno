@@ -13,13 +13,15 @@
 
 	<ui:define name="content">
 
-	<f:metadata>
-		<f:viewParam name="fPkgID" value="#{finalPackageBean.fPkgID}" required="true" />
-	</f:metadata>
-	
+		<f:metadata>
+			<f:viewParam name="fPkgID" value="#{finalPackageBean.fPkgID}"
+				required="true" />
+		</f:metadata>
+
 		<h:form id="customizePack">
 
-			<p:dataTable var="flight" value="#{finalPackageBean.flights}">
+			<p:dataTable var="flight" value="#{finalPackageBean.flights}"
+				rendered="#{not empty finalPackageBean.flights}">
 
 				<f:facet name="header">Flights</f:facet>
 
@@ -33,6 +35,10 @@
 
 				<p:column headerText="To">
 					<h:outputText value="#{flight.arrAirport}" />
+				</p:column>
+
+				<p:column headerText="Date">
+					<h:outputText value="n.f." />
 				</p:column>
 
 				<p:column headerText="Length">
@@ -51,17 +57,21 @@
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
 							<f:param name="prID" value="#{flight.id}" />
 						</p:menuitem>
-						<p:menuitem value="Remove"
-							action="#{finalPackage.removeFlight(flight)}" />
+						<p:menuitem value="Swap" outcome="chooseAlternative">
+							<f:param name="act" value="swap" />
+							<f:param name="fPkgID" value="#{param['fPkgID']}" />
+							<f:param name="prID" value="#{flight.id}" />
+						</p:menuitem>
 					</p:menuButton>
 				</p:column>
 
 			</p:dataTable>
 
 			<p:dataTable var="finalFlight"
-				value="#{finalPackageBean.finalFlights}">
+				value="#{finalPackageBean.finalFlights}"
+				rendered="#{not empty finalPackageBean.finalFlights}">
 
-				<f:facet name="header">Final Flights</f:facet>
+				<f:facet name="header" rendered="#{empty finalPackageBean.flights}">Flights</f:facet>
 
 				<p:column headerText="ID">
 					<h:outputText value="#{finalFlight.id}" />
@@ -76,7 +86,9 @@
 				</p:column>
 
 				<p:column headerText="Date">
-					<h:outputText value="#{finalFlight.departure}" />
+					<h:outputText value="#{finalFlight.departure}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Length">
@@ -95,8 +107,11 @@
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
 							<f:param name="fPrID" value="#{finalFlight.id}" />
 						</p:menuitem>
-						<p:menuitem value="Remove"
-							action="#{finalPackageBean.removeFinalProduct(finalFlight)}" />
+						<p:menuitem value="Swap" outcome="chooseAlternative">
+							<f:param name="act" value="swap" />
+							<f:param name="fPkgID" value="#{param['fPkgID']}" />
+							<f:param name="fPrID" value="#{finalFlight.id}" />
+						</p:menuitem>
 					</p:menuButton>
 				</p:column>
 
@@ -104,8 +119,8 @@
 
 			<p:spacer height="50px" />
 
-			<p:dataTable id="hotels" var="hotel"
-				value="#{finalPackageBean.hotels}">
+			<p:dataTable var="hotel" value="#{finalPackageBean.hotels}"
+				rendered="#{not empty finalPackageBean.hotels}">
 
 				<f:facet name="header">Hotels</f:facet>
 
@@ -125,6 +140,14 @@
 					<h:outputText value="#{hotel.location}" />
 				</p:column>
 
+				<p:column headerText="Check in">
+					<h:outputText value="n.f." />
+				</p:column>
+
+				<p:column headerText="Check out">
+					<h:outputText value="n.f." />
+				</p:column>
+
 				<p:column headerText="Price">
 					<h:outputText value="#{hotel.price}" />
 				</p:column>
@@ -137,18 +160,20 @@
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
 							<f:param name="prID" value="#{hotel.id}" />
 						</p:menuitem>
-						<p:menuitem value="Remove"
-							action="#{finalPackageBean.removeHotel(hotel)}" update="hotels">
+						<p:menuitem value="Swap" outcome="chooseAlternative">
+							<f:param name="act" value="swap" />
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
-							</p:menuitem>
+							<f:param name="prID" value="#{hotel.id}" />
+						</p:menuitem>
 					</p:menuButton>
 				</p:column>
 
 			</p:dataTable>
 
-			<p:dataTable var="finalHotel" value="#{finalPackageBean.finalHotels}">
+			<p:dataTable var="finalHotel" value="#{finalPackageBean.finalHotels}"
+				rendered="#{not empty finalPackageBean.finalHotels}">
 
-				<f:facet name="header">Final Hotels</f:facet>
+				<f:facet name="header" rendered="#{empty finalPackageBean.hotels}">Hotels</f:facet>
 
 				<p:column headerText="ID">
 					<h:outputText value="#{finalHotel.id}" />
@@ -166,11 +191,15 @@
 				</p:column>
 
 				<p:column headerText="Check in">
-					<h:outputText value="#{finalHotel.checkIn}" />
+					<h:outputText value="#{finalHotel.checkIn}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Check out">
-					<h:outputText value="#{finalHotel.checkOut}" />
+					<h:outputText value="#{finalHotel.checkOut}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Price">
@@ -185,8 +214,11 @@
 							<f:param name="fPkgID" value="#{param['fPkgID']}" />
 							<f:param name="fPrID" value="#{finalHotel.id}" />
 						</p:menuitem>
-						<p:menuitem value="Remove"
-							action="#{finalPackageBean.removeFinalProduct(finalHotel)}" />
+						<p:menuitem value="Swap" outcome="chooseAlternative">
+							<f:param name="act" value="swap" />
+							<f:param name="fPkgID" value="#{param['fPkgID']}" />
+							<f:param name="fPrID" value="#{finalHotel.id}" />
+						</p:menuitem>
 					</p:menuButton>
 				</p:column>
 
@@ -194,7 +226,8 @@
 
 			<p:spacer height="50px" />
 
-			<p:dataTable var="excursion" value="#{finalPackageBean.excursions}">
+			<p:dataTable var="excursion" value="#{finalPackageBean.excursions}"
+				rendered="#{not empty finalPackageBean.excursions}">
 
 				<f:facet name="header">Excursions</f:facet>
 
@@ -207,6 +240,10 @@
 
 				<p:column headerText="Location">
 					<h:outputText value="#{excursion.location}" />
+				</p:column>
+
+				<p:column headerText="Date">
+					<h:outputText value="n.f." />
 				</p:column>
 
 				<p:column headerText="Price">
@@ -223,16 +260,18 @@
 
 						</p:menuitem>
 						<p:menuitem value="Remove"
-							action="#{finalPackageBean.removeFinalProduct(finalExcursion)}" />
+							action="#{finalPackageBean.removeProduct(excursion)}" />
 					</p:menuButton>
 				</p:column>
 
 			</p:dataTable>
 
 			<p:dataTable var="finalExcursion"
-				value="#{finalPackageBean.finalExcursions}">
+				value="#{finalPackageBean.finalExcursions}"
+				rendered="#{not empty finalPackageBean.finalExcursions}">
 
-				<f:facet name="header">Final Excursions</f:facet>
+				<f:facet name="header"
+					rendered="#{empty finalPackageBean.excursions}">Excursions</f:facet>
 
 
 				<p:column headerText="ID">
@@ -247,7 +286,9 @@
 				</p:column>
 
 				<p:column headerText="Date">
-					<h:outputText value="#{finalExcursion.date}" />
+					<h:outputText value="#{finalExcursion.date}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Price">
