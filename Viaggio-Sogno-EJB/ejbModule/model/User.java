@@ -166,4 +166,26 @@ public class User implements Serializable {
 		idPool.free(toBeFreed);
 	}
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + iduser;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (!(obj instanceof User))
+			return false;
+		User other = (User) obj;
+		if (iduser != other.iduser)
+			return false;
+		return true;
+	}
+
 }

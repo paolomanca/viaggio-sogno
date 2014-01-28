@@ -241,21 +241,57 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 			fF.setProduct(finalizedPrd);
 			current.getFinalFlights().add(fF);
 		} else if(finalProduct instanceof FinalHotelDTO){
-			FinalHotel fH = (FinalHotel) finalProduct;
+			FinalHotel fH = new FinalHotel((FinalHotelDTO) finalProduct);
 			fH.setIdfinalHotelRelative(usrMgr.getPrincipalUser().nextID());
 			fH.setFinalPackage(current);
 			fH.setProduct(finalizedPrd);
 			current.getFinalHotels().add(fH);			
 		} else if(finalProduct instanceof FinalExcursionDTO){
-			FinalExcursion fE = (FinalExcursion) finalProduct;
+			FinalExcursion fE = new FinalExcursion((FinalExcursionDTO) finalProduct);
 			fE.setIdfinalExcursionRelative(usrMgr.getPrincipalUser().nextID());
 			fE.setFinalPackage(current);
 			fE.setProduct(finalizedPrd);
-			current.getFinalExcursions().add(fE);			
+			current.getFinalExcursions().add(fE);
 		}
 		
 		current.getProducts().remove(finalizedPrd);
 		em.merge(current);
+	}
+
+	@Override
+	public void swap(FinalPackageDTO toChange, ProductDTO oldProduct,
+			ProductDTO newProduct) {
+		
+		FinalPackage toSwap = fromRelativeID(toChange.getId());
+		Product oldP = em.find(Product.class, oldProduct);
+		Product newP = em.find(Product.class, newProduct);
+		
+		toSwap.getProducts().add(newP);
+		toSwap.getProducts().remove(oldP);
+		
+		em.merge(toSwap);
+	}
+
+	@Override
+	public void swap(FinalProductDTO oldProduct, ProductDTO newProduct) {
+		FinalPackage toSwap = fromRelativeID(oldProduct.getFinalPackage().getId());
+		Product newP = em.find(Product.class, newProduct);
+		toSwap.getProducts().add(newP);			
+		
+		if(oldProduct instanceof FinalFlightDTO){
+			FinalFlight fF = new FinalFlight((FinalFlightDTO) oldProduct);
+			toSwap.getFinalFlights().remove(fF);
+		} else if(oldProduct instanceof FinalHotelDTO){
+			FinalHotel fH = new FinalHotel((FinalHotelDTO) oldProduct);
+			toSwap.getFinalHotels().remove(fH);
+		} else if(oldProduct instanceof FinalExcursionDTO){
+			FinalExcursion fE = new FinalExcursion((FinalExcursionDTO) oldProduct);
+			toSwap.getFinalExcursions().remove(fE);
+		}
+		
+		usrMgr.getPrincipalUser().freeID(oldProduct.getId());
+		em.merge(toSwap);
+		
 	}
 
 }
