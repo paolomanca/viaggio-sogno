@@ -8,7 +8,7 @@
 	<ui:define name="page-title">Customize package</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:menuitem value="Package customization" outcome="index" />
+		<p:menuitem value="Package customization" disabled="true" />
 	</ui:define>
 
 	<ui:define name="content">
@@ -293,6 +293,13 @@
 				</p:column>
 
 			</p:dataTable>
+			
+			<p:commandButton value="Add Excursion" outcome="chooseAlternative">
+				<f:param name="act" value="add" />
+				<f:param name="type" value="EXCURSION" />
+				<f:param name="fPkgID" value="#{param['fPkgID']}" />
+			</p:commandButton>
+			
 		</o:form>
 
 	</ui:define>

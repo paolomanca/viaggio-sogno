@@ -24,7 +24,8 @@
 					value="#{finalPackageBean.optionsFlight}" var="flight"
 					rowKey="#{flight.id}"
 					selection="#{finalPackageBean.selectedProduct}"
-					selectionMode="single" rendered="#{param['type'] == FLIGHT}">
+					selectionMode="single"
+					rendered="#{param['act'] == 'swap' and param['type'] == 'FLIGHT'}">
 
 					<f:facet name="header">Flights</f:facet>
 
@@ -57,7 +58,8 @@
 					value="#{finalPackageBean.optionsHotel}" var="hotel"
 					rowKey="#{hotel.id}"
 					selection="#{finalPackageBean.selectedProduct}"
-					selectionMode="single" rendered="#{param['type'] == HOTEL}">
+					selectionMode="single"
+					rendered="#{param['act'] == 'swap' and param['type'] == 'HOTEL'}">
 
 					<p:column headerText="ID" width="35" style="text-align: center">
 						<h:outputText value="#{hotel.id}" />
@@ -81,6 +83,34 @@
 
 					<f:facet name="footer">
 						<p:commandButton value="Swap" action="#{finalPackageBean.swap()}" />
+					</f:facet>
+
+				</p:dataTable>
+
+				<p:dataTable id="alternativeExcursions"
+					value="#{finalPackageBean.optionsExcursion}" var="excursion"
+					rowKey="#{excursion.id}"
+					selection="#{finalPackageBean.selectedProduct}"
+					selectionMode="single"
+					rendered="#{param['act'] == 'add' and param['type'] == 'EXCURSION'}">
+
+					<p:column headerText="ID" width="35" style="text-align: center">
+						<h:outputText value="#{excursion.id}" />
+					</p:column>
+					<p:column headerText="Name">
+						<h:outputText value="#{excursion.name}" />
+					</p:column>
+
+					<p:column headerText="Location">
+						<h:outputText value="#{excursion.location}" />
+					</p:column>
+
+					<p:column headerText="Price" width="100" style="text-align: center">
+						<h:outputText value="#{excursion.price}" />
+					</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton value="Add" action="#{finalPackageBean.add()}" />
 					</f:facet>
 
 				</p:dataTable>
