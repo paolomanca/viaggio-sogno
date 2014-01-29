@@ -47,6 +47,7 @@ public class FinalHotelDTO implements FinalProductDTO {
 	}
 
 	public void setFinalPackage(FinalPackageDTO finalPackage) {
+		this.finalPackage = finalPackage;
 	}
 
 	public FinalPackageDTO getFinalPackage() {
@@ -71,5 +72,10 @@ public class FinalHotelDTO implements FinalProductDTO {
 
 	public int getRating() {
 		return product.getRating();
+	}
+
+	@Override
+	public String getType() {
+		return HOTEL;
 	}
 }
