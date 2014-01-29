@@ -19,6 +19,7 @@ import model.Product;
 import model.User;
 import dto.FinalPackageDTO;
 import dto.FinalProductDTO;
+import dto.PackageDTO;
 import dto.ProductDTO;
 import dto.UserDTO;
 import entitymanagers.FinalPackageMgr;
@@ -44,29 +45,6 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@EJB
 	private FinalProductMgrBean fnPrdMgr;
-	
-	@Override
-	@RolesAllowed({Group._CUSTOMER})
-	public void add(FinalPackageDTO finalPkgDTO) {
-		FinalPackage newFPkg = new FinalPackage(finalPkgDTO);
-		
-		newFPkg.setProducts(new LinkedList<Product>());			
-		newFPkg.setFinalProducts(new LinkedList<FinalProduct>());
-		
-		for(ProductDTO pDTO : finalPkgDTO.getProducts()){
-			newFPkg.getProducts().add(em.find(Product.class, pDTO.getId()));
-		}
-		
-		for(FinalProductDTO fPDTO : finalPkgDTO.getFinalProducts()){
-			newFPkg.getFinalProducts().add(fnPrdMgr.buildFromDTO(fPDTO));
-		}
-		
-		User current = usrMgr.getPrincipalUser();
-		
-		newFPkg.setUser(current);
-		newFPkg.setIdfinalPackageRelative(current.nextID());
-		em.persist(newFPkg);
-	}
 
 	/*TODO free final products ids if removed*/
 	@Override
@@ -160,7 +138,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
-	public void finalize(FinalPackageDTO container, FinalProductDTO finalProduct) {
+	public void finalizeProduct(FinalPackageDTO container, FinalProductDTO finalProduct) {
 		FinalPackage current = fromRelativeID(container.getId());
 		Product finalizedPrd = em.find(Product.class, finalProduct.getProduct().getId());
 		
@@ -195,6 +173,11 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		toSwap.getFinalProducts().remove(fnPrdMgr.fromRelativeID(oldProduct.getId(), oldProduct.getType()));		
 		usrMgr.getPrincipalUser().freeID(oldProduct.getId());
 		em.merge(toSwap);		
+	}
+
+	@Override
+	public FinalPackageDTO finalizePackage(PackageDTO originalPkg) {
+		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
 	}
 
 }
