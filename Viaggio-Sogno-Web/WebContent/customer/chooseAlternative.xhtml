@@ -3,7 +3,7 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 
 	<ui:define name="page-title">Choose Alternative product</ui:define>
 
@@ -12,21 +12,23 @@
 			<f:param name="act" value="show" />
 			<f:param name="fPkgID" value="#{param['fPkgID']}" />
 		</p:menuitem>
-		<p:menuitem value="Choose Alternative" />
+		<p:menuitem value="Choose Alternative" disabled="true" />
 	</ui:define>
 
 	<ui:define name="content">
 
-		<h:form id="alternativesForm">
+		<o:form id="alternativesForm" includeRequestParams="true">
 			<p:panel>
 
 				<p:dataTable id="alternativeFlights"
-					value="#{finalPackageBean.optionsFlight}" var="flight" rowKey="#{flight.id}"
-					selection="#{finalPackageBean.selectedProduct}" selectionMode="single">
+					value="#{finalPackageBean.optionsFlight}" var="flight"
+					rowKey="#{flight.id}"
+					selection="#{finalPackageBean.selectedProduct}"
+					selectionMode="single" rendered="#{param['type'] == FLIGHT}">
 
 					<f:facet name="header">Flights</f:facet>
 
-					<p:column headerText="ID">
+					<p:column headerText="ID" width="35" style="text-align: center">
 						<h:outputText value="#{flight.id}" />
 					</p:column>
 
@@ -42,18 +44,49 @@
 						<h:outputText value="#{flight.flightLength}" />
 					</p:column>
 
-					<p:column headerText="Price">
+					<p:column headerText="Price" width="100" style="text-align: center">
 						<h:outputText value="#{flight.price}" />
 					</p:column>
 
 					<f:facet name="footer">
-						<p:commandButton value="Swap"
-							action="#{finalPackageBean.swap()}" />
+						<p:commandButton value="Swap" action="#{finalPackageBean.swap()}" />
 					</f:facet>
 				</p:dataTable>
 
+				<p:dataTable id="alternativeHotels"
+					value="#{finalPackageBean.optionsHotel}" var="hotel"
+					rowKey="#{hotel.id}"
+					selection="#{finalPackageBean.selectedProduct}"
+					selectionMode="single" rendered="#{param['type'] == HOTEL}">
+
+					<p:column headerText="ID" width="35" style="text-align: center">
+						<h:outputText value="#{hotel.id}" />
+					</p:column>
+
+					<p:column headerText="Name">
+						<h:outputText value="#{hotel.name}" />
+					</p:column>
+
+					<p:column headerText="Rating">
+						<h:outputText value="#{hotel.rating}" />
+					</p:column>
+
+					<p:column headerText="Location">
+						<h:outputText value="#{hotel.location}" />
+					</p:column>
+
+					<p:column headerText="Price" width="100" style="text-align: center">
+						<h:outputText value="#{hotel.price}" />
+					</p:column>
+
+					<f:facet name="footer">
+						<p:commandButton value="Swap" action="#{finalPackageBean.swap()}" />
+					</f:facet>
+
+				</p:dataTable>
+
 			</p:panel>
-		</h:form>
+		</o:form>
 
 	</ui:define>
 </ui:composition>
