@@ -12,6 +12,7 @@
 		<class>model.PackageHasProductPK</class>
 		<class>model.Product</class>
 		<class>model.User</class>
+		<class>model.FinalProduct</class>
 		<properties>
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
 			<property name="eclipselink.logging.level" value="FINE"/>

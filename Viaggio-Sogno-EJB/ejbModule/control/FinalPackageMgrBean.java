@@ -12,16 +12,11 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import model.FinalExcursion;
-import model.FinalFlight;
-import model.FinalHotel;
 import model.FinalPackage;
+import model.FinalProduct;
 import model.Group;
 import model.Product;
 import model.User;
-import dto.FinalExcursionDTO;
-import dto.FinalFlightDTO;
-import dto.FinalHotelDTO;
 import dto.FinalPackageDTO;
 import dto.FinalProductDTO;
 import dto.ProductDTO;
@@ -56,31 +51,17 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		FinalPackage newFPkg = new FinalPackage(finalPkgDTO);
 		
 		newFPkg.setProducts(new LinkedList<Product>());			
-		newFPkg.setFinalFlights(new LinkedList<FinalFlight>());
-		newFPkg.setFinalHotels(new LinkedList<FinalHotel>());
-		newFPkg.setFinalExcursions(new LinkedList<FinalExcursion>());
+		newFPkg.setFinalProducts(new LinkedList<FinalProduct>());
 		
-		for(ProductDTO pDTO : finalPkgDTO.getFlights()){
-			newFPkg.getProducts().add(new Product(pDTO));
-		}
-		for(ProductDTO pDTO : finalPkgDTO.getHotels()){
-			newFPkg.getProducts().add(new Product(pDTO));
-		}
-		for(ProductDTO pDTO : finalPkgDTO.getExcursions()){
-			newFPkg.getProducts().add(new Product(pDTO));
+		for(ProductDTO pDTO : finalPkgDTO.getProducts()){
+			newFPkg.getProducts().add(em.find(Product.class, pDTO.getId()));
 		}
 		
-		for(FinalFlightDTO fFDTO : finalPkgDTO.getFinalFlights()){
-			newFPkg.getFinalFlights().add(new FinalFlight(fFDTO));
-		}
-		for(FinalHotelDTO fHDTO : finalPkgDTO.getFinalHotels()){
-			newFPkg.getFinalHotels().add(new FinalHotel(fHDTO));
-		}
-		for(FinalExcursionDTO fEDTO : finalPkgDTO.getFinalExcursions()){
-			newFPkg.getFinalExcursions().add(new FinalExcursion(fEDTO));
+		for(FinalProductDTO fPDTO : finalPkgDTO.getFinalProducts()){
+			newFPkg.getFinalProducts().add(fnPrdMgr.buildFromDTO(fPDTO));
 		}
 		
-		User current = usrMgr.findByEmail(context.getCallerPrincipal().getName());
+		User current = usrMgr.getPrincipalUser();
 		
 		newFPkg.setUser(current);
 		newFPkg.setIdfinalPackageRelative(current.nextID());
@@ -92,29 +73,15 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@RolesAllowed({Group._CUSTOMER})
 	public void update(FinalPackageDTO finalPkgDTO) {
 		FinalPackage fP = fromRelativeID(finalPkgDTO.getId());
-		fP.setProducts(new LinkedList<Product>());			
-		fP.setFinalFlights(new LinkedList<FinalFlight>());
-		fP.setFinalHotels(new LinkedList<FinalHotel>());
-		fP.setFinalExcursions(new LinkedList<FinalExcursion>());
+		fP.setProducts(new LinkedList<Product>());
+		fP.setFinalProducts(new LinkedList<FinalProduct>());
 		
-		for(ProductDTO pDTO : finalPkgDTO.getFlights()){
-			fP.getProducts().add(em.find(Product.class, pDTO.getId()));
-		}
-		for(ProductDTO pDTO : finalPkgDTO.getHotels()){
-			fP.getProducts().add(em.find(Product.class, pDTO.getId()));
-		}
-		for(ProductDTO pDTO : finalPkgDTO.getExcursions()){
+		for(ProductDTO pDTO : finalPkgDTO.getProducts()){
 			fP.getProducts().add(em.find(Product.class, pDTO.getId()));
 		}
 		
-		for(FinalFlightDTO fFDTO : finalPkgDTO.getFinalFlights()){
-			fP.getFinalFlights().add(fnPrdMgr.flightFromRelativeID(fFDTO.getId()));
-		}
-		for(FinalHotelDTO fHDTO : finalPkgDTO.getFinalHotels()){
-			fP.getFinalHotels().add(fnPrdMgr.hotelFromRelativeID(fHDTO.getId()));
-		}
-		for(FinalExcursionDTO fEDTO : finalPkgDTO.getFinalExcursions()){
-			fP.getFinalExcursions().add(fnPrdMgr.excursionFromRelativeID(fEDTO.getId()));
+		for(FinalProductDTO fPDTO : finalPkgDTO.getFinalProducts()){
+			fP.getFinalProducts().add(fnPrdMgr.fromRelativeID(fPDTO.getId(), fPDTO.getType()));
 		}
 		
 		em.merge(fP);
@@ -142,59 +109,22 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		out.setId(ID);
 		out.setOriginalPackage(pkgMgr.buildDTO(in.getPackage()));
 		
-		List<ProductDTO> flightDTOs = new LinkedList<>();
-		List<ProductDTO> hotelDTOs = new LinkedList<>();
-		List<ProductDTO> excursionDTOs = new LinkedList<>();
+		List<ProductDTO> productDTOs = new LinkedList<>();
 		
-		List<FinalFlightDTO> finalFlightDTOs = new LinkedList<>();
-		List<FinalHotelDTO> finalHotelDTOs = new LinkedList<>();
-		List<FinalExcursionDTO> finalExcursionDTOs = new LinkedList<>();
+		List<FinalProductDTO> finalProductDTOs = new LinkedList<>();
 		
 		for(Product p : in.getProducts()){
-			if(p.getType().equals(Product.FLIGHT)){
-				flightDTOs.add(prdMgr.buildDTO(p));
-			} else
-			if(p.getType().equals(Product.HOTEL)){
-				hotelDTOs.add(prdMgr.buildDTO(p));
-			} else
-			if(p.getType().equals(Product.EXCURSION)){
-				excursionDTOs.add(prdMgr.buildDTO(p));
-			}			
+			productDTOs.add(prdMgr.buildDTO(p));		
 		}
 		
-		for(FinalFlight fF : getFinalFlights(in)){
-			finalFlightDTOs.add(fnPrdMgr.buildFlightDTO(fF));
-		}
-		for(FinalHotel fH : getFinalHotels(in)){
-			finalHotelDTOs.add(fnPrdMgr.buildHotelDTO(fH));
-		}
-		for(FinalExcursion fE : getFinalExcursions(in)){
-			finalExcursionDTOs.add(fnPrdMgr.buildExcursionDTO(fE));
+		for(FinalProduct fP : in.getFinalProducts()){
+			finalProductDTOs.add(fnPrdMgr.buildDTO(fP));
 		}
 		
-		out.setFlights(flightDTOs);
-		out.setHotels(hotelDTOs);
-		out.setExcursions(excursionDTOs);
-		out.setFinalFlights(finalFlightDTOs);
-		out.setFinalHotels(finalHotelDTOs);
-		out.setFinalExcursions(finalExcursionDTOs);
+		out.setProducts(productDTOs);
+		out.setFinalProducts(finalProductDTOs);
 
 		return out;
-	}
-
-	private List<FinalFlight> getFinalFlights(FinalPackage in) {
-		return em.createQuery("SELECT t FROM FinalFlight t where t.finalPackage = :finalPackage", FinalFlight.class)
-		.setParameter("finalPackage", in).getResultList();
-	}
-
-	private List<FinalHotel> getFinalHotels(FinalPackage in) {
-		return em.createQuery("SELECT t FROM FinalHotel t where t.finalPackage = :finalPackage", FinalHotel.class)
-				.setParameter("finalPackage", in).getResultList();
-	}
-
-	private List<FinalExcursion> getFinalExcursions(FinalPackage in) {
-		return em.createQuery("SELECT t FROM FinalExcursion t where t.finalPackage = :finalPackage", FinalExcursion.class)
-				.setParameter("finalPackage", in).getResultList();
 	}
 
 	@Override
@@ -224,35 +154,20 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		return out;
 	}
 
-	private FinalPackage fromRelativeID(int id) {
-		return em.createQuery("SELECT t FROM FinalPackage t where t.user = :user and t.idfinalPackageRelative = :id ", FinalPackage.class)
+	public FinalPackage fromRelativeID(int id) {
+		return em.createQuery("SELECT t FROM FinalPackage t where t.user = :user and t.idRelative = :id ", FinalPackage.class)
 				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();
 	}
 
 	@Override
-	public void finalize(FinalProductDTO finalProduct) {
-		FinalPackage current = fromRelativeID(finalProduct.getFinalPackage().getId());
-		Product finalizedPrd = em.find(Product.class, finalProduct.getId());
+	public void finalize(FinalPackageDTO container, FinalProductDTO finalProduct) {
+		FinalPackage current = fromRelativeID(container.getId());
+		Product finalizedPrd = em.find(Product.class, finalProduct.getProduct().getId());
 		
-		if(finalProduct instanceof FinalFlightDTO){
-			FinalFlight fF = new FinalFlight((FinalFlightDTO) finalProduct);
-			fF.setIdfinalFlightRelative(usrMgr.getPrincipalUser().nextID());
-			fF.setFinalPackage(current);
-			fF.setProduct(finalizedPrd);
-			current.getFinalFlights().add(fF);
-		} else if(finalProduct instanceof FinalHotelDTO){
-			FinalHotel fH = new FinalHotel((FinalHotelDTO) finalProduct);
-			fH.setIdfinalHotelRelative(usrMgr.getPrincipalUser().nextID());
-			fH.setFinalPackage(current);
-			fH.setProduct(finalizedPrd);
-			current.getFinalHotels().add(fH);			
-		} else if(finalProduct instanceof FinalExcursionDTO){
-			FinalExcursion fE = new FinalExcursion((FinalExcursionDTO) finalProduct);
-			fE.setIdfinalExcursionRelative(usrMgr.getPrincipalUser().nextID());
-			fE.setFinalPackage(current);
-			fE.setProduct(finalizedPrd);
-			current.getFinalExcursions().add(fE);
-		}
+		FinalProduct fP = fnPrdMgr.fromRelativeID(finalProduct.getId(), finalProduct.getType());
+		fP.setIdRelative(usrMgr.getPrincipalUser().nextID());
+		fP.setProduct(finalizedPrd);
+		current.getFinalProducts().add(fP);
 		
 		current.getProducts().remove(finalizedPrd);
 		em.merge(current);
@@ -273,25 +188,13 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
-	public void swap(FinalProductDTO oldProduct, ProductDTO newProduct) {
-		FinalPackage toSwap = fromRelativeID(oldProduct.getFinalPackage().getId());
+	public void swap(FinalPackageDTO toChange, FinalProductDTO oldProduct, ProductDTO newProduct) {
+		FinalPackage toSwap = fromRelativeID(toChange.getId());
 		Product newP = em.find(Product.class, newProduct);
-		toSwap.getProducts().add(newP);			
-		
-		if(oldProduct instanceof FinalFlightDTO){
-			FinalFlight fF = new FinalFlight((FinalFlightDTO) oldProduct);
-			toSwap.getFinalFlights().remove(fF);
-		} else if(oldProduct instanceof FinalHotelDTO){
-			FinalHotel fH = new FinalHotel((FinalHotelDTO) oldProduct);
-			toSwap.getFinalHotels().remove(fH);
-		} else if(oldProduct instanceof FinalExcursionDTO){
-			FinalExcursion fE = new FinalExcursion((FinalExcursionDTO) oldProduct);
-			toSwap.getFinalExcursions().remove(fE);
-		}
-		
+		toSwap.getProducts().add(newP);
+		toSwap.getFinalProducts().remove(fnPrdMgr.fromRelativeID(oldProduct.getId(), oldProduct.getType()));		
 		usrMgr.getPrincipalUser().freeID(oldProduct.getId());
-		em.merge(toSwap);
-		
+		em.merge(toSwap);		
 	}
 
 }

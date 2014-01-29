@@ -23,27 +23,19 @@ public class FinalPackage implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="IDFINAL_PACKAGE", unique=true, nullable=false)
-	private int idfinalPackage;
+	private int id;
 	
 	@Column(name="IDFINAL_PACKAGE_RELATIVE", nullable=false)
-	private int idfinalPackageRelative;
+	private int idRelative;
 
 	//uni-directional many-to-one association to User
 	@ManyToOne
 	@JoinColumn(name="USER_idUSER", nullable=false)
 	private User user;
 	
-	//bi-directional many-to-one association to FinalExcursion
-	@OneToMany(mappedBy="finalPackage", cascade=CascadeType.ALL)
-	private List<FinalExcursion> finalExcursions;
-
-	//bi-directional many-to-one association to FinalFlight
-	@OneToMany(mappedBy="finalPackage", cascade=CascadeType.ALL)
-	private List<FinalFlight> finalFlights;
-
-	//bi-directional many-to-one association to FinalHotel
-	@OneToMany(mappedBy="finalPackage", cascade=CascadeType.ALL)
-	private List<FinalHotel> finalHotels;
+	//uni-directional many-to-one association to FinalProduct
+	@OneToMany(cascade=CascadeType.ALL, orphanRemoval=true)
+	private List<FinalProduct> finalProducts;
 
 	//uni-directional many-to-one association to Package
 	@ManyToOne
@@ -67,41 +59,17 @@ public class FinalPackage implements Serializable {
 	}
 
 	public FinalPackage(FinalPackageDTO finalPkgDTO) {
-		this.idfinalPackage = finalPkgDTO.getId();
+		this.id = finalPkgDTO.getId();
 		this.pkg = new Package(finalPkgDTO.getOriginalPackage());
 		this.products = new LinkedList<>();
 	}
 
 	public int getIdfinalPackage() {
-		return this.idfinalPackage;
+		return this.id;
 	}
 
 	public void setIdfinalPackage(int idfinalPackage) {
-		this.idfinalPackage = idfinalPackage;
-	}
-
-	public List<FinalExcursion> getFinalExcursions() {
-		return finalExcursions;
-	}
-
-	public void setFinalExcursions(List<FinalExcursion> finalExcursions) {
-		this.finalExcursions = finalExcursions;
-	}
-
-	public List<FinalFlight> getFinalFlights() {
-		return finalFlights;
-	}
-
-	public void setFinalFlights(List<FinalFlight> finalFlights) {
-		this.finalFlights = finalFlights;
-	}
-
-	public List<FinalHotel> getFinalHotels() {
-		return finalHotels;
-	}
-
-	public void setFinalHotels(List<FinalHotel> finalHotels) {
-		this.finalHotels = finalHotels;
+		this.id = idfinalPackage;
 	}
 
 	public User getUser() {
@@ -129,18 +97,26 @@ public class FinalPackage implements Serializable {
 	}
 
 	public int getIdfinalPackageRelative() {
-		return idfinalPackageRelative;
+		return idRelative;
 	}
 
 	public void setIdfinalPackageRelative(int idfinalPackageRelative) {
-		this.idfinalPackageRelative = idfinalPackageRelative;
+		this.idRelative = idfinalPackageRelative;
+	}
+
+	public List<FinalProduct> getFinalProducts() {
+		return finalProducts;
+	}
+
+	public void setFinalProducts(List<FinalProduct> finalProducts) {
+		this.finalProducts = finalProducts;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + idfinalPackage;
+		result = prime * result + id;
 		return result;
 	}
 
@@ -153,7 +129,7 @@ public class FinalPackage implements Serializable {
 		if (!(obj instanceof FinalPackage))
 			return false;
 		FinalPackage other = (FinalPackage) obj;
-		if (idfinalPackage != other.idfinalPackage)
+		if (id != other.id)
 			return false;
 		return true;
 	}

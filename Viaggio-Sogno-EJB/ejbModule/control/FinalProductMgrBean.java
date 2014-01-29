@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
 import model.FinalExcursion;
 import model.FinalFlight;
 import model.FinalHotel;
-import model.FinalPackage;
+import model.FinalProduct;
 import model.Group;
 import model.Product;
 import dto.FinalExcursionDTO;
@@ -37,95 +37,97 @@ public class FinalProductMgrBean implements FinalProductMgr {
 
 	@EJB
 	private UserMgrBean usrMgr;
-	
+
 	@Override
 	@RolesAllowed({Group._CUSTOMER})
-	public void add(FinalProductDTO fP) {
-		if(fP instanceof FinalFlightDTO){
-			FinalFlightDTO fFDTO = (FinalFlightDTO)fP;
-			FinalFlight fF = new FinalFlight(fFDTO);
-			fF.setFinalPackage(new FinalPackage(fFDTO.getFinalPackage()));
-			fF.setProduct(new Product(fFDTO.getProduct()));
-			fF.setIdfinalFlightRelative(usrMgr.findByEmail(context.getCallerPrincipal().getName()).nextID());
-			em.persist(fF);
-		} else
-			if(fP instanceof FinalHotelDTO){
-				FinalHotelDTO fHDTO = (FinalHotelDTO)fP;
-				FinalHotel fH = new FinalHotel(fHDTO);
-				fH.setFinalPackage(new FinalPackage(fHDTO.getFinalPackage()));
-				fH.setProduct(new Product(fHDTO.getProduct()));
-				fH.setIdfinalHotelRelative(usrMgr.findByEmail(context.getCallerPrincipal().getName()).nextID());
-				em.persist(fH);
-			} else
-				if(fP instanceof FinalExcursionDTO){
-					FinalExcursionDTO fEDTO = (FinalExcursionDTO)fP;
-					FinalExcursion fE = new FinalExcursion(fEDTO);
-					fE.setFinalPackage(new FinalPackage(fEDTO.getFinalPackage()));
-					fE.setProduct(new Product(fEDTO.getProduct()));
-					fE.setIdfinalExcursionRelative(usrMgr.findByEmail(context.getCallerPrincipal().getName()).nextID());
-					em.persist(fE);
-				}
+	public void add(FinalProductDTO fPDTO) {
+		FinalProduct fP = buildFromDTO(fPDTO);		
+		fP.setProduct(em.find(Product.class, fP.getProduct().getIdproduct()));
+		fP.setIdRelative(usrMgr.getPrincipalUser().nextID());
+		em.persist(fP);
+	}
+
+	public FinalProduct buildFromDTO(FinalProductDTO fPDTO) {
+		switch (fPDTO.getType()) {
+		case FinalFlight.TYPE:
+			return new FinalFlight((FinalFlightDTO) fPDTO);
+		case FinalHotel.TYPE:
+			return new FinalHotel((FinalHotelDTO) fPDTO);
+		case FinalExcursion.TYPE:
+			return new FinalExcursion((FinalExcursionDTO) fPDTO);
+		default:
+			throw new IllegalArgumentException("No such type: "+fPDTO.getType());
+		}
 	}
 
 	@Override
 	@RolesAllowed({Group._CUSTOMER})
 	public void update(FinalProductDTO fP) {
-		if(fP instanceof FinalFlightDTO){
+		switch (fP.getType()) {
+		case FinalFlight.TYPE:
 			FinalFlightDTO fFDTO = (FinalFlightDTO) fP;
 			FinalFlight fF = flightFromRelativeID(fP.getId());
 			fF.setDeparture(fFDTO.getDeparture());
 			em.merge(fF);
-		} else
-			if(fP instanceof FinalHotelDTO){
-				FinalHotelDTO fHDTO = (FinalHotelDTO) fP;
-				FinalHotel fH = hotelFromRelativeID(fP.getId());
-				fH.setCheckIn(fHDTO.getCheckIn());
-				fH.setCheckOut(fHDTO.getCheckOut());
-				em.merge(fH);
-			} else
-				if(fP instanceof FinalExcursionDTO){
-					FinalExcursionDTO fEDTO = (FinalExcursionDTO) fP;
-					FinalExcursion fE = excursionFromRelativeID(fP.getId());
-					fE.setDate(fEDTO.getDate());
-					em.merge(fE);
-				}
+			break;
+		case FinalHotel.TYPE:
+			FinalHotelDTO fHDTO = (FinalHotelDTO) fP;
+			FinalHotel fH = hotelFromRelativeID(fP.getId());
+			fH.setCheckIn(fHDTO.getCheckIn());
+			fH.setCheckOut(fHDTO.getCheckOut());
+			em.merge(fH);
+			break;
+		case FinalExcursion.TYPE:
+			FinalExcursionDTO fEDTO = (FinalExcursionDTO) fP;
+			FinalExcursion fE = excursionFromRelativeID(fP.getId());
+			fE.setDate(fEDTO.getDate());
+			em.merge(fE);
+			break;
+		default:
+			throw new IllegalArgumentException("No such type: "+fP.getType());
+		}
 	}
 
 	@Override
 	@RolesAllowed({Group._CUSTOMER})
 	public void remove(FinalProductDTO fP) {
-		if(fP instanceof FinalFlightDTO){
-			em.remove(flightFromRelativeID(fP.getId()));			
-		} else
-			if(fP instanceof FinalHotelDTO){
-				em.remove(hotelFromRelativeID(fP.getId()));
-			} else
-				if(fP instanceof FinalExcursionDTO){
-					em.remove(excursionFromRelativeID(fP.getId()));
-				}
-		usrMgr.findByEmail(context.getCallerPrincipal().getName()).freeID(fP.getId());
+		switch (fP.getType()) {
+		case FinalFlight.TYPE:
+			em.remove(flightFromRelativeID(fP.getId()));
+			break;
+		case FinalHotel.TYPE:
+			em.remove(hotelFromRelativeID(fP.getId()));
+			break;
+		case FinalExcursion.TYPE:
+			em.remove(excursionFromRelativeID(fP.getId()));
+			break;
+		default:
+			throw new IllegalArgumentException("No such type: "+fP.getType());
+		}
+		
+		usrMgr.getPrincipalUser().freeID(fP.getId());
 	}
 
-	public FinalFlightDTO buildFlightDTO(FinalFlight in) {
+	private FinalFlightDTO buildFlightDTO(FinalFlight in) {
 		FinalFlightDTO out = new FinalFlightDTO();
-		out.setId(in.getIdfinalFlightRelative());
+		out.setId(in.getIdRelative());
 		out.setDeparture(in.getDeparture());
 		out.setProduct(prdMgr.buildDTO(in.getProduct()));
 		return out;
 	}
 
-	public FinalHotelDTO buildHotelDTO(FinalHotel in) {
+	private FinalHotelDTO buildHotelDTO(FinalHotel in) {
 		FinalHotelDTO out = new FinalHotelDTO();
-		out.setId(in.getIdfinalHotelRelative());
+		out.setId(in.getIdRelative());
 		out.setCheckIn(in.getCheckIn());
 		out.setCheckOut(in.getCheckOut());
 		out.setProduct(prdMgr.buildDTO(in.getProduct()));
 		return out;
 	}
 
-	public FinalExcursionDTO buildExcursionDTO(FinalExcursion in) {
+	private FinalExcursionDTO buildExcursionDTO(FinalExcursion in) {
 		FinalExcursionDTO out = new FinalExcursionDTO();
-		out.setId(in.getIdfinalExcursionRelative());
+		out.setId(in.getIdRelative());
 		out.setDate(in.getDate());
 		out.setProduct(prdMgr.buildDTO(in.getProduct()));
 		return out;
@@ -144,29 +146,30 @@ public class FinalProductMgrBean implements FinalProductMgr {
 			throw new IllegalArgumentException("No such type: "+type);
 		}
 	}
-	
-	public FinalFlight flightFromRelativeID(int id) {
-		return em.createQuery("SELECT t FROM FinalFlight t WHERE t.idfinalFlightRelative = :id AND t.finalPackage.user = :user ", FinalFlight.class)
-				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
-	}
-	
-	public FinalHotel hotelFromRelativeID(int id) {
-		return em.createQuery("SELECT t FROM FinalHotel t WHERE t.idfinalHotelRelative = :id AND t.finalPackage.user = :user ", FinalHotel.class)
-				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
-	}
-	
-	public FinalExcursion excursionFromRelativeID(int id) {
-		return em.createQuery("SELECT t FROM FinalExcursion t WHERE t.idfinalExcursionRelative = :id AND t.finalPackage.user = :user ", FinalExcursion.class)
+
+	private FinalFlight flightFromRelativeID(int id) {
+		return em.createQuery("SELECT t FROM FinalFlight t WHERE t.idRelative = :id AND t.finalPackage.user = :user ", FinalFlight.class)
 				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
 	}
 
-	/* oh my */
+	private FinalHotel hotelFromRelativeID(int id) {
+		return em.createQuery("SELECT t FROM FinalHotel t WHERE t.idRelative = :id AND t.finalPackage.user = :user ", FinalHotel.class)
+				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
+	}
+
+	private FinalExcursion excursionFromRelativeID(int id) {
+		System.out.println("Searching for excursion numnber: "+id);
+		return em.createQuery("SELECT t FROM FinalExcursion t WHERE t.idRelative = :id AND t.finalPackage.user = :user ", FinalExcursion.class)
+				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
+	}
+
+	/* oh my */ // TODO try em.find(FinalProduct.class, id)
 	@Override
 	public FinalProductDTO getByID(int id) {
 		FinalFlight possibleFlight;
 		FinalHotel possibleHotel;
 		FinalExcursion possibleExcursion;
-		
+
 		try{
 			possibleFlight = flightFromRelativeID(id);
 		} catch (NoResultException e){
@@ -182,18 +185,49 @@ public class FinalProductMgrBean implements FinalProductMgr {
 		} catch (NoResultException e){
 			possibleExcursion = null;
 		}
-		
+
 		if(possibleFlight!=null){
-			return buildFlightDTO(possibleFlight);
+			return buildDTO(possibleFlight);
 		} else
-		if(possibleHotel!=null){
-			return buildHotelDTO(possibleHotel);
-		} else
-		if(possibleExcursion!=null){
-			return buildExcursionDTO(possibleExcursion);
-		} else {
-			throw new IllegalArgumentException("No final products with ID: "+id);
+			if(possibleHotel!=null){
+				return buildHotelDTO(possibleHotel);
+			} else
+				if(possibleExcursion!=null){
+					return buildExcursionDTO(possibleExcursion);
+				} else {
+					throw new IllegalArgumentException("No final products with ID: "+id);
+				}
+	}
+
+	public FinalProduct fromRelativeID(int id, String type) {
+		switch (type) {
+		case FinalFlight.TYPE:
+			return flightFromRelativeID(id);
+		case FinalHotel.TYPE:
+			return hotelFromRelativeID(id);
+		case FinalExcursion.TYPE:
+			return excursionFromRelativeID(id);
+		default:
+			throw new IllegalArgumentException("No such type: "+type);
 		}
+	}
+
+	public FinalProductDTO buildDTO(FinalProduct fP) {
+		FinalProductDTO out = null;
+		switch (fP.getProduct().getType()) {
+		case FinalFlight.TYPE:
+			out = buildFlightDTO((FinalFlight)fP);
+			break;
+		case FinalHotel.TYPE:
+			out = buildHotelDTO((FinalHotel)fP);
+			break;
+		case FinalExcursion.TYPE:
+			out = buildExcursionDTO((FinalExcursion)fP);
+			break;
+		default:
+			throw new IllegalArgumentException("No such type: "+fP.getProduct().getType());
+		}
+		return out;
 	}
 
 }

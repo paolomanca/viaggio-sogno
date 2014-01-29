@@ -16,18 +16,10 @@ import java.util.Date;
 @Entity
 @Table(name="FINAL_FLIGHT")
 @NamedQuery(name="FinalFlight.findAll", query="SELECT f FROM FinalFlight f")
-public class FinalFlight implements Serializable {
+public class FinalFlight extends FinalProduct implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String TYPE = Product.FLIGHT;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="IDFINAL_FLIGHT", unique=true, nullable=false)
-	private int idfinalFlight;
-	
-	@Column(name="IDFINAL_FLIGHT_RELATIVE", nullable=false)
-	private int idfinalFlightRelative;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)
@@ -47,16 +39,8 @@ public class FinalFlight implements Serializable {
 	}
 
 	public FinalFlight(FinalFlightDTO fP) {
-		this.idfinalFlight = fP.getId();
+		this.setId(fP.getId());
 		this.departure = fP.getDeparture();
-	}
-
-	public int getIdfinalFlight() {
-		return this.idfinalFlight;
-	}
-
-	public void setIdfinalFlight(int idfinalFlight) {
-		this.idfinalFlight = idfinalFlight;
 	}
 
 	public Date getDeparture() {
@@ -81,36 +65,6 @@ public class FinalFlight implements Serializable {
 
 	public void setFinalPackage(FinalPackage finalPackage) {
 		this.finalPackage = finalPackage;
-	}
-
-	public int getIdfinalFlightRelative() {
-		return idfinalFlightRelative;
-	}
-
-	public void setIdfinalFlightRelative(int idfinalFlightRelative) {
-		this.idfinalFlightRelative = idfinalFlightRelative;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + idfinalFlight;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof FinalFlight))
-			return false;
-		FinalFlight other = (FinalFlight) obj;
-		if (idfinalFlight != other.idfinalFlight)
-			return false;
-		return true;
 	}
 
 }
