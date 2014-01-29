@@ -8,8 +8,6 @@ public class FinalFlightDTO implements FinalProductDTO {
 	
 	private Date departure;
 	
-	private FinalPackageDTO finalPackage;
-	
 	private ProductDTO product;
 
 	public int getId() {
@@ -53,13 +51,8 @@ public class FinalFlightDTO implements FinalProductDTO {
 	}
 
 	@Override
-	public FinalPackageDTO getFinalPackage() {
-		return finalPackage;
-	}
-
-	@Override
-	public void setFinalPackage(FinalPackageDTO finalPackage) {
-		this.finalPackage = finalPackage;
+	public String getType() {
+		return FLIGHT;
 	}
 	
 }

@@ -12,8 +12,6 @@ public interface PackageMgr {
 	
 	public void add(PackageDTO pkg);
 	
-	public void update(PackageDTO pkg);
-	
 	public void remove(PackageDTO pkg);
 	
 	public PackageDTO getByID(int id);

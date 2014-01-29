@@ -53,9 +53,15 @@ public class FinalExcursionDTO implements FinalProductDTO {
 	}
 
 	public void setFinalPackage(FinalPackageDTO finalPackage) {
+		this.finalPackage = finalPackage;
 	}
 
 	public FinalPackageDTO getFinalPackage() {
 		return finalPackage;
+	}
+
+	@Override
+	public String getType() {
+		return EXCURSION;
 	}
 }

@@ -18,7 +18,7 @@ public interface FinalPackageMgr {
 	 * @param originalPkg : the package on which the final package will be based
 	 * @return the new final package just created
 	 */
-	public FinalPackageDTO add(PackageDTO originalPkg);
+	public FinalPackageDTO finalizePackage(PackageDTO originalPkg);
 	
 	/**
 	 * @param finalPkg : the final package to be updated
@@ -31,12 +31,12 @@ public interface FinalPackageMgr {
 	 */
 	public void remove(FinalPackageDTO finalPkg);
 	
-	
-	public void finalize(FinalProductDTO finalProduct);
+	public void finalizeProduct(FinalPackageDTO container, FinalProductDTO finalProduct);
 	
 	public void swap(FinalPackageDTO finalPackage, ProductDTO oldProduct, ProductDTO newProduct);
 	
-	public void swap(FinalProductDTO oldProduct, ProductDTO newProduct);
+	public void swap(FinalPackageDTO toChange, FinalProductDTO oldProduct,
+			ProductDTO newProduct);
 	
 	public FinalPackageDTO getByID(int ID);
 	
