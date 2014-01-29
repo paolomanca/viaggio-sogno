@@ -3,22 +3,29 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 
 	<ui:define name="page-title">AdminPanel</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:menuitem value="Admin Home" disabled="true" />
+	</ui:define>
+
 	<ui:define name="content">
 
-		<h:form>
-			<p:commandButton action="createPackage?faces-redirect=true"
-				value="Create a package" />
-			<p:commandButton action="createFlight?faces-redirect=true"
-				value="Create a flight" />
-			<p:commandButton action="createHotel?faces-redirect=true"
-				value="Create a hotel" />
-			<p:commandButton action="createExcursion?faces-redirect=true"
-				value="Create an excursion" />
-			<p:commandButton action="#{userBean.logout}" value="Logout" />
-		</h:form>
-		
+		<o:form>
+			<p:menu>
+
+				<p:submenu label="Manage Packages">
+					<p:menuitem value="Create Package" outcome="package">
+						<f:param name="act" value="create" />
+					</p:menuitem>
+				</p:submenu>
+
+			</p:menu>
+
+
+		</o:form>
+
 	</ui:define>
 </ui:composition>
