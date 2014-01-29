@@ -11,8 +11,6 @@ public class FinalHotelDTO implements FinalProductDTO {
 	private Date checkIn;
 	
 	private Date checkOut;
-	
-	private FinalPackageDTO finalPackage;
 
 	public int getId() {
 		return id;
@@ -44,14 +42,6 @@ public class FinalHotelDTO implements FinalProductDTO {
 
 	public void setProduct(ProductDTO product) {
 		this.product = product;
-	}
-
-	public void setFinalPackage(FinalPackageDTO finalPackage) {
-		this.finalPackage = finalPackage;
-	}
-
-	public FinalPackageDTO getFinalPackage() {
-		return finalPackage;
 	}
 
 	public String getName() {
