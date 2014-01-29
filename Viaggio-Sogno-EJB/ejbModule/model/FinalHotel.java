@@ -29,16 +29,6 @@ public class FinalHotel extends FinalProduct implements Serializable {
 	@Column(name="check_out", nullable=false)
 	private Date checkOut;
 
-	//uni-directional many-to-one association to Product
-	@ManyToOne
-	@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
-	private Product product;
-
-	//uni-directional many-to-one association to FinalPackage
-	@ManyToOne
-	@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
-	private FinalPackage finalPackage;
-
 	public FinalHotel() {
 	}
 
@@ -64,20 +54,4 @@ public class FinalHotel extends FinalProduct implements Serializable {
 		this.checkOut = checkOut;
 	}
 
-	public Product getProduct() {
-		return this.product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public FinalPackage getFinalPackage() {
-		return this.finalPackage;
-	}
-
-	public void setFinalPackage(FinalPackage finalPackage) {
-		this.finalPackage = finalPackage;
-	}
-	
 }
