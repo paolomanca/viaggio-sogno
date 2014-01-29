@@ -16,7 +16,6 @@ import model.FinalPackage;
 import model.FinalProduct;
 import model.Group;
 import model.Product;
-import model.User;
 import dto.FinalPackageDTO;
 import dto.FinalProductDTO;
 import dto.PackageDTO;
