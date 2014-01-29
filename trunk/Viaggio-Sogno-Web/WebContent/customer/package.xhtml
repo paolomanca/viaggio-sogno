@@ -1,0 +1,90 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="page-title">Package</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:menuitem value="Package" disabled="true" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<o:form id="packageForm" includeRequestParams="true">
+
+			<h3>Flights</h3>
+			<p:dataTable var="flight" value="#{packageBean.firstChoichesFlight}"
+				rendered="#{not empty packageBean.firstChoichesFlight}">
+
+				<p:column headerText="From">
+					<h:outputText value="#{flight.depAirport}" />
+				</p:column>
+
+				<p:column headerText="To">
+					<h:outputText value="#{flight.arrAirport}" />
+				</p:column>
+
+				<p:column headerText="Length">
+					<h:outputText value="#{flight.flightLength}" />
+				</p:column>
+
+				<p:column headerText="Price" width="100" style="text-align: center">
+					<h:outputText value="#{flight.price}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<p:spacer height="30px" />
+
+
+			<h3>Hotels</h3>
+			<p:dataTable var="hotel" value="#{packageBean.firstChoichesHotel}"
+				rendered="#{not empty packageBean.firstChoichesHotel}">
+
+				<p:column headerText="Name">
+					<h:outputText value="#{hotel.name}" />
+				</p:column>
+
+				<p:column headerText="Rating">
+					<h:outputText value="#{hotel.rating}" />
+				</p:column>
+
+				<p:column headerText="Location">
+					<h:outputText value="#{hotel.location}" />
+				</p:column>
+
+				<p:column headerText="Price" width="100" style="text-align: center">
+					<h:outputText value="#{hotel.price}" />
+				</p:column>
+
+			</p:dataTable>
+
+			<p:spacer height="30px" />
+
+			<h3>Excursions</h3>
+			<p:dataTable var="excursion" value="#{packageBean.firstChoichesExcursions}"
+				rendered="#{not empty packageBean.firstChoichesExcursions}">
+
+				<p:column headerText="Name">
+					<h:outputText value="#{excursion.name}" />
+				</p:column>
+
+				<p:column headerText="Location">
+					<h:outputText value="#{excursion.location}" />
+				</p:column>
+
+				<p:column headerText="Price" width="100" style="text-align: center">
+					<h:outputText value="#{excursion.price}" />
+				</p:column>
+
+			</p:dataTable>
+			
+			<p:commandButton value="Add to your packages" action="#{finalPackageBean.finalizePackage()}" />
+
+		</o:form>
+
+	</ui:define>
+</ui:composition>
