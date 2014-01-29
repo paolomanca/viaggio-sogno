@@ -157,4 +157,9 @@ public class PackageMgrBean implements PackageMgr {
 		return pkgDTO;
 	}
 
+	@Override
+	public PackageDTO getByID(int id) {
+		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+	}
+
 }
