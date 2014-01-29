@@ -37,7 +37,7 @@
 						value="#{packageBean.firstChoicesFlight}"
 						converter="omnifaces.SelectItemsConverter" showCheckbox="true">
 						<f:selectItems value="#{productBean.flights}" var="product"
-							itemLabel="#{product.name}" itemValue="#{product}" />
+							itemLabel="#{product.depAirport} -> #{product.arrAirport}" itemValue="#{product}" />
 					</p:selectManyMenu>
 				</p:column>
 				<p:column>
@@ -97,7 +97,7 @@
 						converter="omnifaces.SelectItemsIndexConverter"
 						showCheckbox="true">
 						<f:selectItems value="#{productBean.flights}" var="product"
-							itemLabel="#{product.name}" itemValue="#{product}" />
+							itemLabel="#{product.depAirport} -> #{product.arrAirport}" itemValue="#{product}" />
 					</p:selectManyMenu>
 				</p:column>
 				<p:column>

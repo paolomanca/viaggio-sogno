@@ -2,8 +2,10 @@ package beans;
 
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
 import dto.PackageDTO;
@@ -19,7 +21,30 @@ public class PackageBean {
 	private static final String EXCURSION = "excursion";
 	
 	@EJB
-	private PackageMgr packageMgr;
+	private PackageMgr pkgMgr;
+	
+	@ManagedProperty(value = "#{param.pkgID}")
+	protected int pkgID;
+	
+	public int getPkgID() {
+		return pkgID;
+	}
+
+	public void setPkgID(int pkgID) {
+		this.pkgID = pkgID;
+	}
+
+	public String getAct() {
+		return act;
+	}
+
+	public void setAct(String act) {
+		this.act = act;
+	}
+
+
+	@ManagedProperty(value = "#{param.act}")
+	protected String act;
 	
 	private PackageDTO pkg;
 	
@@ -28,9 +53,21 @@ public class PackageBean {
 		pkg = new PackageDTO();
 	}
 	
+	@PostConstruct
+	private void init() {
+		if ( act != null ) {
+			
+			if( act.equalsIgnoreCase("create") ) {
+				pkg = new PackageDTO();
+			} else {
+				pkg = pkgMgr.getByID(pkgID);
+			}
+		}
+	}
+	
 	
 	public String add(){	
-		packageMgr.add(pkg);
+		pkgMgr.add(pkg);
 		return "index?faces-redirect=true";
 	}
 
@@ -40,7 +77,7 @@ public class PackageBean {
 	
 	
 	public List<ProductDTO> getFirstChoicesFlight() {
-		return packageMgr.listFirstChoicesByType(pkg, FLIGHT);
+		return pkgMgr.listFirstChoicesByType(pkg, FLIGHT);
 	}
 		
 	
@@ -52,7 +89,7 @@ public class PackageBean {
 
 	
 	public List<ProductDTO> getFirstChoicesHotel() {
-		return packageMgr.listFirstChoicesByType(pkg, HOTEL);
+		return pkgMgr.listFirstChoicesByType(pkg, HOTEL);
 	}
 		
 	
@@ -62,7 +99,7 @@ public class PackageBean {
 	
 
 	public List<ProductDTO> getFirstChoicesExcursion() {
-		return packageMgr.listFirstChoicesByType(pkg, EXCURSION);
+		return pkgMgr.listFirstChoicesByType(pkg, EXCURSION);
 	}
 	
 	
@@ -71,7 +108,7 @@ public class PackageBean {
 	}
 	
 	public List<ProductDTO> getAlternativesFlight() {
-		return packageMgr.listFirstChoicesByType(pkg, FLIGHT);
+		return pkgMgr.listFirstChoicesByType(pkg, FLIGHT);
 	}
 		
 	
@@ -81,7 +118,7 @@ public class PackageBean {
 
 	
 	public List<ProductDTO> getAlternativesHotel() {
-		return packageMgr.listAlternativesByType(pkg, HOTEL);
+		return pkgMgr.listAlternativesByType(pkg, HOTEL);
 	}
 		
 	
@@ -91,7 +128,7 @@ public class PackageBean {
 	
 
 	public List<ProductDTO> getAlternativesExcursion() {
-		return packageMgr.listAlternativesByType(pkg, EXCURSION);
+		return pkgMgr.listAlternativesByType(pkg, EXCURSION);
 	}
 	
 	
@@ -101,7 +138,7 @@ public class PackageBean {
 	
 	
 	public List<PackageDTO> getShowcased() {
-		return packageMgr.listShowcasePackages();
+		return pkgMgr.listShowcasePackages();
 	}
 
 }

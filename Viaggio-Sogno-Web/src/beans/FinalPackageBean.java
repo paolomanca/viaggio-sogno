@@ -75,6 +75,14 @@ public class FinalPackageBean {
 		return "finalPackage?act=show&ampfPkgID =" + fPkg.getId() + "&amp;faces-redirect=true";
 	}
 
+	public String addProduct() {
+		fPkg = fPkgMgr.getByID(fPkgID);
+		fPkg.getProducts().add(selectedProduct);
+		
+		fPkgMgr.update(fPkg);
+		
+		return "finalPackage?act=show&ampfPkgID =" + fPkgID + "&amp;faces-redirect=true";
+	}
 	
 	public String swap() {
 		
