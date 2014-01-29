@@ -16,47 +16,21 @@ import java.util.Date;
 @Entity
 @Table(name="FINAL_EXCURSION")
 @NamedQuery(name="FinalExcursion.findAll", query="SELECT f FROM FinalExcursion f")
-public class FinalExcursion implements Serializable {
+public class FinalExcursion extends FinalProduct implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String TYPE = Product.EXCURSION;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="IDFINAL_EXCURSION", unique=true, nullable=false)
-	private int idfinalExcursion;
-
-	@Column(name="IDFINAL_EXCURSION_RELATIVE", nullable=false)
-	private int idfinalExcursionRelative;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(nullable=false)
 	private Date date;
-
-	//uni-directional many-to-one association to FinalPackage
-	@ManyToOne
-	@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
-	private FinalPackage finalPackage;
-
-	//uni-directional many-to-one association to Product
-	@ManyToOne
-	@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
-	private Product product;
-
+	
 	public FinalExcursion() {
 	}
 
 	public FinalExcursion(FinalExcursionDTO fEDTO) {
-		this.idfinalExcursion = fEDTO.getId();
+		setId(fEDTO.getId());
 		this.date = fEDTO.getDate();
-	}
-
-	public int getIdfinalExcursion() {
-		return this.idfinalExcursion;
-	}
-
-	public void setIdfinalExcursion(int idfinalExcursion) {
-		this.idfinalExcursion = idfinalExcursion;
 	}
 
 	public Date getDate() {
@@ -66,51 +40,5 @@ public class FinalExcursion implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
-	public FinalPackage getFinalPackage() {
-		return this.finalPackage;
-	}
-
-	public void setFinalPackage(FinalPackage finalPackage) {
-		this.finalPackage = finalPackage;
-	}
-
-	public Product getProduct() {
-		return this.product;
-	}
-
-	public void setProduct(Product product) {
-		this.product = product;
-	}
-
-	public int getIdfinalExcursionRelative() {
-		return idfinalExcursionRelative;
-	}
-
-	public void setIdfinalExcursionRelative(int idfinalExcursionRelative) {
-		this.idfinalExcursionRelative = idfinalExcursionRelative;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + idfinalExcursion;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (!(obj instanceof FinalExcursion))
-			return false;
-		FinalExcursion other = (FinalExcursion) obj;
-		if (idfinalExcursion != other.idfinalExcursion)
-			return false;
-		return true;
-	}
-
+	
 }

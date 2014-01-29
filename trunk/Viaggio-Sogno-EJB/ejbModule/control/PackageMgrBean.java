@@ -62,15 +62,6 @@ public class PackageMgrBean implements PackageMgr {
 
 	@Override
 	@RolesAllowed({Group._EMPLOYEE})
-	public void update(PackageDTO pkg) {
-		Package oldPackage = findByID(pkg.getId());
-		Package tempPackage = new Package(pkg);
-		tempPackage.setUser(oldPackage.getUser());
-		em.merge(tempPackage);
-	}
-
-	@Override
-	@RolesAllowed({Group._EMPLOYEE})
 	public void remove(PackageDTO pkg) {
 		em.remove(findByID(pkg.getId()));
 	}
@@ -107,7 +98,7 @@ public class PackageMgrBean implements PackageMgr {
 	@Override
 	public List<ProductDTO> listFirstChoices(PackageDTO pkg) {
 		List<ProductDTO> out = new LinkedList<>();
-		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
+		for(PackageHasProduct pkgHsPrd : getPackageProducts(em.find(Package.class, pkg.getId()))){
 			if(pkgHsPrd.getFirstChoice()){
 				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
@@ -118,7 +109,7 @@ public class PackageMgrBean implements PackageMgr {
 	@Override
 	public List<ProductDTO> listAlternatives(PackageDTO pkg) {
 		List<ProductDTO> out = new LinkedList<>();
-		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
+		for(PackageHasProduct pkgHsPrd : getPackageProducts(em.find(Package.class, pkg.getId()))){
 			if(!pkgHsPrd.getFirstChoice()){
 				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
@@ -129,7 +120,7 @@ public class PackageMgrBean implements PackageMgr {
 	@Override
 	public List<ProductDTO> listFirstChoicesByType(PackageDTO pkg, String type) {
 		List<ProductDTO> out = new LinkedList<>();
-		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
+		for(PackageHasProduct pkgHsPrd : getPackageProducts(em.find(Package.class, pkg.getId()))){
 			if(pkgHsPrd.getFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
 				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
@@ -140,8 +131,8 @@ public class PackageMgrBean implements PackageMgr {
 	@Override
 	public List<ProductDTO> listAlternativesByType(PackageDTO pkg, String type) {
 		List<ProductDTO> out = new LinkedList<>();
-		for(PackageHasProduct pkgHsPrd : getPackageProducts(new Package(pkg))){
-			if(pkgHsPrd.getFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
+		for(PackageHasProduct pkgHsPrd : getPackageProducts(em.find(Package.class, pkg.getId()))){
+			if(!pkgHsPrd.getFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
 				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}

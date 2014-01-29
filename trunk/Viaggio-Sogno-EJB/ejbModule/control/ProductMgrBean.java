@@ -66,6 +66,7 @@ public class ProductMgrBean implements ProductMgr {
 
 	@Override
 	public ProductDTO getByID(int id) {
+		System.out.println("getting product with id: "+id);
 		return buildDTO(em.find(Product.class, id));
 	}
 

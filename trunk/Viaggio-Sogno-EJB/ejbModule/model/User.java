@@ -41,7 +41,7 @@ public class User implements Serializable {
 	private String password;
 
 	//bi-directional many-to-one association to FinalPackage
-	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<FinalPackage> finalPackages;
 
 	//bi-directional many-to-one association to Package
