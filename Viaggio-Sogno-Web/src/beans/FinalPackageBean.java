@@ -36,6 +36,9 @@ public class FinalPackageBean {
 	@EJB
 	private FinalPackageMgr fPkgMgr;
 	
+	@ManagedProperty(value = "#{param.pkgID}")
+	private int pkgID;
+	
 	@ManagedProperty(value = "#{param.fPkgID}")
 	private int fPkgID;
 	
@@ -67,10 +70,11 @@ public class FinalPackageBean {
 		
 	}
 	
-	public String add(){	
-		fPkgMgr.add(fPkg);
-		return "index?faces-redirect=true";
+	public String finalizePackage() {
+		fPkg = fPkgMgr.finalizePackage(pkgMgr.getByID(pkgID));
+		return "finalPackage?act=show&ampfPkgID =" + fPkg.getId() + "&amp;faces-redirect=true";
 	}
+
 	
 	public String swap() {
 		
@@ -85,7 +89,7 @@ public class FinalPackageBean {
 		}
 		
 		
-		return "index/finalPackage?act=show&amp;fPkgID=" + fPkgID + "&amp;faces-redirect=true";
+		return "index/finalPackage?act=show&fPkgID=" + fPkgID;
 	}
 	
 	public String remove(FinalPackageDTO finalPkg) {
@@ -101,10 +105,10 @@ public class FinalPackageBean {
 	}
 	
 	public void removeFinalProduct( FinalProductDTO finalProduct ) {
-		System.out.println(finalProduct);
 		fPkg.removeFinalProduct(finalProduct);
 		fPkgMgr.update(fPkg);
 	}
+	
 	
 	private List<ProductDTO> filterProductByType(List<ProductDTO> products,
 			String type) {
@@ -127,6 +131,14 @@ public class FinalPackageBean {
 			}
 		}
 		return out;		
+	}
+	
+	public int getPkgID() {
+		return pkgID;
+	}
+
+	public void setPkgID(int pkgID) {
+		this.pkgID = pkgID;
 	}
 
 	public int getfPkgID() {
@@ -168,14 +180,9 @@ public class FinalPackageBean {
 
 	public List<ProductDTO> getOptions(String type) {
 		List<ProductDTO> out = new LinkedList<ProductDTO>();
-
-		System.out.println(fPkg);
 		
 		List<ProductDTO> first = pkgMgr.listFirstChoicesByType(fPkg.getOriginalPackage(), type);
 		List<ProductDTO> alter = pkgMgr.listAlternativesByType(fPkg.getOriginalPackage(), type);
-		
-		System.out.println(first.size()+" first choices");
-		System.out.println(alter.size()+" alter choices");
 		
 		out.addAll(first);
 		out.addAll(alter);
