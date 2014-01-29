@@ -16,6 +16,8 @@ public interface PackageMgr {
 	
 	public void remove(PackageDTO pkg);
 	
+	public PackageDTO getByID(int id);
+	
 	public List<PackageDTO> listAllPackages();
 	
 	public List<PackageDTO> listShowcasePackages();

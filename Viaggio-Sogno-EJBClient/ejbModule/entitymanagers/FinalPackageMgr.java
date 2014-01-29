@@ -6,17 +6,31 @@ import javax.ejb.Local;
 
 import dto.FinalPackageDTO;
 import dto.FinalProductDTO;
+import dto.PackageDTO;
 import dto.ProductDTO;
 import dto.UserDTO;
 
 @Local
 public interface FinalPackageMgr {
 	
-	public void add(FinalPackageDTO finalPkg);
 	
+	/**
+	 * @param originalPkg : the package on which the final package will be based
+	 * @return the new final package just created
+	 */
+	public FinalPackageDTO add(PackageDTO originalPkg);
+	
+	/**
+	 * @param finalPkg : the final package to be updated
+	 */
 	public void update(FinalPackageDTO finalPkg);
 	
+	
+	/**
+	 * @param finalPkg : the final package to be removed
+	 */
 	public void remove(FinalPackageDTO finalPkg);
+	
 	
 	public void finalize(FinalProductDTO finalProduct);
 	
