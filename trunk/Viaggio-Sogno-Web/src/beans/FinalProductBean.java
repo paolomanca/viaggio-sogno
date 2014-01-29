@@ -68,7 +68,7 @@ public class FinalProductBean {
 				finalProduct = fPrMgr.getByID(fPrID, type.toUpperCase());
 			}
 		}
-
+		
 	}
 
 	public String getType() {
@@ -120,7 +120,7 @@ public class FinalProductBean {
 	}
 
 	public String add() {
-		fPkgMgr.finalize(finalProduct);
+		fPkgMgr.finalize(fPkgMgr.getByID(fPkgID), finalProduct);
 		return "finalPackage?act=show&amp;fPkgID=" + fPkgID + "&amp;faces-redirect=true";
 	}
 	
