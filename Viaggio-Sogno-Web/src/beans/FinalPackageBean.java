@@ -74,18 +74,18 @@ public class FinalPackageBean {
 	
 	public String swap() {
 		
-		if ( prID >= 0 ) {
+		if ( prID > 0 ) {
 			ProductDTO oldProduct = prMgr.getByID(prID);
 			fPkgMgr.swap(fPkg, oldProduct, selectedProduct);
 		}
 		
-		if ( fPrID >= 0 ) {
-			FinalProductDTO oldProduct = fPrMgr.getByID(prID);
-			fPkgMgr.swap(oldProduct, selectedProduct);
+		if ( fPrID > 0 ) {
+			FinalProductDTO oldProduct = fPrMgr.getByID(fPrID);
+			fPkgMgr.swap(fPkg, oldProduct, selectedProduct);
 		}
 		
 		
-		return "index/finalPackage?act=show&fPkgID=" + fPkgID;
+		return "index/finalPackage?act=show&amp;fPkgID=" + fPkgID + "&amp;faces-redirect=true";
 	}
 	
 	public String remove(FinalPackageDTO finalPkg) {
@@ -106,6 +106,29 @@ public class FinalPackageBean {
 		fPkgMgr.update(fPkg);
 	}
 	
+	private List<ProductDTO> filterProductByType(List<ProductDTO> products,
+			String type) {
+		List<ProductDTO> out = new LinkedList<>();
+		for(ProductDTO pDTO : products){
+			if(pDTO.getType().equals(type)){
+				out.add(pDTO);
+			}
+		}
+		return out;	
+	}
+
+	@SuppressWarnings("unchecked")
+	private <T extends FinalProductDTO> List<T> filterFinalProductByType(
+			List<FinalProductDTO> finalProducts, Class<T> type) {
+		List<T> out = new LinkedList<>();
+		for(FinalProductDTO pDTO : finalProducts){
+			if(type.isInstance(pDTO)){
+				out.add((T)pDTO);
+			}
+		}
+		return out;		
+	}
+
 	public int getfPkgID() {
 		return fPkgID;
 	}
@@ -120,27 +143,27 @@ public class FinalPackageBean {
 	}
 	
 	public List<ProductDTO> getFlights() {
-		return fPkg.getFlights();
+		return filterProductByType(fPkg.getProducts(), FinalProductDTO.FLIGHT);
 	}
 	
 	public List<FinalFlightDTO> getFinalFlights() {
-		return fPkg.getFinalFlights();
+		return filterFinalProductByType(fPkg.getFinalProducts(), FinalFlightDTO.class);
 	}
 	
 	public List<ProductDTO> getHotels() {
-		return fPkg.getHotels();
+		return filterProductByType(fPkg.getProducts(), FinalProductDTO.HOTEL);
 	}
 	
 	public List<FinalHotelDTO> getFinalHotels() {
-		return fPkg.getFinalHotels();
+		return filterFinalProductByType(fPkg.getFinalProducts(), FinalHotelDTO.class);
 	}
 	
 	public List<ProductDTO> getExcursions() {
-		return fPkg.getExcursions();
+		return filterProductByType(fPkg.getProducts(), FinalProductDTO.EXCURSION);
 	}
 	
 	public List<FinalExcursionDTO> getFinalExcursions() {
-		return fPkg.getFinalExcursions();
+		return filterFinalProductByType(fPkg.getFinalProducts(), FinalExcursionDTO.class);
 	}
 
 	public List<ProductDTO> getOptions(String type) {
@@ -150,6 +173,9 @@ public class FinalPackageBean {
 		
 		List<ProductDTO> first = pkgMgr.listFirstChoicesByType(fPkg.getOriginalPackage(), type);
 		List<ProductDTO> alter = pkgMgr.listAlternativesByType(fPkg.getOriginalPackage(), type);
+		
+		System.out.println(first.size()+" first choices");
+		System.out.println(alter.size()+" alter choices");
 		
 		out.addAll(first);
 		out.addAll(alter);
