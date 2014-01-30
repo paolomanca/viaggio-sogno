@@ -111,7 +111,11 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 		out.setProducts(productDTOs);
 		out.setFinalProducts(finalProductDTOs);
-
+		
+		if(out.getProducts().isEmpty() && !out.getFinalProducts().isEmpty()){
+			out.setFinalized(true);
+		}
+		
 		return out;
 	}
 
@@ -209,7 +213,6 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		return buildSharedDTO(sP.getFinalPackage());
 	}
 
-	//TODO finish
 	private FinalPackageDTO buildSharedDTO(FinalPackage finalPackage) {
 		int idCount = 1;
 		FinalPackageDTO out = buildDTO(finalPackage);
@@ -217,6 +220,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		for(FinalProductDTO pDTO : out.getFinalProducts()){
 			pDTO.setId(idCount++);
 		}
+		out.setSharedID(finalPackage.getSharedPackage().getUniqueIdentifier());
 		return out;
 	}
 
@@ -232,10 +236,17 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 		em.persist(sP);
 
-		toShare.setShared(true);
 		toShare.setSharedPackage(sP);
 		em.merge(toShare);
 		
+	}
+
+	@Override
+	@RolesAllowed({Group._CUSTOMER})
+	public void reserve(FinalPackageDTO relativeID) {
+		FinalPackage fP = fromRelativeID(relativeID.getId());
+		fP.setReserved(true);
+		em.merge(fP);
 	}
 
 }
