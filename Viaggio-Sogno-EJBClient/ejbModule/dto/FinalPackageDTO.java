@@ -12,6 +12,8 @@ public class FinalPackageDTO {
 	
 	private boolean finalized = false;
 	
+	private boolean paid = false;
+	
 	private boolean shared = false;
 
 	@NotEmpty
@@ -78,6 +80,14 @@ public class FinalPackageDTO {
 
 	public void setFinalized(boolean finalized) {
 		this.finalized = finalized;
+	}
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
 	}
 
 	public boolean isShared() {
