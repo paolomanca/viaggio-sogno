@@ -70,4 +70,14 @@ public class ProductMgrBean implements ProductMgr {
 		return buildDTO(em.find(Product.class, id));
 	}
 
+	@Override
+	public void update(ProductDTO productDTO) {
+		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+	}
+
+	@Override
+	public void remove(ProductDTO productDTO) {
+		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+	}
+
 }

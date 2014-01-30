@@ -249,6 +249,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		em.persist(sP);
 
 		toShare.setSharedPackage(sP);
+		toShare.setShared(true);
 		em.merge(toShare);
 
 	}
@@ -263,7 +264,11 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	public List<FinalPackageDTO> listAll() {
-		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+		List<FinalPackageDTO> out = new LinkedList<>();
+		for(FinalPackage fP : em.createNamedQuery(FinalPackage.ALL, FinalPackage.class).getResultList()){
+			out.add(buildDTO(fP));
+		}
+		return out;
 	}
 
 }

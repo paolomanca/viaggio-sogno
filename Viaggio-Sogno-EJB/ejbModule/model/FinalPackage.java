@@ -20,6 +20,7 @@ import java.util.List;
 public class FinalPackage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	public static final String ALL = "FinalPackage.findAll";
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="IDFINAL_PACKAGE", unique=true, nullable=false)
@@ -58,6 +59,7 @@ public class FinalPackage implements Serializable {
 		)
 	private List<Product> products;
 	
+	private boolean shared = false;
 	private boolean finalized = false;
 	private boolean paid = false;
 	private boolean reserved = false;
@@ -125,6 +127,14 @@ public class FinalPackage implements Serializable {
 
 	public void setSharedPackage(SharedPackage sharedPackage) {
 		this.sharedPackage = sharedPackage;
+	}
+
+	public boolean isShared() {
+		return shared;
+	}
+
+	public void setShared(boolean shared) {
+		this.shared = shared;
 	}
 
 	public boolean isFinalized() {
