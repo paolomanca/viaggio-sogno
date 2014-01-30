@@ -44,6 +44,10 @@ public class User implements Serializable {
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL, orphanRemoval=true)
 	private List<FinalPackage> finalPackages;
 
+	//bi-directional many-to-one association to FinalProduct
+	@OneToMany(mappedBy="user")
+	private List<FinalProduct> finalProducts;
+
 	//bi-directional many-to-one association to Package
 	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
 	private List<Package> packages;
@@ -186,6 +190,14 @@ public class User implements Serializable {
 		if (iduser != other.iduser)
 			return false;
 		return true;
+	}
+
+	public List<FinalProduct> getFinalProducts() {
+		return finalProducts;
+	}
+
+	public void setFinalProducts(List<FinalProduct> finalProducts) {
+		this.finalProducts = finalProducts;
 	}
 
 }

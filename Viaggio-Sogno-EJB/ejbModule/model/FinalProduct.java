@@ -26,6 +26,11 @@ public abstract class FinalProduct implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="PRODUCT_idPRODUCT", nullable=false)
 	private Product product;
+	
+	//uni-directional many-to-one association to Product
+	@ManyToOne
+	@JoinColumn(name="User_idUser", nullable=false)
+	private User user;
 
 	public FinalProduct() {
 		super();
@@ -75,6 +80,14 @@ public abstract class FinalProduct implements Serializable {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 }

@@ -46,7 +46,7 @@ public class Package implements Serializable {
 	@JoinColumn(name="USER_idUSER", nullable=false)
 	private User user;
 
-	//bi-directional many-to-one association to PackageHasProduct
+	//bi-directional one-to-many association to PackageHasProduct
 	@OneToMany(mappedBy="pkg", cascade = CascadeType.ALL)
 	private List<PackageHasProduct> packageHasProducts = new LinkedList<>();
 
