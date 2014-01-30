@@ -23,3 +23,15 @@
 	margin:0 auto;
 	display: block;
 }
+
+.TD-selectManyMenu {
+	width: 300px;
+}
+
+.TD-selectManyMenu .ui-selectlistbox-item {
+	vertical-align: top;
+}
+
+.TD-selectManyMenu .ui-selectlistbox-item .ui-chkbox {
+	margin-right: 5px;
+}

@@ -1,0 +1,59 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+
+	<title><ui:insert name="page-title">TravelDream</ui:insert></title>
+
+</h:head>
+<h:body>
+
+	<f:facet name="last">
+		<h:outputStylesheet library="css" name="style.css" />
+	</f:facet>
+
+	<p:layout fullPage="true">
+		<p:layoutUnit position="center">
+
+			<p:panel styleClass="mainPanel">
+
+				<f:facet name="header">Welcome, visitor!</f:facet>
+
+				<f:facet name="actions" styleClass="user-menu">
+					<h:form id="userMenuForm">
+
+						<p:menuButton value="Menu">
+							<p:menuitem value="Login" outcome="login"
+								 />
+							<p:menuitem actionListener="register"
+								value="Register" icon="ui-icon-close" />
+						</p:menuButton>
+					</h:form>
+
+
+				</f:facet>
+				<p:spacer />
+
+				<h:form id="page-breadcrumb">
+					<p:breadCrumb>
+						<p:menuitem outcome="index" />
+						<ui:insert name="breadcrumb">
+							<p:menuitem value="Home" disabled="true" />
+						</ui:insert>
+					</p:breadCrumb>
+				</h:form>
+
+				<p:spacer />
+
+				<ui:insert name="content">No content</ui:insert>
+
+			</p:panel>
+
+		</p:layoutUnit>
+	</p:layout>
+
+</h:body>
+</html>

@@ -1,0 +1,215 @@
+<ui:composition template="/WEB-INF/templates/layout-public.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="page-title">Shared package</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:menuitem value="Package" disabled="true" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<o:form id="customizePack" includeRequestParams="true">
+
+			<p:panel header="Flight">
+				<p:dataTable var="flight" value="#{finalPackageBean.flights}"
+					rendered="#{not empty finalPackageBean.flights}">
+
+					<p:column headerText="ID" width="35" style="text-align: center">
+						<h:outputText value="#{flight.id}" />
+					</p:column>
+
+					<p:column headerText="From">
+						<h:outputText value="#{flight.depAirport}" />
+					</p:column>
+
+					<p:column headerText="To">
+						<h:outputText value="#{flight.arrAirport}" />
+					</p:column>
+
+					<p:column headerText="Date">
+						<h:outputText value="n.f." />
+					</p:column>
+
+					<p:column headerText="Length">
+						<h:outputText value="#{flight.flightLength}" />
+					</p:column>
+
+					<p:column headerText="Price" width="100" style="text-align: center">
+						<h:outputText value="#{flight.price}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<p:dataTable var="finalFlight"
+					value="#{finalPackageBean.finalFlights}"
+					rendered="#{not empty finalPackageBean.finalFlights}">
+
+					<p:column headerText="ID" width="35" style="text-align: center">
+						<h:outputText value="#{finalFlight.id}" />
+					</p:column>
+
+					<p:column headerText="From">
+						<h:outputText value="#{finalFlight.depAirport}" />
+					</p:column>
+
+					<p:column headerText="To">
+						<h:outputText value="#{finalFlight.arrAirport}" />
+					</p:column>
+
+					<p:column headerText="Date">
+						<h:outputText value="#{finalFlight.departure}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Length">
+						<h:outputText value="#{finalFlight.flightLength}" />
+					</p:column>
+
+					<p:column headerText="Price" width="100" style="text-align: center">
+						<h:outputText value="#{finalFlight.price}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+
+			<p:spacer height="25px" />
+
+			<p:panel header="Hotels">
+				<p:dataTable var="hotel" value="#{finalPackageBean.hotels}"
+					rendered="#{not empty finalPackageBean.hotels}">
+
+					<p:column headerText="ID" width="35" style="text-align: center">
+						<h:outputText value="#{hotel.id}" />
+					</p:column>
+
+					<p:column headerText="Name">
+						<h:outputText value="#{hotel.name}" />
+					</p:column>
+
+					<p:column headerText="Rating">
+						<h:outputText value="#{hotel.rating}" />
+					</p:column>
+
+					<p:column headerText="Location">
+						<h:outputText value="#{hotel.location}" />
+					</p:column>
+
+					<p:column headerText="Check in">
+						<h:outputText value="n.f." />
+					</p:column>
+
+					<p:column headerText="Check out">
+						<h:outputText value="n.f." />
+					</p:column>
+
+					<p:column headerText="Price" width="100" style="text-align: center">
+						<h:outputText value="#{hotel.price}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<p:dataTable var="finalHotel"
+					value="#{finalPackageBean.finalHotels}"
+					rendered="#{not empty finalPackageBean.finalHotels}">
+
+					<p:column headerText="ID" width="35" style="text-align: center">
+						<h:outputText value="#{finalHotel.id}" />
+					</p:column>
+					<p:column headerText="Name">
+						<h:outputText value="#{finalHotel.name}" />
+					</p:column>
+
+					<p:column headerText="Rating">
+						<h:outputText value="#{finalHotel.rating}" />
+					</p:column>
+
+					<p:column headerText="Location">
+						<h:outputText value="#{finalHotel.location}" />
+					</p:column>
+
+					<p:column headerText="Check in">
+						<h:outputText value="#{finalHotel.checkIn}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Check out">
+						<h:outputText value="#{finalHotel.checkOut}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Price" width="100" style="text-align: center">
+						<h:outputText value="#{finalHotel.price}" />
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+
+			<p:spacer height="25px" />
+
+			<p:panel header="Excursions">
+				<p:dataTable var="excursion" value="#{finalPackageBean.excursions}"
+					rendered="#{not empty finalPackageBean.excursions}">
+
+					<p:column headerText="ID" width="35" style="text-align: center">
+						<h:outputText value="#{excursion.id}" />
+					</p:column>
+					<p:column headerText="Name">
+						<h:outputText value="#{excursion.name}" />
+					</p:column>
+
+					<p:column headerText="Location">
+						<h:outputText value="#{excursion.location}" />
+					</p:column>
+
+					<p:column headerText="Date">
+						<h:outputText value="n.f." />
+					</p:column>
+
+					<p:column headerText="Price" width="100" style="text-align: center">
+						<h:outputText value="#{excursion.price}" />
+					</p:column>
+
+				</p:dataTable>
+
+				<p:dataTable var="finalExcursion"
+					value="#{finalPackageBean.finalExcursions}"
+					rendered="#{not empty finalPackageBean.finalExcursions}">
+
+					<p:column headerText="ID" width="35" style="text-align: center">
+						<h:outputText value="#{finalExcursion.id}" />
+					</p:column>
+					<p:column headerText="Name">
+						<h:outputText value="#{finalExcursion.name}" />
+					</p:column>
+
+					<p:column headerText="Location">
+						<h:outputText value="#{finalExcursion.location}" />
+					</p:column>
+
+					<p:column headerText="Date">
+						<h:outputText value="#{finalExcursion.date}">
+							<f:convertDateTime pattern="dd/MM/yyyy" />
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Price" width="100" style="text-align: center">
+						<h:outputText value="#{finalExcursion.price}" />
+					</p:column>
+
+				</p:dataTable>
+
+			</p:panel>
+
+		</o:form>
+
+	</ui:define>
+</ui:composition>
