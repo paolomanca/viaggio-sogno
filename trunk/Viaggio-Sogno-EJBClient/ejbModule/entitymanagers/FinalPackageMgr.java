@@ -38,7 +38,11 @@ public interface FinalPackageMgr {
 	public void swap(FinalPackageDTO toChange, FinalProductDTO oldProduct,
 			ProductDTO newProduct);
 	
-	public FinalPackageDTO getByID(int ID);
+	public FinalPackageDTO getByMyID(int ID);
+	
+	public FinalPackageDTO getSharedFinalPackage(int ID);
+	
+	public String shareFinalPackage(FinalPackageDTO finalPkg);
 	
 	
 	/**

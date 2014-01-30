@@ -7,7 +7,7 @@ import dto.FinalProductDTO;
 @Local
 public interface FinalProductMgr {
 	
-	public void add(FinalProductDTO fP);
+	public int add(FinalProductDTO fP);
 
 	public void update(FinalProductDTO fP);
 
