@@ -197,8 +197,9 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
-	public FinalPackageDTO getSharedFinalPackage(int ID) {
-		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+	public FinalPackageDTO getSharedFinalPackage(String ID) {
+		SharedPackage sP = em.find(SharedPackage.class, ID);
+		return buildDTO(sP.getFinalPackage());
 	}
 
 	@Override
