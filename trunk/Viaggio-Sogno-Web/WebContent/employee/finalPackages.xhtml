@@ -1,0 +1,73 @@
+<ui:composition template="/WEB-INF/templates/layout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
+
+	<ui:define name="page-title">AdminPanel</ui:define>
+
+	<ui:define name="breadcrumb">
+		<p:menuitem value="Admin Home" disabled="true" />
+	</ui:define>
+
+	<ui:define name="content">
+
+		<o:form includeViewParams="true">
+
+			<p:dataTable id="fPkgTable" var="package"
+				value="#{finalPackageBean.all}" widgetVar="pkgTable"
+				paginator="true" rows="20"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+				<p:column filterBy="id" headerText="ID" filterMatchMode="exact">
+					<h:outputText value="#{package.id}" />
+				</p:column>
+
+				<p:column filterBy="originalPackage.id"
+					headerText="Original Package ID" filterMatchMode="exact">
+					<h:outputText value="#{package.originalPackage.id}" />
+				</p:column>
+
+				<p:column filterBy="originalPackage.name"
+					headerText="Original Package ID" filterMatchMode="contains">
+					<h:outputText value="#{package.originalPackage.name}" />
+				</p:column>
+
+				<p:column headerText="Reserved">
+					<p:selectBooleanButton value="#{package.reserved}" onLabel="Yes"
+						offLabel="No" onIcon="ui-icon-check" disabled="true"
+						offIcon="ui-icon-close" />
+				</p:column>
+
+				<p:column headerText="Paid">
+					<p:selectBooleanButton value="#{package.paid}" onLabel="Yes"
+						offLabel="No" onIcon="ui-icon-check" disabled="true"
+						offIcon="ui-icon-close" />
+				</p:column>
+
+				<p:column headerText="Shared">
+					<p:selectBooleanButton value="#{package.shared}" onLabel="Yes"
+						offLabel="No" onIcon="ui-icon-check" disabled="true"
+						offIcon="ui-icon-close" />
+				</p:column>
+
+				<p:column width="150" style="text-align: center">
+					<p:menuButton value="Actions">
+						<p:menuitem value="View" outcome="finalPackage">
+							<f:param name="act" value="show" />
+							<f:param name="fPkgID" value="#{package.id}" />
+						</p:menuitem>
+						<p:menuitem value="Modify" outcome="finalPackage">
+							<f:param name="act" value="edit" />
+							<f:param name="fPkgID" value="#{package.id}" />
+						</p:menuitem>
+						<p:menuitem value="Remove" action="#{finalPackageBean.remove(package)}"
+							update="fPkgTable" />
+					</p:menuButton>
+				</p:column>
+			</p:dataTable>
+		</o:form>
+
+	</ui:define>
+</ui:composition>
