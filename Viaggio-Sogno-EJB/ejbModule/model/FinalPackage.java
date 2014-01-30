@@ -58,7 +58,8 @@ public class FinalPackage implements Serializable {
 		)
 	private List<Product> products;
 	
-	private boolean shared = false;
+	private boolean paid = false;
+	private boolean reserved = false;
 
 	public FinalPackage() {
 	}
@@ -125,12 +126,20 @@ public class FinalPackage implements Serializable {
 		this.sharedPackage = sharedPackage;
 	}
 
-	public boolean isShared() {
-		return shared;
+	public boolean isPaid() {
+		return paid;
 	}
 
-	public void setShared(boolean shared) {
-		this.shared = shared;
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
+
+	public boolean isReserved() {
+		return reserved;
+	}
+
+	public void setReserved(boolean reserved) {
+		this.reserved = reserved;
 	}
 
 	@Override
