@@ -8,8 +8,10 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 
+import dto.FinalPackageDTO;
 import dto.PackageDTO;
 import dto.ProductDTO;
+import entitymanagers.FinalPackageMgr;
 import entitymanagers.PackageMgr;
 
 @ManagedBean(name="packageBean")
@@ -18,6 +20,9 @@ public class PackageBean {
 	
 	@EJB
 	private PackageMgr pkgMgr;
+	
+	@EJB
+	private FinalPackageMgr fPkgMgr;
 	
 	@ManagedProperty(value = "#{param.act}")
 	protected String act;
@@ -29,8 +34,7 @@ public class PackageBean {
 
 	@PostConstruct
 	private void init() {
-		if ( act != null ) {
-			
+		if ( act != null ) {			
 			if( act.equalsIgnoreCase("create") ) {
 				pkg = new PackageDTO();
 				System.out.println("fix!"); // TODO WTF!?
@@ -40,6 +44,12 @@ public class PackageBean {
 		}
 	}
 
+	public String finalizePackage() {
+		FinalPackageDTO fPkg = fPkgMgr.finalizePackage(pkgMgr.getByID(pkgID));
+		return "finalPackage?act=show&amp;fPkgID =" + fPkg.getId()
+				+ "&amp;faces-redirect=true";
+	}
+	
 	public String add(){	
 		pkgMgr.add(pkg);
 		return "index?faces-redirect=true";
