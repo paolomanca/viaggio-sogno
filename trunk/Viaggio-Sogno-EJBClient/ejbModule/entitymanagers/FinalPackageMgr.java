@@ -40,7 +40,7 @@ public interface FinalPackageMgr {
 	
 	public FinalPackageDTO getByMyID(int ID);
 	
-	public FinalPackageDTO getSharedFinalPackage(int ID);
+	public FinalPackageDTO getSharedFinalPackage(String ID);
 	
 	public String shareFinalPackage(FinalPackageDTO finalPkg);
 	
