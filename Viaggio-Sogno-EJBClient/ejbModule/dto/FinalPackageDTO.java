@@ -11,6 +11,8 @@ public class FinalPackageDTO {
 	private String sharedID;
 	
 	private boolean finalized = false;
+	
+	private boolean shared = false;
 
 	@NotEmpty
 	private PackageDTO originalPackage;
@@ -76,6 +78,14 @@ public class FinalPackageDTO {
 
 	public void setFinalized(boolean finalized) {
 		this.finalized = finalized;
+	}
+
+	public boolean isShared() {
+		return shared;
+	}
+
+	public void setShared(boolean shared) {
+		this.shared = shared;
 	}
 
 }
