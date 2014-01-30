@@ -58,6 +58,7 @@ public class FinalPackage implements Serializable {
 		)
 	private List<Product> products;
 	
+	private boolean finalized = false;
 	private boolean paid = false;
 	private boolean reserved = false;
 
@@ -124,6 +125,14 @@ public class FinalPackage implements Serializable {
 
 	public void setSharedPackage(SharedPackage sharedPackage) {
 		this.sharedPackage = sharedPackage;
+	}
+
+	public boolean isFinalized() {
+		return finalized;
+	}
+
+	public void setFinalized(boolean finalized) {
+		this.finalized = finalized;
 	}
 
 	public boolean isPaid() {

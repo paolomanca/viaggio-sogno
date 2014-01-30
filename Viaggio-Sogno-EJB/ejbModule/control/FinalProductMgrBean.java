@@ -1,7 +1,8 @@
 package control;
 
+import java.util.List;
+
 import javax.annotation.Resource;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
@@ -14,7 +15,6 @@ import model.FinalExcursion;
 import model.FinalFlight;
 import model.FinalHotel;
 import model.FinalProduct;
-import model.Group;
 import model.Product;
 import dto.FinalExcursionDTO;
 import dto.FinalFlightDTO;
@@ -39,7 +39,6 @@ public class FinalProductMgrBean implements FinalProductMgr {
 	private UserMgrBean usrMgr;
 
 	@Override
-	@RolesAllowed({Group._CUSTOMER})
 	public int add(FinalProductDTO fPDTO) {
 		FinalProduct fP = buildFromDTO(fPDTO);		
 		fP.setProduct(em.find(Product.class, fPDTO.getProduct().getId()));
@@ -63,7 +62,6 @@ public class FinalProductMgrBean implements FinalProductMgr {
 	}
 
 	@Override
-	@RolesAllowed({Group._CUSTOMER})
 	public void update(FinalProductDTO fP) {
 		switch (fP.getType()) {
 		case FinalFlight.TYPE:
@@ -91,7 +89,6 @@ public class FinalProductMgrBean implements FinalProductMgr {
 	}
 
 	@Override
-	@RolesAllowed({Group._CUSTOMER})
 	public void remove(FinalProductDTO fP) {
 		switch (fP.getType()) {
 		case FinalFlight.TYPE:
@@ -150,19 +147,33 @@ public class FinalProductMgrBean implements FinalProductMgr {
 	}
 
 	private FinalFlight flightFromRelativeID(int id) {
-		return em.createQuery("SELECT t FROM FinalFlight t WHERE t.idRelative = :id AND t.user = :user ", FinalFlight.class)
-				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
+		List<FinalFlight> out = em.createQuery("SELECT t FROM FinalFlight t WHERE t.idRelative = :id AND t.user = :user ", FinalFlight.class)
+				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getResultList();
+		if(out.isEmpty()){
+			return null;
+		} else {
+			return out.get(0);
+		}
 	}
 
 	private FinalHotel hotelFromRelativeID(int id) {
-		return em.createQuery("SELECT t FROM FinalHotel t WHERE t.idRelative = :id AND t.user = :user ", FinalHotel.class)
-				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
+		List<FinalHotel> out = em.createQuery("SELECT t FROM FinalHotel t WHERE t.idRelative = :id AND t.user = :user ", FinalHotel.class)
+				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getResultList();	
+		if(out.isEmpty()){
+			return null;
+		} else {
+			return out.get(0);
+		}
 	}
 
 	private FinalExcursion excursionFromRelativeID(int id) {
-		System.out.println("Searching for excursion numnber: "+id);
-		return em.createQuery("SELECT t FROM FinalExcursion t WHERE t.idRelative = :id AND t.user = :user ", FinalExcursion.class)
-				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
+		List<FinalExcursion> out = em.createQuery("SELECT t FROM FinalExcursion t WHERE t.idRelative = :id AND t.user = :user ", FinalExcursion.class)
+				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getResultList();
+		if(out.isEmpty()){
+			return null;
+		} else {
+			return out.get(0);
+		}
 	}
 
 	/* oh my */ // TODO try em.find(FinalProduct.class, id)
