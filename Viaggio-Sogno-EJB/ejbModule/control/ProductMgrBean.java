@@ -72,12 +72,13 @@ public class ProductMgrBean implements ProductMgr {
 
 	@Override
 	public void update(ProductDTO productDTO) {
-		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+		Product toUpdate = new Product(productDTO);
+		em.merge(toUpdate);
 	}
 
 	@Override
 	public void remove(ProductDTO productDTO) {
-		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+		em.remove(em.find(Product.class, productDTO).getIdproduct());
 	}
 
 }
