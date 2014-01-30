@@ -16,43 +16,17 @@ import entitymanagers.PackageMgr;
 @RequestScoped
 public class PackageBean {
 	
-	private static final String FLIGHT = "flight";
-	private static final String HOTEL = "hotel";
-	private static final String EXCURSION = "excursion";
-	
 	@EJB
 	private PackageMgr pkgMgr;
+	
+	@ManagedProperty(value = "#{param.act}")
+	protected String act;
 	
 	@ManagedProperty(value = "#{param.pkgID}")
 	protected int pkgID;
 	
-	public int getPkgID() {
-		return pkgID;
-	}
-
-	public void setPkgID(int pkgID) {
-		this.pkgID = pkgID;
-	}
-
-	public String getAct() {
-		return act;
-	}
-
-	public void setAct(String act) {
-		this.act = act;
-	}
-
-
-	@ManagedProperty(value = "#{param.act}")
-	protected String act;
-	
 	private PackageDTO pkg;
-	
-	
-	public PackageBean() {
-		pkg = new PackageDTO();
-	}
-	
+
 	@PostConstruct
 	private void init() {
 		if ( act != null ) {
@@ -64,11 +38,26 @@ public class PackageBean {
 			}
 		}
 	}
-	
-	
+
 	public String add(){	
 		pkgMgr.add(pkg);
 		return "index?faces-redirect=true";
+	}
+
+	public String getAct() {
+		return act;
+	}
+
+	public void setAct(String act) {
+		this.act = act;
+	}
+
+	public int getPkgID() {
+		return pkgID;
+	}
+
+	public void setPkgID(int pkgID) {
+		this.pkgID = pkgID;
 	}
 
 	public PackageDTO getPackage() {
@@ -76,39 +65,41 @@ public class PackageBean {
 	}
 	
 	
-	public List<ProductDTO> getFirstChoicesFlight() {
-		return pkgMgr.listFirstChoicesByType(pkg, FLIGHT);
+	public List<ProductDTO> getFirstFlight() {
+		System.out.println(pkg);
+		return pkgMgr.listFirstChoicesByType(pkg, ProductDTO.FLIGHT );
 	}
 		
 	
-	public void setFirstChoicesFlight( List<ProductDTO> products ) {
+	public void setFirstFlight( List<ProductDTO> products ) {
 		System.out.println(products);
 
 		pkg.getFirstChoices().addAll(products);
 	}
 
 	
-	public List<ProductDTO> getFirstChoicesHotel() {
-		return pkgMgr.listFirstChoicesByType(pkg, HOTEL);
+	public List<ProductDTO> getFirstHotel() {
+		return pkgMgr.listFirstChoicesByType(pkg, ProductDTO.HOTEL);
 	}
 		
 	
-	public void setFirstChoicesHotel( List<ProductDTO> products ) {
+	public void setFirstHotel( List<ProductDTO> products ) {
 		pkg.getFirstChoices().addAll(products);
 	}
 	
 
-	public List<ProductDTO> getFirstChoicesExcursion() {
-		return pkgMgr.listFirstChoicesByType(pkg, EXCURSION);
+	public List<ProductDTO> getFirstExcursion() {
+		return pkgMgr.listFirstChoicesByType(pkg, ProductDTO.EXCURSION);
 	}
 	
 	
-	public void setFirstChoicesExcursion( List<ProductDTO> products ) {
+	public void setFirstExcursion( List<ProductDTO> products ) {
 		pkg.getFirstChoices().addAll(products);
 	}
 	
 	public List<ProductDTO> getAlternativesFlight() {
-		return pkgMgr.listFirstChoicesByType(pkg, FLIGHT);
+		System.out.println(pkg);
+		return pkgMgr.listFirstChoicesByType(pkg, ProductDTO.FLIGHT);
 	}
 		
 	
@@ -118,7 +109,7 @@ public class PackageBean {
 
 	
 	public List<ProductDTO> getAlternativesHotel() {
-		return pkgMgr.listAlternativesByType(pkg, HOTEL);
+		return pkgMgr.listAlternativesByType(pkg, ProductDTO.HOTEL);
 	}
 		
 	
@@ -128,7 +119,7 @@ public class PackageBean {
 	
 
 	public List<ProductDTO> getAlternativesExcursion() {
-		return pkgMgr.listAlternativesByType(pkg, EXCURSION);
+		return pkgMgr.listAlternativesByType(pkg, ProductDTO.EXCURSION);
 	}
 	
 	

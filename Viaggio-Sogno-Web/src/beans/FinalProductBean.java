@@ -10,6 +10,7 @@ import dto.FinalExcursionDTO;
 import dto.FinalFlightDTO;
 import dto.FinalHotelDTO;
 import dto.FinalProductDTO;
+import dto.ProductDTO;
 import entitymanagers.FinalPackageMgr;
 import entitymanagers.FinalProductMgr;
 import entitymanagers.ProductMgr;
@@ -51,13 +52,13 @@ public class FinalProductBean {
 			if (act.equalsIgnoreCase("create")) {
 				
 				switch (type) {
-				case "FLIGHT":
+				case ProductDTO.FLIGHT:
 					finalProduct = new FinalFlightDTO();
 					break;
-				case "HOTEL":
+				case ProductDTO.HOTEL:
 					finalProduct = new FinalHotelDTO();
 					break;
-				case "EXCURSION":
+				case ProductDTO.EXCURSION:
 					finalProduct = new FinalExcursionDTO();
 					break;
 				}

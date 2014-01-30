@@ -52,6 +52,6 @@ public class FinalExcursionDTO implements FinalProductDTO {
 
 	@Override
 	public String getType() {
-		return EXCURSION;
+		return ProductDTO.EXCURSION;
 	}
 }

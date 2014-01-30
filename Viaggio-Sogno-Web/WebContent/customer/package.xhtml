@@ -16,8 +16,7 @@
 		<o:form id="packageForm" includeRequestParams="true">
 
 			<h3>Flights</h3>
-			<p:dataTable var="flight" value="#{packageBean.firstChoichesFlight}"
-				rendered="#{not empty packageBean.firstChoichesFlight}">
+			<p:dataTable var="flight" value="#{packageBean.firstFlight}">
 
 				<p:column headerText="From">
 					<h:outputText value="#{flight.depAirport}" />
@@ -41,8 +40,8 @@
 
 
 			<h3>Hotels</h3>
-			<p:dataTable var="hotel" value="#{packageBean.firstChoichesHotel}"
-				rendered="#{not empty packageBean.firstChoichesHotel}">
+			<p:dataTable var="hotel" value="#{packageBean.firstHotel}"
+				rendered="#{not empty packageBean.firstHotel}">
 
 				<p:column headerText="Name">
 					<h:outputText value="#{hotel.name}" />
@@ -65,8 +64,8 @@
 			<p:spacer height="30px" />
 
 			<h3>Excursions</h3>
-			<p:dataTable var="excursion" value="#{packageBean.firstChoichesExcursions}"
-				rendered="#{not empty packageBean.firstChoichesExcursions}">
+			<p:dataTable var="excursion" value="#{packageBean.firstExcursion}"
+				rendered="#{not empty packageBean.firstExcursion}">
 
 				<p:column headerText="Name">
 					<h:outputText value="#{excursion.name}" />

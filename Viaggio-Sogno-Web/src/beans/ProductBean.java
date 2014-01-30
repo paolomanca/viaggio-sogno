@@ -15,54 +15,42 @@ import entitymanagers.ProductMgr;
 @RequestScoped
 public class ProductBean {
 
-	private static final String FLIGHT = "flight";
-	private static final String HOTEL = "hotel";
-	private static final String EXCURSION = "excursion";
-
 	private ProductDTO product;
 
 	@EJB
-	private ProductMgr productMgr;
+	private ProductMgr prMgr;
 
-	@ManagedProperty(value = "#{param.id}")
-	private int id;
+	
+	@ManagedProperty(value = "#{param.prID}")
+	protected int prID;
+	
+	@ManagedProperty(value = "#{param.act}")
+	protected String act;
+	
+	@ManagedProperty(value = "#{param.type}")
+	protected String type;
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	@PostConstruct
 	public void init() {
-		if (id <= 0)
-			product = new ProductDTO();
-		else
-			product = productMgr.getByID(id);
+		
+		if ( act != null ) {
+			if ( act.equalsIgnoreCase("create") ) {
+				product = new ProductDTO();
+			} else {
+				product = prMgr.getByID(prID);
+			}
+		}
 	}
-
-	public String addFlight() {
-		getProduct().setType(FLIGHT);
-		productMgr.add(getProduct());
-		return "index?faces-redirect=true";
-	}
-
-	public String addHotel() {
-		getProduct().setType(HOTEL);
-		productMgr.add(getProduct());
-		return "index?faces-redirect=true";
-	}
-
-	public String addExcursion() {
-		getProduct().setType(EXCURSION);
-		productMgr.add(getProduct());
+	
+	public String add() {
+		product.setType(type);
+		prMgr.add(product);
 		return "index?faces-redirect=true";
 	}
 
 	public List<ProductDTO> getAll() {
-		return productMgr.listAllProducts();
+		return prMgr.listAllProducts();
 	}
 
 	public ProductDTO getProduct() {
@@ -74,15 +62,15 @@ public class ProductBean {
 	}
 
 	public List<ProductDTO> getFlights() {
-		return productMgr.listByType(FLIGHT);
+		return prMgr.listByType(ProductDTO.FLIGHT);
 	}
 
 	public List<ProductDTO> getHotels() {
-		return productMgr.listByType(HOTEL);
+		return prMgr.listByType(ProductDTO.HOTEL);
 	}
 
 	public List<ProductDTO> getExcursions() {
-		return productMgr.listByType(EXCURSION);
+		return prMgr.listByType(ProductDTO.EXCURSION);
 	}
 
 }

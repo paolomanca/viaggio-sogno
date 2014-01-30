@@ -66,6 +66,6 @@ public class FinalHotelDTO implements FinalProductDTO {
 
 	@Override
 	public String getType() {
-		return HOTEL;
+		return ProductDTO.HOTEL;
 	}
 }

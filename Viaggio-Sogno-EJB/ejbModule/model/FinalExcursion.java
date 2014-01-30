@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import dto.FinalExcursionDTO;
+import dto.ProductDTO;
 
 import java.util.Date;
 
@@ -19,7 +20,7 @@ import java.util.Date;
 public class FinalExcursion extends FinalProduct implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final String TYPE = Product.EXCURSION;
+	public static final String TYPE = ProductDTO.EXCURSION;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(nullable=false)

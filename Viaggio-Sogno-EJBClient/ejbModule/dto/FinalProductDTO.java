@@ -1,10 +1,6 @@
 package dto;
 
 public interface FinalProductDTO {
-	
-	public String FLIGHT = "FLIGHT";
-	public String HOTEL = "HOTEL";
-	public String EXCURSION = "EXCURSION";
 
 	public int getId();
 	
