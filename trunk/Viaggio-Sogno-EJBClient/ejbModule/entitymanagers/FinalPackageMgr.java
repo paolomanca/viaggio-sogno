@@ -31,7 +31,20 @@ public interface FinalPackageMgr {
 	 */
 	public void remove(FinalPackageDTO finalPkg);
 	
+	
+	/**
+	 * 
+	 * @param container
+	 * @param finalProduct
+	 */
 	public void finalizeProduct(FinalPackageDTO container, FinalProductDTO finalProduct);
+	
+	
+	/**
+	 *
+	 * @param byMyID
+	 */
+	public void reserve(FinalPackageDTO byMyID);
 	
 	public void swap(FinalPackageDTO finalPackage, ProductDTO oldProduct, ProductDTO newProduct);
 	
@@ -55,6 +68,8 @@ public interface FinalPackageMgr {
 	 * @return the list of final packages owned by the given user
 	 */
 	public List<FinalPackageDTO> listByUser(UserDTO user);
+
+	
 	
 
 

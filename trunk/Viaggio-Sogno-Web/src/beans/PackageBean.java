@@ -33,6 +33,7 @@ public class PackageBean {
 			
 			if( act.equalsIgnoreCase("create") ) {
 				pkg = new PackageDTO();
+				System.out.println("fix!"); // TODO WTF!?
 			} else {
 				pkg = pkgMgr.getByID(pkgID);
 			}
@@ -66,7 +67,6 @@ public class PackageBean {
 	
 	
 	public List<ProductDTO> getFirstFlight() {
-		System.out.println(pkg);
 		return pkgMgr.listFirstChoicesByType(pkg, ProductDTO.FLIGHT );
 	}
 		

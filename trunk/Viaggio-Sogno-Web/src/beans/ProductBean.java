@@ -73,4 +73,28 @@ public class ProductBean {
 		return prMgr.listByType(ProductDTO.EXCURSION);
 	}
 
+	public int getPrID() {
+		return prID;
+	}
+
+	public void setPrID(int prID) {
+		this.prID = prID;
+	}
+
+	public String getAct() {
+		return act;
+	}
+
+	public void setAct(String act) {
+		this.act = act;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+
 }
