@@ -74,12 +74,6 @@ public class FinalPackageBean {
 		}
 
 	}
-
-	public String finalizePackage() {
-		fPkg = fPkgMgr.finalizePackage(pkgMgr.getByID(pkgID));
-		return "finalPackage?act=show&ampfPkgID =" + fPkg.getId()
-				+ "&amp;faces-redirect=true";
-	}
 	
 	public void reserve() {
 		fPkgMgr.reserve(fPkgMgr.getByMyID(fPkgID));
@@ -91,7 +85,7 @@ public class FinalPackageBean {
 
 		fPkgMgr.update(fPkg);
 
-		return "finalPackage?act=show&ampfPkgID =" + fPkgID
+		return "finalPackage?act=show&amp;fPkgID =" + fPkgID
 				+ "&amp;faces-redirect=true";
 	}
 
@@ -109,7 +103,7 @@ public class FinalPackageBean {
 			fPkgMgr.swap(fPkg, oldProduct, selectedProduct);
 		}
 
-		return "index/finalPackage?act=show&fPkgID=" + fPkgID;
+		return "finalPackage?act=show&amp;fPkgID=" + fPkgID + "&amp;faces-redirect=true";
 	}
 
 	public String remove(FinalPackageDTO finalPkg) {
