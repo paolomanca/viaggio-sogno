@@ -28,7 +28,8 @@
 
 			<p:spacer height="25px" />
 
-			<p:panel header="First Choices">
+			<p:panel header="First Choices"
+				rendered="#{param['act'] == 'create'}">
 				<p:panelGrid styleClass="no-border-grid">
 					<p:row>
 						<p:column>
@@ -89,7 +90,7 @@
 
 			<p:spacer height="25px" />
 
-			<p:panel header="Alternatives">
+			<p:panel header="Alternatives" rendered="#{param['act'] == 'create'}">
 				<p:panelGrid styleClass="no-border-grid">
 
 					<p:row>
@@ -169,11 +170,14 @@
 
 
 				</p:panelGrid>
-				
+
 				<f:facet name="footer">
-					<p:commandButton value="Create" action="#{packageBean.add()}" />
+					<p:commandButton value="Create" action="#{packageBean.add()}"
+						rendered="#{param['act'] == 'create'}" />
+					<p:commandButton value="Update" action="#{packageBean.update()}"
+						rendered="#{param['act'] == 'edit'}" />
 				</f:facet>
-				
+
 			</p:panel>
 
 		</o:form>

@@ -58,6 +58,9 @@ public interface FinalPackageMgr {
 	public void shareFinalPackage(FinalPackageDTO finalPkg);
 	
 	
+	
+	public List<FinalPackageDTO> listAll();
+	
 	/**
 	 * @return the list of final packages owned by the current user
 	 */

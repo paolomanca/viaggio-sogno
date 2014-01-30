@@ -44,6 +44,15 @@ public class PackageBean {
 		pkgMgr.add(pkg);
 		return "index?faces-redirect=true";
 	}
+	
+	public void remove(PackageDTO rs) {
+		pkgMgr.remove(rs);
+	}
+	
+	public String update() {
+		pkgMgr.update(pkg);
+		return "index";
+	}
 
 	public String getAct() {
 		return act;
@@ -132,4 +141,8 @@ public class PackageBean {
 		return pkgMgr.listShowcasePackages();
 	}
 
+	public List<PackageDTO> getAll() {
+		return pkgMgr.listAllPackages();
+	}
+	
 }
