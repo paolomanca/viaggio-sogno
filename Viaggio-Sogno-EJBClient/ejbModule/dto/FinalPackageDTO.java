@@ -15,6 +15,9 @@ public class FinalPackageDTO {
 	private boolean paid = false;
 	
 	private boolean shared = false;
+	
+	private boolean reserved = false;
+
 
 	@NotEmpty
 	private PackageDTO originalPackage;
@@ -96,6 +99,14 @@ public class FinalPackageDTO {
 
 	public void setShared(boolean shared) {
 		this.shared = shared;
+	}
+
+	public boolean isReserved() {
+		return reserved;
+	}
+
+	public void setReserved(boolean reserved) {
+		this.reserved = reserved;
 	}
 
 }
