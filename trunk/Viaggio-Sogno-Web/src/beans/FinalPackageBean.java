@@ -20,131 +20,137 @@ import entitymanagers.FinalProductMgr;
 import entitymanagers.PackageMgr;
 import entitymanagers.ProductMgr;
 
-@ManagedBean(name="finalPackageBean")
+@ManagedBean(name = "finalPackageBean")
 @RequestScoped
 public class FinalPackageBean {
-	
+
 	@EJB
 	private ProductMgr prMgr;
-	
+
 	@EJB
 	private FinalProductMgr fPrMgr;
-	
+
 	@EJB
 	private PackageMgr pkgMgr;
-	
+
 	@EJB
 	private FinalPackageMgr fPkgMgr;
-	
+
 	@ManagedProperty(value = "#{param.pkgID}")
 	private int pkgID;
-	
+
 	@ManagedProperty(value = "#{param.fPkgID}")
 	private int fPkgID;
-	
+
 	@ManagedProperty(value = "#{param.prID}")
 	private int prID;
-	
+
 	@ManagedProperty(value = "#{param.fPrID}")
 	private int fPrID;
-	
+
 	@ManagedProperty(value = "#{param.act}")
 	private String act;
 
+	@ManagedProperty(value = "#{param.sharedID}")
+	private String sharedID;
+
 	private FinalPackageDTO fPkg;
-	
+
 	private ProductDTO selectedProduct;
-	
+
 	@PostConstruct
 	public void init() {
-		
-		if ( act != null ) {
-			
-			if ( act.equalsIgnoreCase("create") ) {
+
+		if (act != null) {
+
+			if (act.equalsIgnoreCase("create")) {
 				fPkg = new FinalPackageDTO();
 			} else {
 				fPkg = fPkgMgr.getByMyID(fPkgID);
 			}
-			
+
+		} else if (sharedID != null) {
+			fPkg = fPkgMgr.getSharedFinalPackage(sharedID);
 		}
-		
+
 	}
-	
+
 	public String finalizePackage() {
 		fPkg = fPkgMgr.finalizePackage(pkgMgr.getByID(pkgID));
-		return "finalPackage?act=show&ampfPkgID =" + fPkg.getId() + "&amp;faces-redirect=true";
+		return "finalPackage?act=show&ampfPkgID =" + fPkg.getId()
+				+ "&amp;faces-redirect=true";
+	}
+	
+	public void reserve() {
+		fPkgMgr.reserve(fPkgMgr.getByMyID(fPkgID));
 	}
 
 	public String addProduct() {
 		fPkg = fPkgMgr.getByMyID(fPkgID);
 		fPkg.getProducts().add(selectedProduct);
-		
+
 		fPkgMgr.update(fPkg);
-		
-		return "finalPackage?act=show&ampfPkgID =" + fPkgID + "&amp;faces-redirect=true";
+
+		return "finalPackage?act=show&ampfPkgID =" + fPkgID
+				+ "&amp;faces-redirect=true";
 	}
-	
+
 	public String swap() {
-		
-		System.out.println("Swapping selected product: " + selectedProduct.getId() );
-		System.out.flush();
-		
-		if ( prID > 0 ) {
+
+		if (prID > 0) {
 			ProductDTO oldProduct = prMgr.getByID(prID);
 			fPkgMgr.swap(fPkg, oldProduct, selectedProduct);
 		}
-		
-		if ( fPrID > 0 ) {
-			System.out.println("swapping "+fPrID+" with "+selectedProduct.getId());
+
+		if (fPrID > 0) {
+			System.out.println("swapping " + fPrID + " with "
+					+ selectedProduct.getId());
 			FinalProductDTO oldProduct = fPrMgr.getByID(fPrID);
 			fPkgMgr.swap(fPkg, oldProduct, selectedProduct);
 		}
-		
-		
+
 		return "index/finalPackage?act=show&fPkgID=" + fPkgID;
 	}
-	
+
 	public String remove(FinalPackageDTO finalPkg) {
 		fPkgMgr.remove(finalPkg);
 
 		return "index?faces-redirect=true";
 	}
-	
-	
-	public void removeProduct( ProductDTO product ) {
+
+	public void removeProduct(ProductDTO product) {
 		fPkg.removeProduct(product);
 		fPkgMgr.update(fPkg);
 	}
-	
-	public void removeFinalProduct( FinalProductDTO finalProduct ) {
+
+	public void removeFinalProduct(FinalProductDTO finalProduct) {
 		fPkg.removeFinalProduct(finalProduct);
 		fPkgMgr.update(fPkg);
 	}
-	
-	
+
 	private List<ProductDTO> filterProductByType(List<ProductDTO> products,
 			String type) {
 		List<ProductDTO> out = new LinkedList<>();
-		for(ProductDTO pDTO : products){
-			if(pDTO.getType().equals(type)){
+		for (ProductDTO pDTO : products) {
+			if (pDTO.getType().equals(type)) {
 				out.add(pDTO);
 			}
 		}
-		return out;	
+		return out;
 	}
 
 	@SuppressWarnings("unchecked")
 	private <T extends FinalProductDTO> List<T> filterFinalProductByType(
 			List<FinalProductDTO> finalProducts, Class<T> type) {
 		List<T> out = new LinkedList<>();
-		for(FinalProductDTO pDTO : finalProducts){
-			if(type.isInstance(pDTO)){
-				out.add((T)pDTO);
+		for (FinalProductDTO pDTO : finalProducts) {
+			if (type.isInstance(pDTO)) {
+				out.add((T) pDTO);
 			}
 		}
-		return out;		
+		return out;
 	}
-	
+
 	public int getPkgID() {
 		return pkgID;
 	}
@@ -160,60 +166,64 @@ public class FinalPackageBean {
 	public void setfPkgID(int id) {
 		this.fPkgID = id;
 	}
-	
 
 	public FinalPackageDTO getFinalPackage() {
 		return fPkg;
 	}
-	
+
 	public List<ProductDTO> getFlights() {
 		return filterProductByType(fPkg.getProducts(), ProductDTO.FLIGHT);
 	}
-	
+
 	public List<FinalFlightDTO> getFinalFlights() {
-		return filterFinalProductByType(fPkg.getFinalProducts(), FinalFlightDTO.class);
+		return filterFinalProductByType(fPkg.getFinalProducts(),
+				FinalFlightDTO.class);
 	}
-	
+
 	public List<ProductDTO> getHotels() {
 		return filterProductByType(fPkg.getProducts(), ProductDTO.HOTEL);
 	}
-	
+
 	public List<FinalHotelDTO> getFinalHotels() {
-		return filterFinalProductByType(fPkg.getFinalProducts(), FinalHotelDTO.class);
+		return filterFinalProductByType(fPkg.getFinalProducts(),
+				FinalHotelDTO.class);
 	}
-	
+
 	public List<ProductDTO> getExcursions() {
 		return filterProductByType(fPkg.getProducts(), ProductDTO.EXCURSION);
 	}
-	
+
 	public List<FinalExcursionDTO> getFinalExcursions() {
-		return filterFinalProductByType(fPkg.getFinalProducts(), FinalExcursionDTO.class);
+		return filterFinalProductByType(fPkg.getFinalProducts(),
+				FinalExcursionDTO.class);
 	}
 
 	public List<ProductDTO> getOptions(String type) {
 		List<ProductDTO> out = new LinkedList<ProductDTO>();
-		
-		List<ProductDTO> first = pkgMgr.listFirstChoicesByType(fPkg.getOriginalPackage(), type);
-		List<ProductDTO> alter = pkgMgr.listAlternativesByType(fPkg.getOriginalPackage(), type);
-		
+
+		List<ProductDTO> first = pkgMgr.listFirstChoicesByType(
+				fPkg.getOriginalPackage(), type);
+		List<ProductDTO> alter = pkgMgr.listAlternativesByType(
+				fPkg.getOriginalPackage(), type);
+
 		out.addAll(first);
 		out.addAll(alter);
-		
+
 		return out;
 	}
-	
+
 	public List<ProductDTO> getOptionsFlight() {
 		return getOptions(ProductDTO.FLIGHT);
 	}
-	
+
 	public List<ProductDTO> getOptionsHotel() {
 		return getOptions(ProductDTO.HOTEL);
 	}
-	
+
 	public List<ProductDTO> getOptionsExcursion() {
 		return getOptions(ProductDTO.EXCURSION);
 	}
-	
+
 	public List<FinalPackageDTO> getOwn() {
 		return fPkgMgr.listByUser();
 	}
@@ -243,13 +253,19 @@ public class FinalPackageBean {
 	}
 
 	public ProductDTO getSelectedProduct() {
-		//System.out.println("Getting selected product: " + selectedProduct.getId());
 		return selectedProduct;
 	}
 
 	public void setSelectedProduct(ProductDTO selectedProduct) {
-		//System.out.println("Setting selected product: " + selectedProduct.getId());
 		this.selectedProduct = selectedProduct;
+	}
+
+	public String getSharedID() {
+		return sharedID;
+	}
+
+	public void setSharedID(String sharedID) {
+		this.sharedID = sharedID;
 	}
 
 }
