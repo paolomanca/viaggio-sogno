@@ -22,7 +22,7 @@
 				<p:panelGrid id="finalProductGrid" styleClass="no-border-grid">
 
 					<p:row
-						rendered="#{param['type'] == 'HOTEL' || param['type'] == 'EXCURSION'}">
+						rendered="#{param['type'] == 'HOTEL' or param['type'] == 'EXCURSION'}">
 						<p:column>
 							<h:outputLabel for="name">Name:</h:outputLabel>
 						</p:column>
@@ -33,7 +33,7 @@
 					</p:row>
 
 					<p:row
-						rendered="#{param['type'] == 'HOTEL' || param['type'] == 'EXCURSION'}">
+						rendered="#{param['type'] == 'HOTEL' or param['type'] == 'EXCURSION'}">
 						<p:column>
 							<h:outputLabel for="location">Location:</h:outputLabel>
 						</p:column>
@@ -82,7 +82,7 @@
 					</p:row>
 
 					<p:row
-						rendered="#{param['type'] == 'HOTEL' || param['type'] == 'EXCURSION'}">
+						rendered="#{param['type'] == 'HOTEL' or param['type'] == 'EXCURSION'}">
 						<p:column>
 							<h:outputLabel for="rating">Description:</h:outputLabel>
 						</p:column>
@@ -145,6 +145,19 @@
 						</p:column>
 						<p:column>
 							<p:message for="checkOut" />
+						</p:column>
+					</p:row>
+
+					<p:row rendered="#{param['type'] == 'EXCURSION'}">
+						<p:column>
+							<h:outputLabel for="date" value="Check out" />
+						</p:column>
+						<p:column>
+							<p:calendar id="date"
+								value="#{finalProductBean.finalProduct.date}" />
+						</p:column>
+						<p:column>
+							<p:message for="date" />
 						</p:column>
 					</p:row>
 

@@ -309,8 +309,43 @@
 						<f:param name="fPkgID" value="#{param['fPkgID']}" />
 					</p:commandButton>
 				</f:facet>
+
 			</p:panel>
 
+
+			<p:spacer height="30px" />
+
+			<p:panel>
+				<p:panelGrid styleClass="no-border-grid">
+					<p:row>
+						<p:column>
+							<h:outputText value="Share this package with your friends: " />
+							<h:link
+								value="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/finalPackage.xhtml?sharedID=#{finalPackageBean.finalPackage.sharedID}"
+								outcome="/finalPackage">
+								<f:param name="sharedID"
+									value="#{finalPackageBean.finalPackage.sharedID}" />
+							</h:link>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:separator />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:commandButton value="Reserve"
+								action="#{finalPackageBean.reserve()}"
+								disabled="#{not finalProductBean.finalProduct.finalized}" />
+							<p:spacer width="20px" />
+							<h:outputText
+								value="All products have to be finalized in order to reserve the package"
+								rendered="#{not finalProductBean.finalProduct.finalized}" />
+						</p:column>
+					</p:row>
+				</p:panelGrid>
+			</p:panel>
 
 		</o:form>
 
