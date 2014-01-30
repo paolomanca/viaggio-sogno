@@ -69,9 +69,4 @@ public interface FinalPackageMgr {
 	 */
 	public List<FinalPackageDTO> listByUser(UserDTO user);
 
-	
-	
-
-
-
 }
