@@ -167,7 +167,27 @@ public class PackageMgrBean implements PackageMgr {
 
 	@Override
 	public void update(PackageDTO pkg) {
-		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+		Package toUpdate = em.find(Package.class, pkg.getId());
+		toUpdate.setName(pkg.getName());
+		toUpdate.setShowcased(pkg.isShowcased());
+		List<PackageHasProduct> managed = new LinkedList<>();
+		
+		for(ProductDTO pDTO : pkg.getFirstChoices()){
+			PackageHasProduct toAdd = new PackageHasProduct(toUpdate, em.find(Product.class, pDTO.getId()));
+			toAdd.setFirstChoice(true);
+			em.merge(toAdd);
+			managed.add(toAdd);
+		}
+		
+		for(ProductDTO pDTO : pkg.getAlternatives()){
+			PackageHasProduct toAdd = new PackageHasProduct(toUpdate, em.find(Product.class, pDTO.getId()));
+			toAdd.setFirstChoice(false);
+			em.merge(toAdd);
+			managed.add(toAdd);
+		}
+		
+		toUpdate.setPackageHasProducts(managed);
+		
 	}
 
 }
