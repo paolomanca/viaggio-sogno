@@ -213,6 +213,11 @@ public class FinalProductMgrBean implements FinalProductMgr {
 			throw new IllegalArgumentException("No such type: "+type);
 		}
 	}
+	
+	public FinalProduct fromRelativeID(int id){
+		return em.createQuery("SELECT t FROM FinalProduct t WHERE t.idRelative = :id AND t.user = :user ", FinalProduct.class)
+				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
+	}
 
 	public FinalProductDTO buildDTO(FinalProduct fP) {
 		FinalProductDTO out = null;

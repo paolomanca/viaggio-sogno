@@ -27,6 +27,9 @@ public class FinalPackage implements Serializable {
 	
 	@Column(name="IDFINAL_PACKAGE_RELATIVE", nullable=false)
 	private int idRelative;
+	
+	@OneToOne(cascade=CascadeType.ALL)
+	private SharedPackage sharedPackage;
 
 	//uni-directional many-to-one association to User
 	@ManyToOne
@@ -114,6 +117,22 @@ public class FinalPackage implements Serializable {
 		this.finalProducts = finalProducts;
 	}
 
+	public SharedPackage getSharedPackage() {
+		return sharedPackage;
+	}
+
+	public void setSharedPackage(SharedPackage sharedPackage) {
+		this.sharedPackage = sharedPackage;
+	}
+
+	public boolean isShared() {
+		return shared;
+	}
+
+	public void setShared(boolean shared) {
+		this.shared = shared;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -134,14 +153,6 @@ public class FinalPackage implements Serializable {
 		if (id != other.id)
 			return false;
 		return true;
-	}
-
-	public boolean isShared() {
-		return shared;
-	}
-
-	public void setShared(boolean shared) {
-		this.shared = shared;
 	}
 
 }

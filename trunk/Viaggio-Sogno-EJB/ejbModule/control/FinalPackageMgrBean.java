@@ -39,32 +39,39 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@EJB
 	private UserMgrBean usrMgr;
-	
+
 	@EJB
 	private PackageMgrBean pkgMgr;
-	
+
 	@EJB
 	private ProductMgrBean prdMgr;
 
 	@EJB
 	private FinalProductMgrBean fnPrdMgr;
-	
-	/*TODO free final products ids if removed*/
+
 	@Override
 	@RolesAllowed({Group._CUSTOMER})
 	public void update(FinalPackageDTO finalPkgDTO) {
 		FinalPackage fP = fromRelativeID(finalPkgDTO.getId());
 		fP.setProducts(new LinkedList<Product>());
+		List<FinalProduct> originalFinalProducts = fP.getFinalProducts();
+
 		fP.setFinalProducts(new LinkedList<FinalProduct>());
-		
+
 		for(ProductDTO pDTO : finalPkgDTO.getProducts()){
 			fP.getProducts().add(em.find(Product.class, pDTO.getId()));
 		}
-		
+
 		for(FinalProductDTO fPDTO : finalPkgDTO.getFinalProducts()){
 			fP.getFinalProducts().add(fnPrdMgr.fromRelativeID(fPDTO.getId(), fPDTO.getType()));
 		}
-		
+
+		if(originalFinalProducts.removeAll(fP.getFinalProducts())){
+			for(FinalProduct oFP : originalFinalProducts){
+				usrMgr.getPrincipalUser().freeID(oFP.getIdRelative());
+			}
+		}
+
 		em.merge(fP);
 	}
 
@@ -89,19 +96,19 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		FinalPackageDTO out = new FinalPackageDTO();
 		out.setId(ID);
 		out.setOriginalPackage(pkgMgr.buildDTO(in.getPackage()));
-		
+
 		List<ProductDTO> productDTOs = new LinkedList<>();
-		
+
 		List<FinalProductDTO> finalProductDTOs = new LinkedList<>();
-		
+
 		for(Product p : in.getProducts()){
 			productDTOs.add(prdMgr.buildDTO(p));		
 		}
-		
+
 		for(FinalProduct fP : in.getFinalProducts()){
 			finalProductDTOs.add(fnPrdMgr.buildDTO(fP));
 		}
-		
+
 		out.setProducts(productDTOs);
 		out.setFinalProducts(finalProductDTOs);
 
@@ -112,12 +119,12 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	public List<FinalPackageDTO> listByUser() {
 		List<FinalPackageDTO> out = new LinkedList<>();
 		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user", FinalPackage.class)
-		.setParameter("user", usrMgr.getPrincipalUser()).getResultList();
-		
+				.setParameter("user", usrMgr.getPrincipalUser()).getResultList();
+
 		for(FinalPackage pkg : toConvert){
 			out.add(buildDTO(pkg, pkg.getIdfinalPackageRelative()));
 		}
-		
+
 		return out;
 	}
 
@@ -126,12 +133,12 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	public List<FinalPackageDTO> listByUser(UserDTO user) {
 		List<FinalPackageDTO> out = new LinkedList<>();
 		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user", FinalPackage.class)
-		.setParameter("user", user).getResultList();
-		
+				.setParameter("user", user).getResultList();
+
 		for(FinalPackage fP : toConvert){
 			out.add(buildDTO(fP));
 		}
-		
+
 		return out;
 	}
 
@@ -144,11 +151,11 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	public void finalizeProduct(FinalPackageDTO container, FinalProductDTO finalProduct) {
 		FinalPackage current = fromRelativeID(container.getId());
 		Product finalizedPrd = em.find(Product.class, finalProduct.getProduct().getId());
-		
+
 		int id = fnPrdMgr.add(finalProduct);
 		FinalProduct fP = fnPrdMgr.fromRelativeID(id, finalProduct.getType());
 		current.getFinalProducts().add(fP);
-		
+
 		current.getProducts().remove(finalizedPrd);
 		em.merge(current);
 	}
@@ -156,14 +163,14 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@Override
 	public void swap(FinalPackageDTO toChange, ProductDTO oldProduct,
 			ProductDTO newProduct) {
-		
+
 		FinalPackage toSwap = fromRelativeID(toChange.getId());
-		Product oldP = em.find(Product.class, oldProduct);
-		Product newP = em.find(Product.class, newProduct);
-		
+		Product oldP = em.find(Product.class, oldProduct.getId());
+		Product newP = em.find(Product.class, newProduct.getId());
+
 		toSwap.getProducts().add(newP);
 		toSwap.getProducts().remove(oldP);
-		
+
 		em.merge(toSwap);
 	}
 
@@ -186,39 +193,49 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		fP.setPackage(toFinalize);
 		fP.setProducts(new LinkedList<Product>());
 		fP.setFinalProducts(new LinkedList<FinalProduct>());
-		
+
 		for(PackageHasProduct p : toFinalize.getPackageHasProducts()){
 			fP.getProducts().add(p.getProduct());
 		}
-		
+
 		em.persist(fP);
-		
+
 		return buildDTO(fP, fP.getIdfinalPackageRelative());
 	}
 
 	@Override
 	public FinalPackageDTO getSharedFinalPackage(String ID) {
 		SharedPackage sP = em.find(SharedPackage.class, ID);
-		return buildDTO(sP.getFinalPackage());
+		return buildSharedDTO(sP.getFinalPackage());
+	}
+
+	//TODO finish
+	private FinalPackageDTO buildSharedDTO(FinalPackage finalPackage) {
+		int idCount = 1;
+		FinalPackageDTO out = buildDTO(finalPackage);
+		out.setId(idCount++);
+		for(FinalProductDTO pDTO : out.getFinalProducts()){
+			pDTO.setId(idCount++);
+		}
+		return out;
 	}
 
 	@Override
-	public String shareFinalPackage(FinalPackageDTO finalPkg) {
+	public void shareFinalPackage(FinalPackageDTO finalPkg) {
 		FinalPackage toShare = fromRelativeID(finalPkg.getId());
-		
+
 		String uniqueId = UUID.randomUUID().toString();
-		
+
 		SharedPackage sP = new SharedPackage();
 		sP.setFinalPackage(toShare);
 		sP.setUniqueIdentifier(uniqueId);
-		
+
 		em.persist(sP);
-		
+
 		toShare.setShared(true);
-		
+		toShare.setSharedPackage(sP);
 		em.merge(toShare);
 		
-		return uniqueId;
 	}
 
 }

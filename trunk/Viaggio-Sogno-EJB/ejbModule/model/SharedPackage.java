@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  * Entity implementation class for Entity: SharedPackage
@@ -13,7 +14,7 @@ import javax.persistence.Id;
 
 public class SharedPackage implements Serializable {
 
-	
+	@OneToOne(mappedBy="sharedPackage")
 	private FinalPackage finalPackage;   
 	
 	@Id
