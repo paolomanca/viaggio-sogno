@@ -9,6 +9,8 @@ public class FinalPackageDTO {
 	private int id;
 	
 	private String sharedID;
+	
+	private boolean finalized = false;
 
 	@NotEmpty
 	private PackageDTO originalPackage;
@@ -66,6 +68,14 @@ public class FinalPackageDTO {
 
 	public void setSharedID(String sharedID) {
 		this.sharedID = sharedID;
+	}
+
+	public boolean isFinalized() {
+		return finalized;
+	}
+
+	public void setFinalized(boolean finalized) {
+		this.finalized = finalized;
 	}
 
 }
