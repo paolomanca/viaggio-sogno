@@ -40,14 +40,16 @@ public class FinalProductMgrBean implements FinalProductMgr {
 
 	@Override
 	@RolesAllowed({Group._CUSTOMER})
-	public void add(FinalProductDTO fPDTO) {
+	public int add(FinalProductDTO fPDTO) {
 		FinalProduct fP = buildFromDTO(fPDTO);		
-		fP.setProduct(em.find(Product.class, fP.getProduct().getIdproduct()));
+		fP.setProduct(em.find(Product.class, fPDTO.getProduct().getId()));
 		fP.setIdRelative(usrMgr.getPrincipalUser().nextID());
+		fP.setUser(usrMgr.getPrincipalUser());
 		em.persist(fP);
+		return fP.getIdRelative();
 	}
 
-	public FinalProduct buildFromDTO(FinalProductDTO fPDTO) {
+	private FinalProduct buildFromDTO(FinalProductDTO fPDTO) {
 		switch (fPDTO.getType()) {
 		case FinalFlight.TYPE:
 			return new FinalFlight((FinalFlightDTO) fPDTO);
@@ -148,18 +150,18 @@ public class FinalProductMgrBean implements FinalProductMgr {
 	}
 
 	private FinalFlight flightFromRelativeID(int id) {
-		return em.createQuery("SELECT t FROM FinalFlight t WHERE t.idRelative = :id AND t.finalPackage.user = :user ", FinalFlight.class)
+		return em.createQuery("SELECT t FROM FinalFlight t WHERE t.idRelative = :id AND t.user = :user ", FinalFlight.class)
 				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
 	}
 
 	private FinalHotel hotelFromRelativeID(int id) {
-		return em.createQuery("SELECT t FROM FinalHotel t WHERE t.idRelative = :id AND t.finalPackage.user = :user ", FinalHotel.class)
+		return em.createQuery("SELECT t FROM FinalHotel t WHERE t.idRelative = :id AND t.user = :user ", FinalHotel.class)
 				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
 	}
 
 	private FinalExcursion excursionFromRelativeID(int id) {
 		System.out.println("Searching for excursion numnber: "+id);
-		return em.createQuery("SELECT t FROM FinalExcursion t WHERE t.idRelative = :id AND t.finalPackage.user = :user ", FinalExcursion.class)
+		return em.createQuery("SELECT t FROM FinalExcursion t WHERE t.idRelative = :id AND t.user = :user ", FinalExcursion.class)
 				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();		
 	}
 

@@ -2,6 +2,7 @@ package control;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
@@ -13,9 +14,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import model.FinalPackage;
+import model.Package;
 import model.FinalProduct;
 import model.Group;
+import model.PackageHasProduct;
 import model.Product;
+import model.SharedPackage;
 import dto.FinalPackageDTO;
 import dto.FinalProductDTO;
 import dto.PackageDTO;
@@ -44,7 +48,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@EJB
 	private FinalProductMgrBean fnPrdMgr;
-
+	
 	/*TODO free final products ids if removed*/
 	@Override
 	@RolesAllowed({Group._CUSTOMER})
@@ -73,7 +77,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	@RolesAllowed({Group._CUSTOMER})
-	public FinalPackageDTO getByID(int ID) {
+	public FinalPackageDTO getByMyID(int ID) {
 		return buildDTO(fromRelativeID(ID), ID);
 	}
 
@@ -141,9 +145,8 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		FinalPackage current = fromRelativeID(container.getId());
 		Product finalizedPrd = em.find(Product.class, finalProduct.getProduct().getId());
 		
-		FinalProduct fP = fnPrdMgr.fromRelativeID(finalProduct.getId(), finalProduct.getType());
-		fP.setIdRelative(usrMgr.getPrincipalUser().nextID());
-		fP.setProduct(finalizedPrd);
+		int id = fnPrdMgr.add(finalProduct);
+		FinalProduct fP = fnPrdMgr.fromRelativeID(id, finalProduct.getType());
 		current.getFinalProducts().add(fP);
 		
 		current.getProducts().remove(finalizedPrd);
@@ -167,7 +170,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@Override
 	public void swap(FinalPackageDTO toChange, FinalProductDTO oldProduct, ProductDTO newProduct) {
 		FinalPackage toSwap = fromRelativeID(toChange.getId());
-		Product newP = em.find(Product.class, newProduct);
+		Product newP = em.find(Product.class, newProduct.getId());
 		toSwap.getProducts().add(newP);
 		toSwap.getFinalProducts().remove(fnPrdMgr.fromRelativeID(oldProduct.getId(), oldProduct.getType()));		
 		usrMgr.getPrincipalUser().freeID(oldProduct.getId());
@@ -176,7 +179,45 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	public FinalPackageDTO finalizePackage(PackageDTO originalPkg) {
+		Package toFinalize = em.find(Package.class, originalPkg.getId());
+		FinalPackage fP = new FinalPackage();
+		fP.setIdfinalPackageRelative(usrMgr.getPrincipalUser().nextID());
+		fP.setUser(usrMgr.getPrincipalUser());
+		fP.setPackage(toFinalize);
+		fP.setProducts(new LinkedList<Product>());
+		fP.setFinalProducts(new LinkedList<FinalProduct>());
+		
+		for(PackageHasProduct p : toFinalize.getPackageHasProducts()){
+			fP.getProducts().add(p.getProduct());
+		}
+		
+		em.persist(fP);
+		
+		return buildDTO(fP, fP.getIdfinalPackageRelative());
+	}
+
+	@Override
+	public FinalPackageDTO getSharedFinalPackage(int ID) {
 		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+	}
+
+	@Override
+	public String shareFinalPackage(FinalPackageDTO finalPkg) {
+		FinalPackage toShare = fromRelativeID(finalPkg.getId());
+		
+		String uniqueId = UUID.randomUUID().toString();
+		
+		SharedPackage sP = new SharedPackage();
+		sP.setFinalPackage(toShare);
+		sP.setUniqueIdentifier(uniqueId);
+		
+		em.persist(sP);
+		
+		toShare.setShared(true);
+		
+		em.merge(toShare);
+		
+		return uniqueId;
 	}
 
 }

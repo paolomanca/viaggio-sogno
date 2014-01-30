@@ -54,6 +54,8 @@ public class FinalPackage implements Serializable {
 			}
 		)
 	private List<Product> products;
+	
+	private boolean shared = false;
 
 	public FinalPackage() {
 	}
@@ -132,6 +134,14 @@ public class FinalPackage implements Serializable {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	public boolean isShared() {
+		return shared;
+	}
+
+	public void setShared(boolean shared) {
+		this.shared = shared;
 	}
 
 }
