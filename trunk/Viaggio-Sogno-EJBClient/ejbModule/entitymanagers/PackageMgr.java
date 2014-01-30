@@ -2,7 +2,10 @@ package entitymanagers;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
+
+import common.Constants;
 
 import dto.PackageDTO;
 import dto.ProductDTO;
@@ -10,8 +13,10 @@ import dto.ProductDTO;
 @Local
 public interface PackageMgr {
 	
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public void add(PackageDTO pkg);
 	
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public void remove(PackageDTO pkg);
 	
 	public void update(PackageDTO pkg);
