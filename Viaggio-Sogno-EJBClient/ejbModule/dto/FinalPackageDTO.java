@@ -7,6 +7,8 @@ import org.hibernate.validator.constraints.NotEmpty;
 public class FinalPackageDTO {
 
 	private int id;
+	
+	private String sharedID;
 
 	@NotEmpty
 	private PackageDTO originalPackage;
@@ -56,6 +58,14 @@ public class FinalPackageDTO {
 
 	public void setFinalProducts(List<FinalProductDTO> finalProducts) {
 		this.finalProducts = finalProducts;
+	}
+
+	public String getSharedID() {
+		return sharedID;
+	}
+
+	public void setSharedID(String sharedID) {
+		this.sharedID = sharedID;
 	}
 
 }

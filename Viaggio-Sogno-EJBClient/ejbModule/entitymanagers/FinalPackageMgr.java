@@ -42,7 +42,7 @@ public interface FinalPackageMgr {
 	
 	public FinalPackageDTO getSharedFinalPackage(String ID);
 	
-	public String shareFinalPackage(FinalPackageDTO finalPkg);
+	public void shareFinalPackage(FinalPackageDTO finalPkg);
 	
 	
 	/**
