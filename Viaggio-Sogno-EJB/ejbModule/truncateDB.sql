@@ -1,0 +1,16 @@
+SET foreign_key_checks = 0;
+TRUNCATE `traveldreamdb`.`final_excursion`;
+TRUNCATE `traveldreamdb`.`final_flight`;
+TRUNCATE `traveldreamdb`.`final_hotel`;
+TRUNCATE `traveldreamdb`.`final_package`;
+TRUNCATE `traveldreamdb`.`final_package_finalproduct`;
+TRUNCATE `traveldreamdb`.`final_package_has_product`;
+TRUNCATE `traveldreamdb`.`finalproduct`;
+TRUNCATE `traveldreamdb`.`id_pool`;
+TRUNCATE `traveldreamdb`.`idpool_pool`;
+TRUNCATE `traveldreamdb`.`package`;
+TRUNCATE `traveldreamdb`.`package_has_product`;
+TRUNCATE `traveldreamdb`.`product`;
+TRUNCATE `traveldreamdb`.`user_`;
+TRUNCATE `traveldreamdb`.`user_group`;
+SET foreign_key_checks = 1;
