@@ -8,35 +8,29 @@
 	<ui:define name="page-title">Product</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:menuitem value="Package" outcome="finalPackage">
-			<f:param name="act" value="show" />
-			<f:param name="fPkgID" value="#{param['fPkgID']}" />
-		</p:menuitem>
 		<p:menuitem value="#{param['type']}" disabled="true" />
 	</ui:define>
 
 	<ui:define name="content">
 
-		<o:form id="createProductForm" includeRequestParams="true">
+		<o:form id="productForm" includeRequestParams="true">
 			<p:panel>
-				<p:panelGrid styleClass="no-border-grid"
-					rendered="#{param['act'] == create}">
+				<p:panelGrid styleClass="no-border-grid">
 
 					<p:row
 						rendered="#{param['type'] == 'HOTEL' || param['type'] == 'EXCURSION'}">
 						<p:column>
-							<h:inputLabel for="name">Name:</h:outputLabel>
+							<h:outputLabel for="name">Name:</h:outputLabel>
 						</p:column>
 						<p:column colspan="2">
-							<h:inputText id="name"
-								value="#{productBean.product.name}" />
+							<h:inputText id="name" value="#{productBean.product.name}" />
 						</p:column>
 					</p:row>
 
 					<p:row
 						rendered="#{param['type'] == 'HOTEL' || param['type'] == 'EXCURSION'}">
 						<p:column>
-							<h:inputLabel for="location">Location:</h:outputLabel>
+							<h:outputLabel for="location">Location:</h:outputLabel>
 						</p:column>
 						<p:column colspan="2">
 							<h:inputText id="location"
@@ -77,8 +71,7 @@
 							<h:outputLabel for="rating">Rating:</h:outputLabel>
 						</p:column>
 						<p:column colspan="2">
-							<h:inputText id="rating"
-								value="#{productBean.product.rating}" />
+							<h:inputText id="rating" value="#{productBean.product.rating}" />
 						</p:column>
 					</p:row>
 
@@ -98,75 +91,20 @@
 							<h:outputLabel for="price">Price:</h:outputLabel>
 						</p:column>
 						<p:column colspan="2">
-							<h:inputText id="price"
-								value="#{productBean.product.price} €" />
+							<h:inputText id="price" value="#{productBean.product.price}" />
 						</p:column>
 					</p:row>
-
-					<p:row>
-						<p:column colspan="3">
-							<p:separator />
-						</p:column>
-					</p:row>
-
-					<p:row rendered="#{param['type'] == 'FLIGHT'}">
-						<p:column>
-							<h:outputLabel for="departure" value="Departure" />
-						</p:column>
-						<p:column>
-							<p:calendar id="departure"
-								value="#{productBean.product.departure}"
-								pattern="dd/MM/yyyy HH:mm" />
-						</p:column>
-						<p:column>
-							<p:message for="departure" />
-						</p:column>
-					</p:row>
-
-					<p:row rendered="#{param['type'] == 'HOTEL'}">
-						<p:column>
-							<h:inputLabel for="checkIn" value="Check in" />
-						</p:column>
-						<p:column>
-							<p:calendar id="checkIn"
-								value="#{productBean.product.checkIn}" />
-						</p:column>
-						<p:column>
-							<p:message for="checkIn" />
-						</p:column>
-					</p:row>
-
-					<p:row rendered="#{param['type'] == 'HOTEL'}">
-						<p:column>
-							<h:outputLabel for="checkOut" value="Check out" />
-						</p:column>
-						<p:column>
-							<p:calendar id="checkOut"
-								value="#{productBean.product.checkOut}" />
-						</p:column>
-						<p:column>
-							<p:message for="checkOut" />
-						</p:column>
-					</p:row>
-
-					<p:row>
-						<p:column colspan="3">
-							<p:separator height="5px" />
-						</p:column>
-					</p:row>
-
-					<p:row>
-						<p:column colspan="3">
-							<p:commandButton value="Update"
-								action="#{productBean.update()}"
-								rendered="#{param['act'] == 'edit'}" ajax="false" />
-
-							<p:commandButton value="Finalize" update="hotelGrid"
-								action="#{productBean.add()}"
-								rendered="#{param['act'] == 'create'}" ajax="false" />
-						</p:column>
-					</p:row>
+>
 				</p:panelGrid>
+
+				<f:facet name="footer">
+					<p:commandButton value="Update" action="#{productBean.update()}"
+						rendered="#{param['act'] == 'edit'}" ajax="false" />
+
+					<p:commandButton value="Create" update="hotelGrid"
+						action="#{productBean.add()}"
+						rendered="#{param['act'] == 'create'}" ajax="false" />
+				</f:facet>
 			</p:panel>
 		</o:form>
 

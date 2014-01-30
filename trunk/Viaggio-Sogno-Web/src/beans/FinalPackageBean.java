@@ -268,4 +268,8 @@ public class FinalPackageBean {
 		this.sharedID = sharedID;
 	}
 
+	public List<FinalPackageDTO> getAll() {
+		return fPkgMgr.listAll();
+	}
+	
 }

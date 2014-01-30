@@ -14,6 +14,8 @@ public interface PackageMgr {
 	
 	public void remove(PackageDTO pkg);
 	
+	public void update(PackageDTO pkg);
+	
 	public PackageDTO getByID(int id);
 	
 	public List<PackageDTO> listAllPackages();
@@ -27,5 +29,7 @@ public interface PackageMgr {
 	public List<ProductDTO> listFirstChoicesByType(PackageDTO pkg, String type);
 	
 	public List<ProductDTO> listAlternativesByType(PackageDTO pkg, String type);
+
+
 
 }

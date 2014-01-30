@@ -13,19 +13,79 @@
 
 	<ui:define name="content">
 
-		<o:form>
-			<p:menu>
+		<p:panelGrid styleClass="no-border-grid">
+			<p:row>
+				<p:column>
+					<o:form id="leftColForm" includeRequestParams="true">
+						<p:menu>
 
-				<p:submenu label="Manage Packages">
-					<p:menuitem value="Create Package" outcome="package">
-						<f:param name="act" value="create" />
-					</p:menuitem>
-				</p:submenu>
+							<p:submenu label="Manage Packages">
+								<p:menuitem value="Create Package" outcome="package">
+									<f:param name="act" value="create" />
+								</p:menuitem>
+								<p:menuitem value="All Final Packages" outcome="finalPackages" />
+							</p:submenu>
 
-			</p:menu>
+							<p:submenu label="Manage Products">
+								<p:menuitem value="All Products" outcome="products" />
+								<p:menuitem value="Create Flight" outcome="product">
+									<f:param name="act" value="create" />
+									<f:param name="type" value="FLIGHT" />
+								</p:menuitem>
+								<p:menuitem value="Create Hotel" outcome="product">
+									<f:param name="act" value="create" />
+									<f:param name="type" value="HOTEL" />
+								</p:menuitem>
+								<p:menuitem value="Create Excursion" outcome="product">
+									<f:param name="act" value="create" />
+									<f:param name="type" value="EXCURSION" />
+								</p:menuitem>
+							</p:submenu>
+
+						</p:menu>
+					</o:form>
+				</p:column>
+
+				<p:column style="width: 70%">
+					<o:form id="rightColForm" includeRequestParams="true">
+
+						<p:dataTable id="pkgTable" var="package"
+							value="#{packageBean.all}" widgetVar="pkgTable" paginator="true"
+							rows="5"
+							paginatorTemplate="{CurrentPageReport}  {PreviousPageLink} {PageLinks} {NextPageLink}">
+
+							<p:column headerText="ID" filterBy="id">
+								<h:outputText value="#{package.id}" />
+							</p:column>
+
+							<p:column headerText="Name" filterBy="name" filterMatchMode="contains">
+								<h:outputText value="#{package.name}" />
+							</p:column>
+
+							<p:column headerText="Showcased">
+								<p:selectBooleanButton value="#{package.showcased}"
+									onLabel="Yes" offLabel="No" onIcon="ui-icon-check"
+									disabled="true" offIcon="ui-icon-close" />
+							</p:column>
 
 
-		</o:form>
+							<p:column width="150" style="text-align: center">
+								<p:menuButton value="Actions">
+									<p:menuitem value="Modify" outcome="package">
+										<f:param name="act" value="edit" />
+										<f:param name="pkgID" value="#{package.id}" />
+									</p:menuitem>
+									<p:menuitem value="Remove"
+										action="#{packageBean.remove(package)}" update="pkgTable" />
+								</p:menuButton>
+							</p:column>
+						</p:dataTable>
 
+
+					</o:form>
+
+				</p:column>
+			</p:row>
+		</p:panelGrid>
 	</ui:define>
 </ui:composition>

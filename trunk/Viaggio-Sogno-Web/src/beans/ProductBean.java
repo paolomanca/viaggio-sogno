@@ -48,6 +48,15 @@ public class ProductBean {
 		prMgr.add(product);
 		return "index?faces-redirect=true";
 	}
+	
+	public String update() {
+		prMgr.update(product);
+		return "index?faces-redirect=true";
+	}
+	
+	public void remove(ProductDTO pr) {
+		prMgr.remove(pr);
+	}
 
 	public List<ProductDTO> getAll() {
 		return prMgr.listAllProducts();

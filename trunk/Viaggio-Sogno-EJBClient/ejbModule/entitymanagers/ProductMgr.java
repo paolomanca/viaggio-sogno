@@ -11,6 +11,10 @@ public interface ProductMgr {
 
 	public void add(ProductDTO productDTO);
 	
+	public void update(ProductDTO productDTO);
+	
+	public void remove(ProductDTO productDTO);
+	
 	public ProductDTO getByID(int id);
 	
 	public List<ProductDTO> listAllProducts();
