@@ -2,7 +2,10 @@ package entitymanagers;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
+
+import common.Constants;
 
 import dto.FinalPackageDTO;
 import dto.FinalProductDTO;
@@ -23,12 +26,14 @@ public interface FinalPackageMgr {
 	/**
 	 * @param finalPkg : the final package to be updated
 	 */
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void update(FinalPackageDTO finalPkg);
 	
 	
 	/**
 	 * @param finalPkg : the final package to be removed
 	 */
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void remove(FinalPackageDTO finalPkg);
 	
 	
@@ -44,6 +49,7 @@ public interface FinalPackageMgr {
 	 *
 	 * @param byMyID
 	 */
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void reserve(FinalPackageDTO byMyID);
 	
 	public void swap(FinalPackageDTO finalPackage, ProductDTO oldProduct, ProductDTO newProduct);
@@ -51,6 +57,7 @@ public interface FinalPackageMgr {
 	public void swap(FinalPackageDTO toChange, FinalProductDTO oldProduct,
 			ProductDTO newProduct);
 	
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public FinalPackageDTO getByMyID(int ID);
 	
 	public FinalPackageDTO getSharedFinalPackage(String ID);
@@ -70,6 +77,7 @@ public interface FinalPackageMgr {
 	/**
 	 * @return the list of final packages owned by the given user
 	 */
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public List<FinalPackageDTO> listByUser(UserDTO user);
 
 }
