@@ -86,6 +86,9 @@ public class FinalPackageBean {
 	
 	public String swap() {
 		
+		System.out.println("Swapping selected product: " + selectedProduct.getId() );
+		System.out.flush();
+		
 		if ( prID > 0 ) {
 			ProductDTO oldProduct = prMgr.getByID(prID);
 			fPkgMgr.swap(fPkg, oldProduct, selectedProduct);
@@ -240,10 +243,12 @@ public class FinalPackageBean {
 	}
 
 	public ProductDTO getSelectedProduct() {
+		//System.out.println("Getting selected product: " + selectedProduct.getId());
 		return selectedProduct;
 	}
 
 	public void setSelectedProduct(ProductDTO selectedProduct) {
+		//System.out.println("Setting selected product: " + selectedProduct.getId());
 		this.selectedProduct = selectedProduct;
 	}
 
