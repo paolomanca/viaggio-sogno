@@ -55,7 +55,7 @@ public class PackageHasProduct implements Serializable {
 		this.id = id;
 	}
 
-	public boolean getFirstChoice() {
+	public boolean isFirstChoice() {
 		return this.firstChoice;
 	}
 

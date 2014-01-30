@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
@@ -12,7 +11,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import model.Group;
 import model.Package;
 import model.PackageHasProduct;
 import model.Product;
@@ -37,7 +35,6 @@ public class PackageMgrBean implements PackageMgr {
 	private ProductMgrBean prdMgr;
 
 	@Override
-	@RolesAllowed({Group._EMPLOYEE})
 	public void add(PackageDTO pkg) {
 		Package newPkg = new Package(pkg);
 		newPkg.setUser(usrMgr.findByEmail(context.getCallerPrincipal().getName()));
@@ -61,7 +58,6 @@ public class PackageMgrBean implements PackageMgr {
 	}
 
 	@Override
-	@RolesAllowed({Group._EMPLOYEE})
 	public void remove(PackageDTO pkg) {
 		em.remove(findByID(pkg.getId()));
 	}
@@ -99,7 +95,7 @@ public class PackageMgrBean implements PackageMgr {
 	public List<ProductDTO> listFirstChoices(PackageDTO pkg) {
 		List<ProductDTO> out = new LinkedList<>();
 		for(PackageHasProduct pkgHsPrd : getPackageProducts(em.find(Package.class, pkg.getId()))){
-			if(pkgHsPrd.getFirstChoice()){
+			if(pkgHsPrd.isFirstChoice()){
 				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}
@@ -110,7 +106,7 @@ public class PackageMgrBean implements PackageMgr {
 	public List<ProductDTO> listAlternatives(PackageDTO pkg) {
 		List<ProductDTO> out = new LinkedList<>();
 		for(PackageHasProduct pkgHsPrd : getPackageProducts(em.find(Package.class, pkg.getId()))){
-			if(!pkgHsPrd.getFirstChoice()){
+			if(!pkgHsPrd.isFirstChoice()){
 				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}
@@ -123,7 +119,7 @@ public class PackageMgrBean implements PackageMgr {
 		
 		List<ProductDTO> out = new LinkedList<>();
 		for(PackageHasProduct pkgHsPrd : getPackageProducts(em.find(Package.class, pkg.getId()))){
-			if(pkgHsPrd.getFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
+			if(pkgHsPrd.isFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
 				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}
@@ -138,7 +134,7 @@ public class PackageMgrBean implements PackageMgr {
 	public List<ProductDTO> listAlternativesByType(PackageDTO pkg, String type) {
 		List<ProductDTO> out = new LinkedList<>();
 		for(PackageHasProduct pkgHsPrd : getPackageProducts(em.find(Package.class, pkg.getId()))){
-			if(!pkgHsPrd.getFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
+			if(!pkgHsPrd.isFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
 				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}
@@ -153,7 +149,7 @@ public class PackageMgrBean implements PackageMgr {
 		pkgDTO.setFirstChoices(new LinkedList<ProductDTO>());
 		pkgDTO.setFirstChoices(new LinkedList<ProductDTO>());
 		for(PackageHasProduct pkgHsPrd : getPackageProducts(in)){
-			if(pkgHsPrd.getFirstChoice()){
+			if(pkgHsPrd.isFirstChoice()){
 
 				pkgDTO.getFirstChoices().add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			} else {
@@ -167,6 +163,11 @@ public class PackageMgrBean implements PackageMgr {
 	@Override
 	public PackageDTO getByID(int id) {
 		return buildDTO(em.find(Package.class, id));
+	}
+
+	@Override
+	public void update(PackageDTO pkg) {
+		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
 	}
 
 }

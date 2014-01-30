@@ -4,19 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import model.Group;
+import model.User;
+
 import org.apache.commons.codec.digest.DigestUtils;
 
 import dto.UserDTO;
 import entitymanagers.UserMgr;
-import model.Group;
-import model.User;
 
 /**
  * Session Bean implementation class UserBean
@@ -43,7 +43,6 @@ public class UserMgrBean implements UserMgr {
 
 
 	@Override
-	@RolesAllowed({Group._EMPLOYEE})
 	public void addEmployee(UserDTO user) {
 		User newUser = new User(user);
 		List<Group> groups = new ArrayList<Group>();
@@ -54,7 +53,6 @@ public class UserMgrBean implements UserMgr {
 
 
 	@Override
-	@RolesAllowed({Group._CUSTOMER})
 	public void updateSelf(UserDTO user) {
 		getPrincipalUser().setPassword(DigestUtils.sha512Hex(user.getPassword()));
 		getPrincipalUser().setFirstName(user.getFirstName());
@@ -65,14 +63,12 @@ public class UserMgrBean implements UserMgr {
 	
 
 	@Override
-	@RolesAllowed({Group._EMPLOYEE})
 	public void update(UserDTO user) {
 		em.merge(new User(user));
 	}
 
 
 	@Override
-	@RolesAllowed({Group._CUSTOMER,Group._EMPLOYEE})
 	public UserDTO getUserDTO() {
 		UserDTO userDTO = buildDTO(getPrincipalUser());
 		return userDTO;
@@ -80,7 +76,6 @@ public class UserMgrBean implements UserMgr {
 
 
 	@Override
-	@RolesAllowed({Group._EMPLOYEE})
 	public void remove(String email) {
 		remove(findByEmail(email));
 	}
@@ -99,7 +94,6 @@ public class UserMgrBean implements UserMgr {
 
 
 	@Override
-	@RolesAllowed({Group._CUSTOMER})
 	public void unregister() {
 		remove(getPrincipalUser());
 	}
