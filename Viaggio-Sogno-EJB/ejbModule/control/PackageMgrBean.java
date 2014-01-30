@@ -159,7 +159,7 @@ public class PackageMgrBean implements PackageMgr {
 
 	@Override
 	public PackageDTO getByID(int id) {
-		throw new UnsupportedOperationException(); // TODO Auto-generated method stub
+		return buildDTO(em.find(Package.class, id));
 	}
 
 }
