@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 import dto.FinalFlightDTO;
+import dto.ProductDTO;
 
 import java.util.Date;
 
@@ -19,7 +20,7 @@ import java.util.Date;
 public class FinalFlight extends FinalProduct implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final String TYPE = Product.FLIGHT;
+	public static final String TYPE = ProductDTO.FLIGHT;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(nullable=false)

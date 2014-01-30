@@ -17,10 +17,10 @@
 				
 					<h:outputText value="#{package.name}" />
 					
-					<p:commandButton value="View package" outcome="package">
-						<f:param name="action" var="show" />
-						<f:param name="pkgID" var="#{package.id}" />
-					</p:commandButton>
+					<p:button value="View package" outcome="package">
+						<f:param name="act" value="show" />
+						<f:param name="pkgID" value="#{package.id}" />
+					</p:button>
 
 				</h:panelGrid>
 			</p:carousel>

@@ -52,7 +52,7 @@ public class FinalFlightDTO implements FinalProductDTO {
 
 	@Override
 	public String getType() {
-		return FLIGHT;
+		return ProductDTO.FLIGHT;
 	}
 	
 }

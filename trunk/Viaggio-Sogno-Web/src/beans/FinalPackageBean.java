@@ -164,7 +164,7 @@ public class FinalPackageBean {
 	}
 	
 	public List<ProductDTO> getFlights() {
-		return filterProductByType(fPkg.getProducts(), FinalProductDTO.FLIGHT);
+		return filterProductByType(fPkg.getProducts(), ProductDTO.FLIGHT);
 	}
 	
 	public List<FinalFlightDTO> getFinalFlights() {
@@ -172,7 +172,7 @@ public class FinalPackageBean {
 	}
 	
 	public List<ProductDTO> getHotels() {
-		return filterProductByType(fPkg.getProducts(), FinalProductDTO.HOTEL);
+		return filterProductByType(fPkg.getProducts(), ProductDTO.HOTEL);
 	}
 	
 	public List<FinalHotelDTO> getFinalHotels() {
@@ -180,7 +180,7 @@ public class FinalPackageBean {
 	}
 	
 	public List<ProductDTO> getExcursions() {
-		return filterProductByType(fPkg.getProducts(), FinalProductDTO.EXCURSION);
+		return filterProductByType(fPkg.getProducts(), ProductDTO.EXCURSION);
 	}
 	
 	public List<FinalExcursionDTO> getFinalExcursions() {
@@ -200,15 +200,15 @@ public class FinalPackageBean {
 	}
 	
 	public List<ProductDTO> getOptionsFlight() {
-		return getOptions("FLIGHT");
+		return getOptions(ProductDTO.FLIGHT);
 	}
 	
 	public List<ProductDTO> getOptionsHotel() {
-		return getOptions("HOTEL");
+		return getOptions(ProductDTO.HOTEL);
 	}
 	
 	public List<ProductDTO> getOptionsExcursion() {
-		return getOptions("EXCURSION");
+		return getOptions(ProductDTO.EXCURSION);
 	}
 	
 	public List<FinalPackageDTO> getOwn() {

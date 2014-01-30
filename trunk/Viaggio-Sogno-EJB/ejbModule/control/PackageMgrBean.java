@@ -119,12 +119,18 @@ public class PackageMgrBean implements PackageMgr {
 
 	@Override
 	public List<ProductDTO> listFirstChoicesByType(PackageDTO pkg, String type) {
+		
+		
 		List<ProductDTO> out = new LinkedList<>();
 		for(PackageHasProduct pkgHsPrd : getPackageProducts(em.find(Package.class, pkg.getId()))){
 			if(pkgHsPrd.getFirstChoice() && pkgHsPrd.getProduct().getType().equals(type)){
 				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}
+		
+		System.out.println("# of first choices " + out.size());
+
+		
 		return out;
 	}
 
@@ -136,6 +142,7 @@ public class PackageMgrBean implements PackageMgr {
 				out.add(prdMgr.buildDTO(pkgHsPrd.getProduct()));
 			}
 		}
+				
 		return out;
 	}
 

@@ -4,6 +4,10 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 public class ProductDTO {
 	
+	public final static String FLIGHT = "FLIGHT";
+	public final static String HOTEL = "HOTEL";
+	public final static String EXCURSION = "EXCURSION";
+	
 	private int id;
 	
 	@NotEmpty
