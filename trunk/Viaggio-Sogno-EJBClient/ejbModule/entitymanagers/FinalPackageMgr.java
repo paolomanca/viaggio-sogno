@@ -65,7 +65,7 @@ public interface FinalPackageMgr {
 	public void shareFinalPackage(FinalPackageDTO finalPkg);
 	
 	
-	
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public List<FinalPackageDTO> listAll();
 	
 	/**
