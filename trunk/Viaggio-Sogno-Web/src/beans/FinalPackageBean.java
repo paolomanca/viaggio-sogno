@@ -63,7 +63,7 @@ public class FinalPackageBean {
 			if ( act.equalsIgnoreCase("create") ) {
 				fPkg = new FinalPackageDTO();
 			} else {
-				fPkg = fPkgMgr.getByID(fPkgID);
+				fPkg = fPkgMgr.getByMyID(fPkgID);
 			}
 			
 		}
@@ -76,7 +76,7 @@ public class FinalPackageBean {
 	}
 
 	public String addProduct() {
-		fPkg = fPkgMgr.getByID(fPkgID);
+		fPkg = fPkgMgr.getByMyID(fPkgID);
 		fPkg.getProducts().add(selectedProduct);
 		
 		fPkgMgr.update(fPkg);
@@ -92,6 +92,7 @@ public class FinalPackageBean {
 		}
 		
 		if ( fPrID > 0 ) {
+			System.out.println("swapping "+fPrID+" with "+selectedProduct.getId());
 			FinalProductDTO oldProduct = fPrMgr.getByID(fPrID);
 			fPkgMgr.swap(fPkg, oldProduct, selectedProduct);
 		}

@@ -120,7 +120,7 @@ public class FinalProductBean {
 	}
 
 	public String add() {
-		fPkgMgr.finalizeProduct(fPkgMgr.getByID(fPkgID), finalProduct);
+		fPkgMgr.finalizeProduct(fPkgMgr.getByMyID(fPkgID), finalProduct);
 		return "finalPackage?act=show&amp;fPkgID=" + fPkgID + "&amp;faces-redirect=true";
 	}
 	
