@@ -1,7 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.Table;
 
 import dto.ProductDTO;
 
@@ -19,7 +17,6 @@ import dto.ProductDTO;
  * 
  */
 @Entity
-@Table(name="PRODUCT")
 @NamedQuery(name="Product.findAll", query="SELECT p FROM Product p")
 public class Product implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -45,7 +42,7 @@ public class Product implements Serializable {
 	@Column(length=45)
 	private String name;
 
-	private BigInteger price;
+	private int price;
 
 	private int rating;
 
@@ -69,7 +66,7 @@ public class Product implements Serializable {
 		
 		this.name = p.getName();
 		this.location = p.getLocation();
-		this.price = BigInteger.valueOf(p.getPrice());
+		this.price = p.getPrice();
 		this.rating = p.getRating();
 		
 	}
@@ -114,11 +111,11 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	public BigInteger getPrice() {
+	public int getPrice() {
 		return this.price;
 	}
 
-	public void setPrice(BigInteger price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 

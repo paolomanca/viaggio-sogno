@@ -13,7 +13,7 @@ import model.Product;
  * 
  */
 @Entity
-@Table(name="package_has_product")
+@Table(name="package_product")
 @NamedQuery(name="PackageHasProduct.findAll", query="SELECT p FROM PackageHasProduct p")
 public class PackageHasProduct implements Serializable {
 	private static final long serialVersionUID = 1L;

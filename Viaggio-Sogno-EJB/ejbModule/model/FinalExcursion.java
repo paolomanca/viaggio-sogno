@@ -15,7 +15,6 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="FINAL_EXCURSION")
 @NamedQuery(name="FinalExcursion.findAll", query="SELECT f FROM FinalExcursion f")
 public class FinalExcursion extends FinalProduct implements Serializable {
 	private static final long serialVersionUID = 1L;
