@@ -350,7 +350,8 @@
 					<p:row>
 						<p:column>
 							<p:outputLabel value="Number of participants: "/>
-							<p:spinner value="#{finalPackageBean.finalPackage.participants}" onclick="#{finalPackageBean.update()}" min="1" max="20" />
+							<p:spinner value="#{finalPackageBean.finalPackage.participants}" min="1" max="20" disabled="#{finalPackageBean.finalPackage.reserved}" />
+							<p:commandButton value ="Save" action="#{finalPackageBean.update()}" rendered="#{not finalPackageBean.finalPackage.reserved}" />
 						</p:column>
 						<p:column>
 							<p:outputLabel value="Total cost: #{finalPackageBean.finalPackage.totalCost}"/>
@@ -372,7 +373,7 @@
 								value="All products have to be finalized in order to reserve the package"
 								rendered="#{not finalPackageBean.finalPackage.finalized}" />
 							<h:outputText
-								value="You have reserved this package. You just have to procede with the payment now and enjoy your trip!"
+								value="You have reserved this package. You just have to proceed with the payment now and enjoy your trip!"
 								rendered="#{finalPackageBean.finalPackage.reserved}" />
 							<h:outputText
 								value="You have paid for this package. Have a wonderful trip!"

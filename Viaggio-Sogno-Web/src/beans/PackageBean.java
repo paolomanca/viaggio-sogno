@@ -61,7 +61,7 @@ public class PackageBean {
 	
 	public String update() {
 		pkgMgr.update(pkg);
-		return "index";
+		return "index?faces-redirect=true";
 	}
 
 	public String getAct() {

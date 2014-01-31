@@ -10,8 +10,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.interceptor.InvocationContext;
-
 import dto.FinalExcursionDTO;
 import dto.FinalFlightDTO;
 import dto.FinalHotelDTO;
@@ -138,8 +136,6 @@ public class FinalPackageBean {
 	}
 
 	public String pay() {
-		System.out.println("Ciao: " + fPkg);
-
 		fPkgMgr.pay(fPkg);
 
 		return "finalPackage?act=show&amp;fPkgID =" + fPkgID
