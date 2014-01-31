@@ -45,7 +45,7 @@ public class FinalPackage implements Serializable {
 	@JoinColumn(name="PACKAGE_idPACKAGE", nullable=false)
 	private Package pkg;
 
-	private int numberOfPartecipants;
+	private int numberOfPartecipants = 1;
 	
 	//uni-directional many-to-many association to Product
 	@ManyToMany
