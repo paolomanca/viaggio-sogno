@@ -88,6 +88,8 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 			}
 
 			fP.setFinalProducts(newFinalProducts);
+			fP.setNumberOfPartecipants(finalPkgDTO.getNumberOFPartecipants());
+			
 			if (fP.getProducts().isEmpty()) {
 				fP.setFinalized(true);
 			} else {
@@ -123,7 +125,10 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		FinalPackageDTO out = new FinalPackageDTO();
 		out.setId(ID);
 		out.setOriginalPackage(pkgMgr.buildDTO(in.getPackage()));
+		out.setNumberOFPartecipants(in.getNumberOfPartecipants());
+		out.setTotalCost(in.getTotalCost());
 
+		
 		List<ProductDTO> productDTOs = new LinkedList<>();
 
 		List<FinalProductDTO> finalProductDTOs = new LinkedList<>();
