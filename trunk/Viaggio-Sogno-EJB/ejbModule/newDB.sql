@@ -1,0 +1,5 @@
+INSERT INTO IDPOOL (NEXT) values (1);
+INSERT INTO USER_ (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, IDPOOL_IDPOOL_ID) values ('emp@e.e', SHA2('emp', 512), 'Emp1', 'loyee', 1); -- ID:1
+INSERT INTO USER_GROUP (email, groupname) values ('emp@e.e','EMPLOYEE');
+
+INSERT INTO `PRODUCT` VALUES (1,'Tunis','Milan',NULL,75,NULL,NULL,55,0,'FLIGHT'),(2,'Milan','Tunis',NULL,75,NULL,NULL,55,0,'FLIGHT'),(3,'Tunis','Rome',NULL,40,NULL,NULL,45,0,'FLIGHT'),(4,'Rome','Tunis',NULL,40,NULL,NULL,40,0,'FLIGHT'),(5,'Tunis','London',NULL,150,NULL,NULL,90,0,'FLIGHT'),(6,'London','Tunis',NULL,150,NULL,NULL,90,0,'FLIGHT'),(7,'London','Milan',NULL,100,NULL,NULL,70,0,'FLIGHT'),(8,'Milan','London',NULL,100,NULL,NULL,65,0,'FLIGHT'),(9,'Madrid','Milan',NULL,80,NULL,NULL,40,0,'FLIGHT'),(10,'Madrid','Rome',NULL,60,NULL,NULL,50,0,'FLIGHT'),(11,'Rome','Madrid',NULL,60,NULL,NULL,55,0,'FLIGHT')

@@ -38,6 +38,7 @@ public class UserBean {
 		usrMgr.unregister();
 		logout();
 	}
+	
 
 	public void logout() {
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();

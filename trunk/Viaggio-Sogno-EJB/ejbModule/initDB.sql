@@ -2,12 +2,13 @@ INSERT INTO IDPOOL (NEXT) values (1);
 INSERT INTO IDPOOL (NEXT) values (1);
 INSERT INTO IDPOOL (NEXT) values (1);
 INSERT INTO IDPOOL (NEXT) values (1);
+INSERT INTO USER_ (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, IDPOOL_IDPOOL_ID) values ('emp@e.e', SHA2('emp', 512), 'Emp1', 'loyee', 3); -- ID:3
+INSERT INTO USER_GROUP (email, groupname) values ('emp@e.e','EMPLOYEE');
 INSERT INTO USER_ (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, IDPOOL_IDPOOL_ID) values ('cust@c.c', SHA2('cust', 512), 'Cust1', 'omer', 1); -- ID:1
 INSERT INTO USER_GROUP (email, groupname) values ('cust@c.c','CUSTOMER');
 INSERT INTO USER_ (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, IDPOOL_IDPOOL_ID) values ('cust2@c.c', SHA2('cust', 512), 'Cust2', 'omer', 2); -- ID:2
 INSERT INTO USER_GROUP (email, groupname) values ('cust2@c.c','CUSTOMER');
-INSERT INTO USER_ (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, IDPOOL_IDPOOL_ID) values ('emp@e.e', SHA2('emp', 512), 'Emp1', 'loyee', 3); -- ID:3
-INSERT INTO USER_GROUP (email, groupname) values ('emp@e.e','EMPLOYEE');
+
 INSERT INTO USER_ (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME, IDPOOL_IDPOOL_ID) values ('emp2@e.e', SHA2('emp', 512), 'Emp2', 'loyee', 4); -- ID:4
 INSERT INTO USER_GROUP (email, groupname) values ('emp2@e.e','EMPLOYEE');
 
