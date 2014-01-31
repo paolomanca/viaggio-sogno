@@ -18,6 +18,9 @@ public class FinalPackageDTO {
 	
 	private boolean reserved = false;
 
+	private int numberOFPartecipants;
+	
+	private int totalCost;
 
 	@NotEmpty
 	private PackageDTO originalPackage;
@@ -67,6 +70,22 @@ public class FinalPackageDTO {
 
 	public void setFinalProducts(List<FinalProductDTO> finalProducts) {
 		this.finalProducts = finalProducts;
+	}
+
+	public int getNumberOFPartecipants() {
+		return numberOFPartecipants;
+	}
+
+	public void setNumberOFPartecipants(int numberOFPartecipants) {
+		this.numberOFPartecipants = numberOFPartecipants;
+	}
+
+	public int getTotalCost() {
+		return totalCost;
+	}
+
+	public void setTotalCost(int totalPrice) {
+		this.totalCost = totalPrice;
 	}
 
 	public String getSharedID() {
