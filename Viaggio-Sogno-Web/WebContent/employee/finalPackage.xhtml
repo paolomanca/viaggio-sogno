@@ -213,9 +213,10 @@
 			<p:spacer height="30px" />
 
 			<p:panel>
-				<p:commandButton value="Pay" action="#{finalPackageBean.pay()}"
-					rendered="#{finalPackageBean.finalpackage.paid}" />
-					<p:outputText value="This package has been paid for" rendered="#{not finalPackageBean.finalpackage.paid}" />
+				<p:commandButton value="Set as paid" action="#{finalPackageBean.pay()}"
+					rendered="#{not finalPackageBean.finalPackage.paid and finalPackageBean.finalPackage.reserved}" />
+					<h:outputText value="This package hasn't been reserved yet" rendered="#{not finalPackageBean.finalPackage.reserved}" />
+					<h:outputText value="This package has been paid for" rendered="#{finalPackageBean.finalPackage.paid}" />
 			</p:panel>
 
 		</o:form>
