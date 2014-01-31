@@ -55,32 +55,33 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		List<FinalProduct> originalFinalProducts = fP.getFinalProducts();
 		List<FinalProduct> newFinalProducts = new LinkedList<FinalProduct>();
 
-		for(ProductDTO pDTO : finalPkgDTO.getProducts()){
+		for (ProductDTO pDTO : finalPkgDTO.getProducts()) {
 			fP.getProducts().add(em.find(Product.class, pDTO.getId()));
 		}
 
-		for(FinalProductDTO fPDTO : finalPkgDTO.getFinalProducts()){
-			FinalProduct fPrd = fnPrdMgr.fromRelativeID(fPDTO.getId(), fPDTO.getType());
-			if(fPrd != null){
+		for (FinalProductDTO fPDTO : finalPkgDTO.getFinalProducts()) {
+			FinalProduct fPrd = fnPrdMgr.fromRelativeID(fPDTO.getId(),
+					fPDTO.getType());
+			if (fPrd != null) {
 				newFinalProducts.add(fPrd);
 			} else {
 				int id = fnPrdMgr.add(fPDTO);
-				fPrd = fnPrdMgr.fromRelativeID(id, fPDTO.getType());				
+				fPrd = fnPrdMgr.fromRelativeID(id, fPDTO.getType());
 				newFinalProducts.add(fPrd);
 			}
 		}
 
-		System.out.println("original size: "+originalFinalProducts.size());
-		System.out.println("new size: "+newFinalProducts.size());
+		System.out.println("original size: " + originalFinalProducts.size());
+		System.out.println("new size: " + newFinalProducts.size());
 		originalFinalProducts.removeAll(newFinalProducts);
-		
-		for(FinalProduct oFP : originalFinalProducts){
-			System.out.println("Deleting ID: "+oFP.getId());
+
+		for (FinalProduct oFP : originalFinalProducts) {
+			System.out.println("Deleting ID: " + oFP.getId());
 			usrMgr.getPrincipalUser().freeID(oFP.getIdRelative());
 		}
 
 		fP.setFinalProducts(newFinalProducts);
-		if(fP.getProducts().isEmpty()){
+		if (fP.getProducts().isEmpty()) {
 			fP.setFinalized(true);
 		} else {
 			fP.setFinalized(false);
@@ -96,7 +97,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	public FinalPackageDTO getByMyID(int ID) {
-		System.out.println("getting my id number: "+ID);
+		System.out.println("getting my id number: " + ID);
 		return buildDTO(fromRelativeID(ID), ID);
 	}
 
@@ -113,18 +114,25 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 		List<FinalProductDTO> finalProductDTOs = new LinkedList<>();
 
-		for(Product p : in.getProducts()){
-			productDTOs.add(prdMgr.buildDTO(p));		
+		for (Product p : in.getProducts()) {
+			productDTOs.add(prdMgr.buildDTO(p));
 		}
 
-		for(FinalProduct fP : in.getFinalProducts()){
+		for (FinalProduct fP : in.getFinalProducts()) {
 			finalProductDTOs.add(fnPrdMgr.buildDTO(fP));
 		}
 
 		out.setProducts(productDTOs);
 		out.setFinalProducts(finalProductDTOs);
 
+		if (in.getSharedPackage() != null) {
+			out.setSharedID(in.getSharedPackage().getUniqueIdentifier());
+		}
+
 		out.setFinalized(in.isFinalized());
+		out.setReserved(in.isReserved());
+		out.setPaid(in.isPaid());
+		out.setShared(in.isShared());
 
 		return out;
 	}
@@ -132,10 +140,14 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@Override
 	public List<FinalPackageDTO> listByUser() {
 		List<FinalPackageDTO> out = new LinkedList<>();
-		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user", FinalPackage.class)
-				.setParameter("user", usrMgr.getPrincipalUser()).getResultList();
+		List<FinalPackage> toConvert = em
+				.createQuery(
+						"SELECT t FROM FinalPackage t where t.user = :user",
+						FinalPackage.class)
+				.setParameter("user", usrMgr.getPrincipalUser())
+				.getResultList();
 
-		for(FinalPackage pkg : toConvert){
+		for (FinalPackage pkg : toConvert) {
 			out.add(buildDTO(pkg, pkg.getIdfinalPackageRelative()));
 		}
 
@@ -145,10 +157,13 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@Override
 	public List<FinalPackageDTO> listByUser(UserDTO user) {
 		List<FinalPackageDTO> out = new LinkedList<>();
-		List<FinalPackage> toConvert = em.createQuery("SELECT t FROM FinalPackage t where t.user = :user", FinalPackage.class)
-				.setParameter("user", user).getResultList();
+		List<FinalPackage> toConvert = em
+				.createQuery(
+						"SELECT t FROM FinalPackage t where t.user = :user",
+						FinalPackage.class).setParameter("user", user)
+				.getResultList();
 
-		for(FinalPackage fP : toConvert){
+		for (FinalPackage fP : toConvert) {
 			out.add(buildDTO(fP));
 		}
 
@@ -156,14 +171,20 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	public FinalPackage fromRelativeID(int id) {
-		return em.createQuery("SELECT t FROM FinalPackage t where t.user = :user and t.idRelative = :id ", FinalPackage.class)
-				.setParameter("user", usrMgr.getPrincipalUser()).setParameter("id", id).getSingleResult();
+		return em
+				.createQuery(
+						"SELECT t FROM FinalPackage t where t.user = :user and t.idRelative = :id ",
+						FinalPackage.class)
+				.setParameter("user", usrMgr.getPrincipalUser())
+				.setParameter("id", id).getSingleResult();
 	}
 
 	@Override
-	public void finalizeProduct(FinalPackageDTO container, FinalProductDTO finalProduct) {
+	public void finalizeProduct(FinalPackageDTO container,
+			FinalProductDTO finalProduct) {
 		FinalPackage current = fromRelativeID(container.getId());
-		Product finalizedPrd = em.find(Product.class, finalProduct.getProduct().getId());
+		Product finalizedPrd = em.find(Product.class, finalProduct.getProduct()
+				.getId());
 
 		int id = fnPrdMgr.add(finalProduct);
 		FinalProduct fP = fnPrdMgr.fromRelativeID(id, finalProduct.getType());
@@ -172,7 +193,8 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 		current.getProducts().remove(finalizedPrd);
 
-		if(current.getProducts().isEmpty() && !current.getFinalProducts().isEmpty()){
+		if (current.getProducts().isEmpty()
+				&& !current.getFinalProducts().isEmpty()) {
 			current.setFinalized(true);
 		}
 		em.merge(current);
@@ -193,14 +215,17 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
-	public void swap(FinalPackageDTO toChange, FinalProductDTO oldProduct, ProductDTO newProduct) {
+	public void swap(FinalPackageDTO toChange, FinalProductDTO oldProduct,
+			ProductDTO newProduct) {
 		FinalPackage toSwap = fromRelativeID(toChange.getId());
 		Product newP = em.find(Product.class, newProduct.getId());
 		toSwap.getProducts().add(newP);
-		toSwap.getFinalProducts().remove(fnPrdMgr.fromRelativeID(oldProduct.getId(), oldProduct.getType()));		
+		toSwap.getFinalProducts().remove(
+				fnPrdMgr.fromRelativeID(oldProduct.getId(),
+						oldProduct.getType()));
 		usrMgr.getPrincipalUser().freeID(oldProduct.getId());
 		toSwap.setFinalized(false);
-		em.merge(toSwap);		
+		em.merge(toSwap);
 	}
 
 	@Override
@@ -213,8 +238,8 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		fP.setProducts(new LinkedList<Product>());
 		fP.setFinalProducts(new LinkedList<FinalProduct>());
 
-		for(PackageHasProduct p : toFinalize.getPackageHasProducts()){
-			if(p.isFirstChoice())
+		for (PackageHasProduct p : toFinalize.getPackageHasProducts()) {
+			if (p.isFirstChoice())
 				fP.getProducts().add(p.getProduct());
 		}
 
@@ -233,11 +258,10 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		int idCount = 1;
 		FinalPackageDTO out = buildDTO(finalPackage);
 		out.setId(idCount++);
-		for(FinalProductDTO pDTO : out.getFinalProducts()){
+		for (FinalProductDTO pDTO : out.getFinalProducts()) {
 			pDTO.setId(idCount++);
 		}
-		out.setSharedID(finalPackage.getSharedPackage().getUniqueIdentifier());
-		System.out.println("SHARED ID: "+out.getSharedID());
+		System.out.println("SHARED ID: " + out.getSharedID());
 		return out;
 	}
 
@@ -261,14 +285,15 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@Override
 	public void reserve(FinalPackageDTO finalPkg) {
 		FinalPackage fP = fromRelativeID(finalPkg.getId());
-		if(fP.isFinalized())
+		if (fP.isFinalized())
 			fP.setReserved(true);
 	}
 
 	@Override
 	public List<FinalPackageDTO> listAll() {
 		List<FinalPackageDTO> out = new LinkedList<>();
-		for(FinalPackage fP : em.createNamedQuery(FinalPackage.ALL, FinalPackage.class).getResultList()){
+		for (FinalPackage fP : em.createNamedQuery(FinalPackage.ALL,
+				FinalPackage.class).getResultList()) {
 			out.add(buildDTO(fP));
 		}
 		return out;
@@ -277,7 +302,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@Override
 	public void pay(FinalPackageDTO finalPkg) {
 		FinalPackage fP = fromRelativeID(finalPkg.getId());
-		if(fP.isReserved())
+		if (fP.isReserved())
 			fP.setPaid(true);
 	}
 

@@ -78,6 +78,10 @@ public class FinalPackageBean {
 	public void reserve() {
 		fPkgMgr.reserve(fPkgMgr.getByMyID(fPkgID));
 	}
+	
+	public void share() {
+		fPkgMgr.shareFinalPackage(fPkgMgr.getByMyID(fPkgID));
+	}
 
 	public String addProduct() {
 		fPkg = fPkgMgr.getByMyID(fPkgID);
