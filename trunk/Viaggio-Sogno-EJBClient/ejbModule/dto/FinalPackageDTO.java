@@ -18,7 +18,7 @@ public class FinalPackageDTO {
 	
 	private boolean reserved = false;
 
-	private int numberOFPartecipants;
+	private int participants = 1;
 	
 	private int totalCost;
 
@@ -72,12 +72,12 @@ public class FinalPackageDTO {
 		this.finalProducts = finalProducts;
 	}
 
-	public int getNumberOFPartecipants() {
-		return numberOFPartecipants;
+	public int getParticipants() {
+		return participants;
 	}
 
-	public void setNumberOFPartecipants(int numberOFPartecipants) {
-		this.numberOFPartecipants = numberOFPartecipants;
+	public void setParticipants(int participants) {
+		this.participants = participants;
 	}
 
 	public int getTotalCost() {

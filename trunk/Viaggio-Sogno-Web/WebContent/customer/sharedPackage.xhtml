@@ -5,17 +5,17 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" xmlns:o="http://omnifaces.org/ui">
 
-	<ui:define name="page-title">Final Package</ui:define>
+	<ui:define name="page-title">Shared package</ui:define>
 
 	<ui:define name="breadcrumb">
-		<p:menuitem value="Package customization" disabled="true" />
+		<p:menuitem value="Package" disabled="true" />
 	</ui:define>
 
 	<ui:define name="content">
 
 		<o:form id="customizePack" includeRequestParams="true">
 
-			<p:panel header="Flights">
+			<p:panel header="Flight">
 				<p:dataTable var="flight" value="#{finalPackageBean.flights}"
 					rendered="#{not empty finalPackageBean.flights}">
 
@@ -79,7 +79,7 @@
 
 			</p:panel>
 
-			<p:spacer height="30px" />
+			<p:spacer height="25px" />
 
 			<p:panel header="Hotels">
 				<p:dataTable var="hotel" value="#{finalPackageBean.hotels}"
@@ -153,7 +153,7 @@
 				</p:dataTable>
 			</p:panel>
 
-			<p:spacer height="30px" />
+			<p:spacer height="25px" />
 
 			<p:panel header="Excursions">
 				<p:dataTable var="excursion" value="#{finalPackageBean.excursions}"
@@ -209,13 +209,14 @@
 
 			</p:panel>
 
-
 			<p:spacer height="30px" />
 
 			<p:panel>
-				<p:commandButton value="Pay" action="#{finalPackageBean.pay()}"
-					rendered="#{finalPackageBean.finalpackage.paid}" />
-					<p:outputText value="This package has been paid for" rendered="#{not finalPackageBean.finalpackage.paid}" />
+
+				<p:button value="Save the package" action="#{finalPackageBean.savaSharedPackage()}">
+					<f:param name="sharedID" value="#{param['sharedID']}" />
+				</p:button>
+
 			</p:panel>
 
 		</o:form>

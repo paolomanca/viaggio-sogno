@@ -11,8 +11,9 @@
 		<p:menuitem value="Package customization" disabled="true" />
 	</ui:define>
 
-	<ui:define name="content">
 
+
+	<ui:define name="content">
 		<o:form id="customizePack" includeRequestParams="true">
 
 			<p:panel header="Flights">
@@ -333,8 +334,8 @@
 								action="#{finalPackageBean.share()}" update="packButtons"
 								rendered="#{not finalPackageBean.finalPackage.shared}" />
 							<h:link
-								value="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/finalPackage.xhtml?sharedID=#{finalPackageBean.finalPackage.sharedID}"
-								outcome="/finalPackage"
+								value="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/sharedPackage.xhtml?sharedID=#{finalPackageBean.finalPackage.sharedID}"
+								outcome="/sharedPackage"
 								rendered="#{finalPackageBean.finalPackage.shared}">
 								<f:param name="sharedID"
 									value="#{finalPackageBean.finalPackage.sharedID}" />
@@ -348,12 +349,25 @@
 					</p:row>
 					<p:row>
 						<p:column>
+							<p:outputLabel value="Number of participants: "/>
+							<p:spinner value="#{finalPackageBean.finalPackage.participants}" onclick="#{finalPackageBean.update()}" min="1" max="20" />
+						</p:column>
+						<p:column>
+							<p:outputLabel value="Total cost: #{finalPackageBean.finalPackage.totalCost}"/>
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
+							<p:separator />
+						</p:column>
+					</p:row>
+					<p:row>
+						<p:column>
 							<p:commandButton value="Reserve"
 								action="#{finalPackageBean.reserve()}"
 								disabled="#{not finalPackageBean.finalPackage.finalized}"
 								rendered="#{not finalPackageBean.finalPackage.reserved}"
-								update=":customizePack"
-								style="margin-right: 20px" />
+								style="margin-right: 20px" ajax="false" />
 							<h:outputText
 								value="All products have to be finalized in order to reserve the package"
 								rendered="#{not finalPackageBean.finalPackage.finalized}" />
