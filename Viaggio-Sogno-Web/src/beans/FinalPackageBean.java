@@ -10,6 +10,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+
 import dto.FinalExcursionDTO;
 import dto.FinalFlightDTO;
 import dto.FinalHotelDTO;
@@ -77,14 +78,14 @@ public class FinalPackageBean {
 			if (param.get("act") != null) {
 				act = param.get("act")[0];
 			}
-			
+
 			if (param.get("sharedID") != null) {
 				sharedID = param.get("sharedID")[0];
 			}
 
 		}
 
-		
+
 		if (act != null) {
 
 			if (act.equalsIgnoreCase("create")) {
@@ -178,9 +179,15 @@ public class FinalPackageBean {
 	}
 
 	public String remove(FinalPackageDTO finalPkg) {
-		fPkgMgr.remove(finalPkg);
+		if(uMgr.isRole(common.Constants.Group.EMPLOYEE)){
+			fPkgMgr.removeForced(finalPkg);
 
-		return "index?faces-redirect=true";
+			return "index?faces-redirect=true";
+		} else {
+			fPkgMgr.remove(finalPkg);
+
+			return "index?faces-redirect=true";
+		}
 	}
 
 	public void removeProduct(ProductDTO product) {
