@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -14,6 +15,8 @@ import model.Group;
 import model.User;
 
 import org.apache.commons.codec.digest.DigestUtils;
+
+import common.Constants;
 
 import dto.UserDTO;
 import entitymanagers.UserMgr;
@@ -144,6 +147,7 @@ public class UserMgrBean implements UserMgr {
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER, Constants.Group.EMPLOYEE})
 	public boolean isRole(String role) {
 		return context.isCallerInRole(role);
 	}
