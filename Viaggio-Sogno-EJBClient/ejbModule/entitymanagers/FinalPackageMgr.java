@@ -6,7 +6,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 
 import common.Constants;
-
 import dto.FinalPackageDTO;
 import dto.FinalProductDTO;
 import dto.PackageDTO;
@@ -52,6 +51,9 @@ public interface FinalPackageMgr {
 	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void reserve(FinalPackageDTO byMyID);
 	
+	@RolesAllowed({Constants.Group.EMPLOYEE})
+	void unreserve(FinalPackageDTO finalPkg);
+
 	public void swap(FinalPackageDTO finalPackage, ProductDTO oldProduct, ProductDTO newProduct);
 	
 	public void swap(FinalPackageDTO toChange, FinalProductDTO oldProduct,
@@ -85,5 +87,7 @@ public interface FinalPackageMgr {
 	 */
 	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public List<FinalPackageDTO> listByUser(UserDTO user);
+
+	void copySharedPackage(String ID);
 
 }
