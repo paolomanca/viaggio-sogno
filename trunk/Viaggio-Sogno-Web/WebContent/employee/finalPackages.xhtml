@@ -34,6 +34,11 @@
 					<h:outputText value="#{package.originalPackage.name}" />
 				</p:column>
 
+				<p:column filterBy="user.email"
+					headerText="Owner" filterMatchMode="contains">
+					<h:outputText value="#{package.user.email}" />
+				</p:column>
+
 				<p:column headerText="Reserved">
 					<p:selectBooleanButton value="#{package.reserved}" onLabel="Yes"
 						offLabel="No" onIcon="ui-icon-check" disabled="true"
@@ -62,8 +67,8 @@
 							<f:param name="act" value="edit" />
 							<f:param name="fPkgID" value="#{package.id}" />
 						</p:menuitem>
-						<p:menuitem value="Remove" action="#{finalPackageBean.remove(package)}"
-							update="fPkgTable" />
+						<p:menuitem value="Remove"
+							action="#{finalPackageBean.remove(package)}" update="fPkgTable" />
 					</p:menuButton>
 				</p:column>
 			</p:dataTable>
