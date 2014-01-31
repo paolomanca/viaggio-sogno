@@ -256,7 +256,7 @@
 
 							</p:menuitem>
 							<p:menuitem value="Remove"
-								action="#{finalPackageBean.removeProduct(excursion)}" />
+								action="#{finalPackageBean.removeProduct(excursion)}"  update=":customizePack"/>
 						</p:menuButton>
 					</p:column>
 
@@ -296,7 +296,7 @@
 								<f:param name="fPrID" value="#{finalExcursion.id}" />
 							</p:menuitem>
 							<p:menuitem value="Remove"
-								action="#{finalPackageBean.removeFinalProduct(finalExcursion)}" />
+								action="#{finalPackageBean.removeFinalProduct(finalExcursion)}" update=":customizePack"/>
 						</p:menuButton>
 					</p:column>
 
@@ -337,11 +337,11 @@
 						<p:column>
 							<p:commandButton value="Reserve"
 								action="#{finalPackageBean.reserve()}"
-								disabled="#{not finalProductBean.finalProduct.finalized}" />
+								disabled="#{not finalPackageBean.finalPackage.finalized}" />
 							<p:spacer width="20px" />
 							<h:outputText
 								value="All products have to be finalized in order to reserve the package"
-								rendered="#{not finalProductBean.finalProduct.finalized}" />
+								rendered="#{not finalPackageBean.finalPackage.finalized}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>

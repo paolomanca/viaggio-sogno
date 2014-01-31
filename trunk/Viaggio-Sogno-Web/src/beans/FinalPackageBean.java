@@ -74,7 +74,7 @@ public class FinalPackageBean {
 		}
 
 	}
-	
+
 	public void reserve() {
 		fPkgMgr.reserve(fPkgMgr.getByMyID(fPkgID));
 	}
@@ -202,7 +202,9 @@ public class FinalPackageBean {
 
 		out.addAll(first);
 		out.addAll(alter);
-
+		if(prID>0){
+			out.remove(prMgr.getByID(prID));
+		}
 		return out;
 	}
 
@@ -265,5 +267,5 @@ public class FinalPackageBean {
 	public List<FinalPackageDTO> getAll() {
 		return fPkgMgr.listAll();
 	}
-	
+
 }
