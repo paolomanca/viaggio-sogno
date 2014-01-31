@@ -1,0 +1,13 @@
+PREREQUISITES: a MySQL server is running and set up with the information provided in jdbcConnectionPool-2.PNG screenshot
+
+1) Configure the jdbc connection pool and glassfish realm as showed in the screenshots provided in the "Configuration screenshots folder"
+2) Create a new schema in the MySQL database called traveldreamdb
+3) Deploy the EAR through the Glassfish web administration console (this should create all of the necessary tables in the database)
+3a) Alternatively deploy the application from the Eclipse workspace, after importing the EAR file
+4) Select the database schema traveldreamdb through the MySQL shell ("use traveldreamdb;")
+5) Execute the SQL script file initDB.sql on the MySQL database ("source /path/to/TravelDream/initDB.sql")
+4a/5a) Execute the script through the MySQL workbench
+
+6) Go to http://localhost:8080/Viaggio-Sogno/ to access the website
+7) You can only login as an employee with username "emp@e.e" and password "emp"
+7a) To access as a customer you must first register as one

@@ -1,0 +1,2 @@
+- Maximum number of characters handled in strings for most of the entries is 45
+- You cannot select the same product as first choice and alternative at the same time
