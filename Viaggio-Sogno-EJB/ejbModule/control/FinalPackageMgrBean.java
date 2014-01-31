@@ -109,6 +109,13 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		em.remove(fromRelativeID(finalPkgDTO.getId()));
 		usrMgr.getPrincipalUser().freeID(finalPkgDTO.getId());
 	}
+	
+	@Override
+	@RolesAllowed({Constants.Group.EMPLOYEE})
+	public void removeForced(FinalPackageDTO finalPkgDTO) {
+		em.remove(em.find(FinalPackage.class, finalPkgDTO.getId()));
+		usrMgr.getPrincipalUser().freeID(finalPkgDTO.getId());
+	}
 
 	@Override
 	@RolesAllowed({Constants.Group.CUSTOMER})
