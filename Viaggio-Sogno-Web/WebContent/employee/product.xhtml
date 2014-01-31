@@ -63,6 +63,7 @@
 						<p:column colspan="2">
 							<h:inputText id="flightLength"
 								value="#{productBean.product.flightLength}" />
+							<h:outputLabel value="minutes" />
 						</p:column>
 					</p:row>
 
@@ -92,9 +93,10 @@
 						</p:column>
 						<p:column colspan="2">
 							<h:inputText id="price" value="#{productBean.product.price}" />
+							<h:outputLabel value="€" />
 						</p:column>
 					</p:row>
->
+
 				</p:panelGrid>
 
 				<f:facet name="footer">
