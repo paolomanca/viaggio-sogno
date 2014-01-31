@@ -50,6 +50,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@Override
 	public void update(FinalPackageDTO finalPkgDTO) {
 		FinalPackage fP = fromRelativeID(finalPkgDTO.getId());
+		em.detach(fP);
 		fP.setProducts(new LinkedList<Product>());
 		List<FinalProduct> originalFinalProducts = fP.getFinalProducts();
 		List<FinalProduct> newFinalProducts = new LinkedList<FinalProduct>();
@@ -61,10 +62,8 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		for(FinalProductDTO fPDTO : finalPkgDTO.getFinalProducts()){
 			FinalProduct fPrd = fnPrdMgr.fromRelativeID(fPDTO.getId(), fPDTO.getType());
 			if(fPrd != null){
-				System.out.println("final product found id:"+fPrd.getId());
 				newFinalProducts.add(fPrd);
 			} else {
-				System.out.println("final product not found id: " + fPDTO.getId());
 				int id = fnPrdMgr.add(fPDTO);
 				fPrd = fnPrdMgr.fromRelativeID(id, fPDTO.getType());				
 				newFinalProducts.add(fPrd);
@@ -74,12 +73,18 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		System.out.println("original size: "+originalFinalProducts.size());
 		System.out.println("new size: "+newFinalProducts.size());
 		originalFinalProducts.removeAll(newFinalProducts);
-
+		
 		for(FinalProduct oFP : originalFinalProducts){
+			System.out.println("Deleting ID: "+oFP.getId());
 			usrMgr.getPrincipalUser().freeID(oFP.getIdRelative());
 		}
 
 		fP.setFinalProducts(newFinalProducts);
+		if(fP.getProducts().isEmpty()){
+			fP.setFinalized(true);
+		} else {
+			fP.setFinalized(false);
+		}
 		em.merge(fP);
 	}
 
@@ -250,16 +255,14 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 		toShare.setSharedPackage(sP);
 		toShare.setShared(true);
-		em.merge(toShare);
 
 	}
 
 	@Override
-	public void reserve(FinalPackageDTO relativeID) {
-		FinalPackage fP = fromRelativeID(relativeID.getId());
+	public void reserve(FinalPackageDTO finalPkg) {
+		FinalPackage fP = fromRelativeID(finalPkg.getId());
 		if(fP.isFinalized())
 			fP.setReserved(true);
-		em.merge(fP);
 	}
 
 	@Override
@@ -269,6 +272,13 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 			out.add(buildDTO(fP));
 		}
 		return out;
+	}
+
+	@Override
+	public void pay(FinalPackageDTO finalPkg) {
+		FinalPackage fP = fromRelativeID(finalPkg.getId());
+		if(fP.isReserved())
+			fP.setPaid(true);
 	}
 
 }
