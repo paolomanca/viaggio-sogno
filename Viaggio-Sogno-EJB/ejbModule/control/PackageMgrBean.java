@@ -11,14 +11,13 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 import model.FinalPackage;
 import model.Package;
 import model.PackageHasProduct;
 import model.Product;
-
 import common.Constants;
-
 import dto.PackageDTO;
 import dto.ProductDTO;
 import entitymanagers.PackageMgr;
@@ -181,14 +180,20 @@ public class PackageMgrBean implements PackageMgr {
 		List<PackageHasProduct> managed = new LinkedList<>();
 		
 		for(ProductDTO pDTO : pkg.getFirstChoices()){
-			PackageHasProduct toAdd = new PackageHasProduct(toUpdate, em.find(Product.class, pDTO.getId()));
+			PackageHasProduct toAdd = findPackageHasProduct(pkg,pDTO);
+			if(toAdd==null){
+				toAdd = new PackageHasProduct(toUpdate, em.find(Product.class, pDTO.getId()));
+			}
 			toAdd.setFirstChoice(true);
 			em.merge(toAdd);
 			managed.add(toAdd);
 		}
 		
 		for(ProductDTO pDTO : pkg.getAlternatives()){
-			PackageHasProduct toAdd = new PackageHasProduct(toUpdate, em.find(Product.class, pDTO.getId()));
+			PackageHasProduct toAdd = findPackageHasProduct(pkg,pDTO);
+			if(toAdd==null){
+				toAdd = new PackageHasProduct(toUpdate, em.find(Product.class, pDTO.getId()));
+			}
 			toAdd.setFirstChoice(false);
 			em.merge(toAdd);
 			managed.add(toAdd);
@@ -196,6 +201,15 @@ public class PackageMgrBean implements PackageMgr {
 		
 		toUpdate.setPackageHasProducts(managed);
 		
+	}
+
+	private PackageHasProduct findPackageHasProduct(PackageDTO pkg,
+			ProductDTO pDTO) {
+		TypedQuery<PackageHasProduct> q = em.createQuery("select f from PackageHasProduct f where f.pkg.idpackage = :idPkg and f.product.idproduct = :idPrd", PackageHasProduct.class);
+		q.setParameter("idPkg", pkg.getId());
+		q.setParameter("idPrd", pDTO.getId());
+		
+		return q.getSingleResult();
 	}
 
 }
