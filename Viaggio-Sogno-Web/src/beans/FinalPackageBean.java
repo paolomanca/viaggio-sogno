@@ -19,10 +19,14 @@ import entitymanagers.FinalPackageMgr;
 import entitymanagers.FinalProductMgr;
 import entitymanagers.PackageMgr;
 import entitymanagers.ProductMgr;
+import entitymanagers.UserMgr;
 
 @ManagedBean(name = "finalPackageBean")
 @RequestScoped
 public class FinalPackageBean {
+
+	@EJB
+	private UserMgr uMgr;
 
 	@EJB
 	private ProductMgr prMgr;
@@ -66,8 +70,17 @@ public class FinalPackageBean {
 			if (act.equalsIgnoreCase("create")) {
 				fPkg = new FinalPackageDTO();
 			} else {
+				if (uMgr.isRole(common.Constants.Group.CUSTOMER)) {
+					fPkg = fPkgMgr.getByMyID(fPkgID);
+				}
 				
-				fPkg = fPkgMgr.getByMyID(fPkgID);
+				if (uMgr.isRole(common.Constants.Group.EMPLOYEE)) {
+					fPkg = fPkgMgr.getByID(fPkgID);
+					System.out.println("I'm an employee! (and a banana)");
+				}
+				System.out.println("Just another banana)");
+				
+
 			}
 
 		} else if (sharedID != null) {
