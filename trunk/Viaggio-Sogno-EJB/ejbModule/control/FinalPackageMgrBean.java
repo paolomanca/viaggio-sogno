@@ -49,44 +49,52 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 
 	@Override
 	public void update(FinalPackageDTO finalPkgDTO) {
+
 		FinalPackage fP = fromRelativeID(finalPkgDTO.getId());
-		em.detach(fP);
-		fP.setProducts(new LinkedList<Product>());
-		List<FinalProduct> originalFinalProducts = fP.getFinalProducts();
-		List<FinalProduct> newFinalProducts = new LinkedList<FinalProduct>();
+		if (!fP.isReserved()) {
+			em.detach(fP);
+			fP.setProducts(new LinkedList<Product>());
+			List<FinalProduct> originalFinalProducts = fP.getFinalProducts();
+			List<FinalProduct> newFinalProducts = new LinkedList<FinalProduct>();
 
-		for (ProductDTO pDTO : finalPkgDTO.getProducts()) {
-			fP.getProducts().add(em.find(Product.class, pDTO.getId()));
-		}
-
-		for (FinalProductDTO fPDTO : finalPkgDTO.getFinalProducts()) {
-			FinalProduct fPrd = fnPrdMgr.fromRelativeID(fPDTO.getId(),
-					fPDTO.getType());
-			if (fPrd != null) {
-				newFinalProducts.add(fPrd);
-			} else {
-				int id = fnPrdMgr.add(fPDTO);
-				fPrd = fnPrdMgr.fromRelativeID(id, fPDTO.getType());
-				newFinalProducts.add(fPrd);
+			for (ProductDTO pDTO : finalPkgDTO.getProducts()) {
+				fP.getProducts().add(em.find(Product.class, pDTO.getId()));
 			}
-		}
 
-		System.out.println("original size: " + originalFinalProducts.size());
-		System.out.println("new size: " + newFinalProducts.size());
-		originalFinalProducts.removeAll(newFinalProducts);
+			for (FinalProductDTO fPDTO : finalPkgDTO.getFinalProducts()) {
+				FinalProduct fPrd = fnPrdMgr.fromRelativeID(fPDTO.getId(),
+						fPDTO.getType());
+				if (fPrd != null) {
+					newFinalProducts.add(fPrd);
+				} else {
+					int id = fnPrdMgr.add(fPDTO);
+					fPrd = fnPrdMgr.fromRelativeID(id, fPDTO.getType());
+					newFinalProducts.add(fPrd);
+				}
+			}
 
-		for (FinalProduct oFP : originalFinalProducts) {
-			System.out.println("Deleting ID: " + oFP.getId());
-			usrMgr.getPrincipalUser().freeID(oFP.getIdRelative());
-		}
+			System.out
+					.println("original size: " + originalFinalProducts.size());
+			System.out.println("new size: " + newFinalProducts.size());
+			originalFinalProducts.removeAll(newFinalProducts);
 
-		fP.setFinalProducts(newFinalProducts);
-		if (fP.getProducts().isEmpty()) {
-			fP.setFinalized(true);
+			for (FinalProduct oFP : originalFinalProducts) {
+				System.out.println("Deleting ID: " + oFP.getId());
+				usrMgr.getPrincipalUser().freeID(oFP.getIdRelative());
+			}
+
+			fP.setFinalProducts(newFinalProducts);
+			if (fP.getProducts().isEmpty()) {
+				fP.setFinalized(true);
+			} else {
+				fP.setFinalized(false);
+			}
+			em.merge(fP);
+
 		} else {
-			fP.setFinalized(false);
+			throw new IllegalArgumentException(
+					"Final package is already reserved");
 		}
-		em.merge(fP);
 	}
 
 	@Override
@@ -254,6 +262,38 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		return buildSharedDTO(sP.getFinalPackage());
 	}
 
+	@Override
+	public void copySharedPackage(String ID) {
+		SharedPackage sP = em.find(SharedPackage.class, ID);
+		FinalPackage toCopy = sP.getFinalPackage();
+		FinalPackage newFinalPackage = new FinalPackage();
+		newFinalPackage.setIdfinalPackageRelative(usrMgr.getPrincipalUser().nextID());
+		newFinalPackage.setPackage(toCopy.getPackage());
+		
+		newFinalPackage.setProducts(new LinkedList<Product>());
+		for(Product p : toCopy.getProducts()){
+			newFinalPackage.getProducts().add(p);
+		}
+		
+		newFinalPackage.setFinalProducts(new LinkedList<FinalProduct>());
+		for(FinalProduct fPrd : toCopy.getFinalProducts()){
+			FinalProduct newFPrd = fPrd.shallowCopy();
+			newFPrd.setIdRelative(usrMgr.getPrincipalUser().nextID());
+			newFPrd.setProduct(fPrd.getProduct());
+			newFPrd.setUser(usrMgr.getPrincipalUser());
+			newFinalPackage.getFinalProducts().add(newFPrd);
+		}
+		
+		newFinalPackage.setFinalized(toCopy.isFinalized());
+		newFinalPackage.setPaid(false);
+		newFinalPackage.setReserved(false);
+		newFinalPackage.setShared(false);
+		newFinalPackage.setUser(usrMgr.getPrincipalUser());
+
+		em.merge(newFinalPackage);
+
+	}
+
 	private FinalPackageDTO buildSharedDTO(FinalPackage finalPackage) {
 		int idCount = 1;
 		FinalPackageDTO out = buildDTO(finalPackage);
@@ -290,6 +330,15 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
+	public void unreserve(FinalPackageDTO finalPkg) {
+		FinalPackage fP = fromRelativeID(finalPkg.getId());
+		if (fP.isReserved()) {
+			fP.setReserved(false);
+			fP.setPaid(false);
+		}
+	}
+
+	@Override
 	public List<FinalPackageDTO> listAll() {
 		List<FinalPackageDTO> out = new LinkedList<>();
 		for (FinalPackage fP : em.createNamedQuery(FinalPackage.ALL,
@@ -304,6 +353,12 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		FinalPackage fP = fromRelativeID(finalPkg.getId());
 		if (fP.isReserved())
 			fP.setPaid(true);
+	}
+
+	@Override
+	public FinalPackageDTO getByID(int ID) {
+		FinalPackage fP = em.find(FinalPackage.class, ID);
+		return buildDTO(fP);
 	}
 
 }

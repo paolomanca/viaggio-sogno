@@ -42,4 +42,13 @@ public class FinalFlight extends FinalProduct implements Serializable {
 		this.departure = departure;
 	}
 
+	@Override
+	public FinalFlight shallowCopy() {
+		FinalFlight out = new FinalFlight();
+		out.setDeparture(departure);
+		out.setId(getId());
+		out.setIdRelative(getIdRelative());
+		return out;
+	}
+
 }

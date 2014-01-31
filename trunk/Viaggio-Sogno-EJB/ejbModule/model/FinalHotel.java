@@ -55,4 +55,14 @@ public class FinalHotel extends FinalProduct implements Serializable {
 		this.checkOut = checkOut;
 	}
 
+	@Override
+	public FinalHotel shallowCopy() {
+		FinalHotel out = new FinalHotel();
+		out.setCheckIn(checkIn);
+		out.setCheckOut(checkOut);
+		out.setId(getId());
+		out.setIdRelative(getIdRelative());
+		return out;
+	}
+
 }
