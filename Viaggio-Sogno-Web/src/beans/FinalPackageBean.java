@@ -182,7 +182,7 @@ public class FinalPackageBean {
 		if(uMgr.isRole(common.Constants.Group.EMPLOYEE)){
 			fPkgMgr.removeForced(finalPkg);
 
-			return "index?faces-redirect=true";
+			return "finalPackages?faces-redirect=true";
 		} else {
 			fPkgMgr.remove(finalPkg);
 
