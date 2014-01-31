@@ -15,7 +15,6 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="FINAL_HOTEL")
 @NamedQuery(name="FinalHotel.findAll", query="SELECT f FROM FinalHotel f")
 public class FinalHotel extends FinalProduct implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 import dto.PackageDTO;
 
@@ -23,7 +22,6 @@ import dto.PackageDTO;
  * 
  */
 @Entity
-@Table(name="PACKAGE")
 @NamedQuery(name="Package.findAll", query="SELECT p FROM Package p")
 public class Package implements Serializable {
 	private static final long serialVersionUID = 1L;

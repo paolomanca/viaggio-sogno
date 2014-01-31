@@ -11,7 +11,6 @@ import javax.persistence.OneToOne;
  *
  */
 @Entity
-
 public class SharedPackage implements Serializable {
 
 	@OneToOne(mappedBy="sharedPackage")

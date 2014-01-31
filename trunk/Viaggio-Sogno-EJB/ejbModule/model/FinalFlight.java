@@ -15,7 +15,6 @@ import java.util.Date;
  * 
  */
 @Entity
-@Table(name="FINAL_FLIGHT")
 @NamedQuery(name="FinalFlight.findAll", query="SELECT f FROM FinalFlight f")
 public class FinalFlight extends FinalProduct implements Serializable {
 	private static final long serialVersionUID = 1L;

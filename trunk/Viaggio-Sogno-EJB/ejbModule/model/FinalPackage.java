@@ -15,7 +15,6 @@ import java.util.List;
  * 
  */
 @Entity
-@Table(name="FINAL_PACKAGE")
 @NamedQuery(name="FinalPackage.findAll", query="SELECT f FROM FinalPackage f")
 public class FinalPackage implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -46,11 +45,11 @@ public class FinalPackage implements Serializable {
 	@JoinColumn(name="PACKAGE_idPACKAGE", nullable=false)
 	private Package pkg;
 
+	private int numberOfPartecipants;
+	
 	//uni-directional many-to-many association to Product
 	@ManyToMany
-	@JoinTable(
-		name="final_package_has_product"
-		, joinColumns={
+	@JoinTable(	joinColumns={
 			@JoinColumn(name="FINAL_PACKAGE_idFINAL_PACKAGE", nullable=false)
 			}
 		, inverseJoinColumns={
@@ -159,6 +158,26 @@ public class FinalPackage implements Serializable {
 
 	public void setReserved(boolean reserved) {
 		this.reserved = reserved;
+	}
+
+	public int getNumberOfPartecipants() {
+		return numberOfPartecipants;
+	}
+
+	public void setNumberOfPartecipants(int numberOfPartecipants) {
+		this.numberOfPartecipants = numberOfPartecipants;
+	}
+	
+	public int getTotalCost(){
+		return singleCost()*numberOfPartecipants;
+	}
+
+	private int singleCost() {
+		int out = 0;
+		for(FinalProduct fProduct : getFinalProducts()){
+			out += fProduct.getProduct().getPrice();
+		}
+		return out;
 	}
 
 	@Override

@@ -57,8 +57,7 @@ public class ProductMgrBean implements ProductMgr {
 		out.setId(in.getIdproduct());
 		out.setLocation(in.getLocation());
 		out.setName(in.getName());
-		if ( in.getPrice() != null )
-			out.setPrice(in.getPrice().intValue());
+		out.setPrice(in.getPrice());
 		out.setRating(in.getRating());
 		out.setType(in.getType());
 		return out;
