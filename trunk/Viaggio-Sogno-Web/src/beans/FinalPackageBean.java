@@ -86,6 +86,7 @@ public class FinalPackageBean {
 
 		}
 
+		
 		if (act != null) {
 
 			if (act.equalsIgnoreCase("create")) {
@@ -177,7 +178,7 @@ public class FinalPackageBean {
 
 		fPkgMgr.copySharedPackage(sharedID);
 
-		return "index";
+		return "customer/index";
 	}
 
 	public String remove(FinalPackageDTO finalPkg) {
