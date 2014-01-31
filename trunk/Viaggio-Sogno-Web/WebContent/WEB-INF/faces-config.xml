@@ -9,4 +9,7 @@
   </navigation-case>
  </navigation-rule>
  <application/>
+ <factory>
+  <exception-handler-factory>exception.CustomExceptionHandlerFactory</exception-handler-factory>
+ </factory>
 </faces-config>
