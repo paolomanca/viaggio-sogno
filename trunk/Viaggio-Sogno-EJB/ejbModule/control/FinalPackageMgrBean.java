@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import common.Constants;
 
 import model.FinalPackage;
 import model.FinalProduct;
@@ -48,6 +51,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	private FinalProductMgrBean fnPrdMgr;
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void update(FinalPackageDTO finalPkgDTO) {
 
 		FinalPackage fP = fromRelativeID(finalPkgDTO.getId());
@@ -98,12 +102,14 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void remove(FinalPackageDTO finalPkgDTO) {
 		em.remove(fromRelativeID(finalPkgDTO.getId()));
 		usrMgr.getPrincipalUser().freeID(finalPkgDTO.getId());
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public FinalPackageDTO getByMyID(int ID) {
 		System.out.println("getting my id number: " + ID);
 		return buildDTO(fromRelativeID(ID), ID);
@@ -163,6 +169,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public List<FinalPackageDTO> listByUser(UserDTO user) {
 		List<FinalPackageDTO> out = new LinkedList<>();
 		List<FinalPackage> toConvert = em
@@ -323,6 +330,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void reserve(FinalPackageDTO finalPkg) {
 		FinalPackage fP = fromRelativeID(finalPkg.getId());
 		if (fP.isFinalized())
@@ -330,6 +338,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public void unreserve(FinalPackageDTO finalPkg) {
 		FinalPackage fP = fromRelativeID(finalPkg.getId());
 		if (fP.isReserved()) {
@@ -339,6 +348,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public List<FinalPackageDTO> listAll() {
 		List<FinalPackageDTO> out = new LinkedList<>();
 		for (FinalPackage fP : em.createNamedQuery(FinalPackage.ALL,
@@ -349,13 +359,15 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public void pay(FinalPackageDTO finalPkg) {
-		FinalPackage fP = fromRelativeID(finalPkg.getId());
+		FinalPackage fP = em.find(FinalPackage.class, finalPkg.getId());
 		if (fP.isReserved())
 			fP.setPaid(true);
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public FinalPackageDTO getByID(int ID) {
 		FinalPackage fP = em.find(FinalPackage.class, ID);
 		return buildDTO(fP);
