@@ -88,7 +88,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 			}
 
 			fP.setFinalProducts(newFinalProducts);
-			fP.setNumberOfPartecipants(finalPkgDTO.getNumberOFPartecipants());
+			fP.setNumberOfPartecipants(finalPkgDTO.getParticipants());
 			
 			if (fP.getProducts().isEmpty()) {
 				fP.setFinalized(true);
@@ -125,7 +125,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		FinalPackageDTO out = new FinalPackageDTO();
 		out.setId(ID);
 		out.setOriginalPackage(pkgMgr.buildDTO(in.getPackage()));
-		out.setNumberOFPartecipants(in.getNumberOfPartecipants());
+		out.setParticipants(in.getNumberOfPartecipants());
 		out.setTotalCost(in.getTotalCost());
 
 		

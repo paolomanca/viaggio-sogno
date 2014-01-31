@@ -88,6 +88,7 @@ public interface FinalPackageMgr {
 	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public List<FinalPackageDTO> listByUser(UserDTO user);
 
-	void copySharedPackage(String ID);
+	public void copySharedPackage(String sharedID);
+	
 
 }

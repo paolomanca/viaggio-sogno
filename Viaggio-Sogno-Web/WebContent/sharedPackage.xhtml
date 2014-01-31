@@ -209,6 +209,20 @@
 
 			</p:panel>
 
+			<p:spacer height="30px" />
+
+			<p:panel>
+
+				<p:button value="Register and save the package" outcome="register">
+					<f:param name="sharedID" value="#{param['sharedID']}" />
+				</p:button>
+				<p:spacer width="25px" />
+				<p:button value="Login and save the package" outcome="customer/sharedPackage">
+					<f:param name="sharedID" value="#{param['sharedID']}" />
+				</p:button>
+
+			</p:panel>
+
 		</o:form>
 
 	</ui:define>

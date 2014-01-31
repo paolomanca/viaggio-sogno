@@ -2,12 +2,15 @@ package beans;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.interceptor.InvocationContext;
 
 import dto.FinalExcursionDTO;
 import dto.FinalFlightDTO;
@@ -65,21 +68,40 @@ public class FinalPackageBean {
 	@PostConstruct
 	public void init() {
 
+		Map<String, String[]> param = FacesContext.getCurrentInstance()
+				.getExternalContext().getRequestParameterValuesMap();
+
+		if (param != null) {
+			if (param.get("fPkgID") != null) {
+				fPkgID = Integer.valueOf(param.get("fPkgID")[0]);
+			}
+
+			if (param.get("act") != null) {
+				act = param.get("act")[0];
+			}
+			
+			if (param.get("sharedID") != null) {
+				sharedID = param.get("sharedID")[0];
+			}
+
+		}
+
 		if (act != null) {
 
 			if (act.equalsIgnoreCase("create")) {
 				fPkg = new FinalPackageDTO();
 			} else {
+				// System.out.println("Act not create:" + param.get("act"));
+
 				if (uMgr.isRole(common.Constants.Group.CUSTOMER)) {
 					fPkg = fPkgMgr.getByMyID(fPkgID);
+					// System.out.println("Pacchetto :" + fPkg);
 				}
-				
+
 				if (uMgr.isRole(common.Constants.Group.EMPLOYEE)) {
 					fPkg = fPkgMgr.getByID(fPkgID);
 					System.out.println("I'm an employee! (and a banana)");
 				}
-				System.out.println("Just another banana)");
-				
 
 			}
 
@@ -89,12 +111,36 @@ public class FinalPackageBean {
 
 	}
 
-	public void reserve() {
-		fPkgMgr.reserve(fPkgMgr.getByMyID(fPkgID));
+	public String reserve() {
+
+		fPkg = fPkgMgr.getByMyID(fPkgID);
+
+		fPkgMgr.reserve(fPkg);
+
+		return "finalPackage?act=show&amp;fPkgID =" + fPkgID
+				+ "&amp;faces-redirect=true";
+
+	}
+
+	public String update() {
+
+		fPkgMgr.update(fPkg);
+
+		return "finalPackage?act=show&amp;fPkgID =" + fPkgID
+				+ "&amp;faces-redirect=true";
 	}
 
 	public String share() {
 		fPkgMgr.shareFinalPackage(fPkgMgr.getByMyID(fPkgID));
+		return "finalPackage?act=show&amp;fPkgID =" + fPkgID
+				+ "&amp;faces-redirect=true";
+	}
+
+	public String pay() {
+		System.out.println("Ciao: " + fPkg);
+
+		fPkgMgr.pay(fPkg);
+
 		return "finalPackage?act=show&amp;fPkgID =" + fPkgID
 				+ "&amp;faces-redirect=true";
 	}
@@ -125,6 +171,13 @@ public class FinalPackageBean {
 
 		return "finalPackage?act=show&amp;fPkgID=" + fPkgID
 				+ "&amp;faces-redirect=true";
+	}
+
+	public String saveShared() {
+
+		fPkgMgr.copySharedPackage(sharedID);
+
+		return "index";
 	}
 
 	public String remove(FinalPackageDTO finalPkg) {
