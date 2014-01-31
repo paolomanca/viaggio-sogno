@@ -182,7 +182,6 @@ public class FinalProductMgrBean implements FinalProductMgr {
 		}
 	}
 
-	/* oh my */ // TODO try em.find(FinalProduct.class, id)
 	@Override
 	public FinalProductDTO getByID(int id) {
 		FinalFlight possibleFlight;

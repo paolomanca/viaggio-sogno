@@ -62,8 +62,6 @@ public class UserMgrBean implements UserMgr {
 		getPrincipalUser().setPassword(DigestUtils.sha512Hex(user.getPassword()));
 		getPrincipalUser().setFirstName(user.getFirstName());
 		getPrincipalUser().setLastName(user.getLastName());
-		// TODO
-		/*getPrincipalUser().setEmail(user.getEmail());*/
 	}
 	
 
