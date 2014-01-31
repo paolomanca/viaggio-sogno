@@ -3,6 +3,7 @@ package control;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
@@ -10,6 +11,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+
+import common.Constants;
 
 import model.FinalExcursion;
 import model.FinalFlight;
@@ -39,6 +42,7 @@ public class FinalProductMgrBean implements FinalProductMgr {
 	private UserMgrBean usrMgr;
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public int add(FinalProductDTO fPDTO) {
 		FinalProduct fP = buildFromDTO(fPDTO);		
 		fP.setProduct(em.find(Product.class, fPDTO.getProduct().getId()));
@@ -62,6 +66,7 @@ public class FinalProductMgrBean implements FinalProductMgr {
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void update(FinalProductDTO fP) {
 		switch (fP.getType()) {
 		case FinalFlight.TYPE:
@@ -89,6 +94,7 @@ public class FinalProductMgrBean implements FinalProductMgr {
 	}
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void remove(FinalProductDTO fP) {
 		switch (fP.getType()) {
 		case FinalFlight.TYPE:

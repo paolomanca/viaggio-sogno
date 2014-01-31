@@ -20,7 +20,7 @@ import java.util.List;
 public class FinalPackage implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	public static final String ALL = "FinalPackage.findAll";
+	public static final String FIND_ALL = "FinalPackage.findAll";
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="IDFINAL_PACKAGE", unique=true, nullable=false)
