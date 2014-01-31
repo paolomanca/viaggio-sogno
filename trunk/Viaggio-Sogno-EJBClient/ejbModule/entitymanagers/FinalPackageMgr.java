@@ -32,7 +32,7 @@ public interface FinalPackageMgr {
 	/**
 	 * @param finalPkg : the final package to be removed
 	 */
-	@RolesAllowed({Constants.Group.CUSTOMER})
+	@RolesAllowed({Constants.Group.CUSTOMER, Constants.Group.EMPLOYEE})
 	public void remove(FinalPackageDTO finalPkg);
 	
 	
@@ -89,6 +89,8 @@ public interface FinalPackageMgr {
 	public List<FinalPackageDTO> listByUser(UserDTO user);
 
 	public void copySharedPackage(String sharedID);
+
+	public void removeForced(FinalPackageDTO finalPkgDTO);
 	
 
 }
