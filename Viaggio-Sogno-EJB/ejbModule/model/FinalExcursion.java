@@ -41,5 +41,14 @@ public class FinalExcursion extends FinalProduct implements Serializable {
 	public void setDate(Date date) {
 		this.date = date;
 	}
+
+	@Override
+	public FinalExcursion shallowCopy() {
+		FinalExcursion out = new FinalExcursion();
+		out.setDate(date);
+		out.setId(getId());
+		out.setIdRelative(getIdRelative());
+		return out;
+	}
 	
 }

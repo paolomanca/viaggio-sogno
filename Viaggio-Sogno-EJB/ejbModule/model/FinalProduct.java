@@ -90,4 +90,6 @@ public abstract class FinalProduct implements Serializable {
 		this.user = user;
 	}
 
+	public abstract FinalProduct shallowCopy();
+
 }
