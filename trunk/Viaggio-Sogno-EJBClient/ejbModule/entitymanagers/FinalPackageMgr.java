@@ -57,6 +57,9 @@ public interface FinalPackageMgr {
 	public void swap(FinalPackageDTO toChange, FinalProductDTO oldProduct,
 			ProductDTO newProduct);
 	
+	@RolesAllowed({Constants.Group.EMPLOYEE})
+	public FinalPackageDTO getByID(int ID);
+	
 	@RolesAllowed({Constants.Group.CUSTOMER})
 	public FinalPackageDTO getByMyID(int ID);
 	

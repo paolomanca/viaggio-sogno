@@ -325,15 +325,17 @@
 			<p:spacer height="30px" />
 
 			<p:panel>
-				<p:panelGrid styleClass="no-border-grid">
+				<p:panelGrid styleClass="no-border-grid" id="packButtons">
 					<p:row>
 						<p:column>
 							<h:outputText value="Share this package with your friends: " />
 							<p:commandButton value="Get shared URL"
-								action="#{finalPackageBean.share()}" update=":customizePack" rendered="#{not finalPackageBean.finalPackage.shared}" />
+								action="#{finalPackageBean.share()}" update="packButtons"
+								rendered="#{not finalPackageBean.finalPackage.shared}" />
 							<h:link
 								value="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/finalPackage.xhtml?sharedID=#{finalPackageBean.finalPackage.sharedID}"
-								outcome="/finalPackage" rendered="#{finalPackageBean.finalPackage.shared}">
+								outcome="/finalPackage"
+								rendered="#{finalPackageBean.finalPackage.shared}">
 								<f:param name="sharedID"
 									value="#{finalPackageBean.finalPackage.sharedID}" />
 							</h:link>
@@ -349,11 +351,18 @@
 							<p:commandButton value="Reserve"
 								action="#{finalPackageBean.reserve()}"
 								disabled="#{not finalPackageBean.finalPackage.finalized}"
-								update=":customizePack" />
-							<p:spacer width="20px" />
+								rendered="#{not finalPackageBean.finalPackage.reserved}"
+								update=":customizePack"
+								style="margin-right: 20px" />
 							<h:outputText
 								value="All products have to be finalized in order to reserve the package"
 								rendered="#{not finalPackageBean.finalPackage.finalized}" />
+							<h:outputText
+								value="You have reserved this package. You just have to procede with the payment now and enjoy your trip!"
+								rendered="#{finalPackageBean.finalPackage.reserved}" />
+							<h:outputText
+								value="You have paid for this package. Have a wonderful trip!"
+								rendered="#{finalPackageBean.finalPackage.paid}" />
 						</p:column>
 					</p:row>
 				</p:panelGrid>
