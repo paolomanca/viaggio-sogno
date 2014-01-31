@@ -46,6 +46,7 @@ public class UserMgrBean implements UserMgr {
 
 
 	@Override
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public void addEmployee(UserDTO user) {
 		User newUser = new User(user);
 		List<Group> groups = new ArrayList<Group>();
@@ -56,6 +57,7 @@ public class UserMgrBean implements UserMgr {
 
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void updateSelf(UserDTO user) {
 		getPrincipalUser().setPassword(DigestUtils.sha512Hex(user.getPassword()));
 		getPrincipalUser().setFirstName(user.getFirstName());
@@ -66,12 +68,14 @@ public class UserMgrBean implements UserMgr {
 	
 
 	@Override
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public void update(UserDTO user) {
 		em.merge(new User(user));
 	}
 
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER, Constants.Group.EMPLOYEE})
 	public UserDTO getUserDTO() {
 		UserDTO userDTO = buildDTO(getPrincipalUser());
 		return userDTO;
@@ -79,6 +83,7 @@ public class UserMgrBean implements UserMgr {
 
 
 	@Override
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public void remove(String email) {
 		remove(findByEmail(email));
 	}
@@ -97,6 +102,7 @@ public class UserMgrBean implements UserMgr {
 
 
 	@Override
+	@RolesAllowed({Constants.Group.CUSTOMER})
 	public void unregister() {
 		remove(getPrincipalUser());
 	}

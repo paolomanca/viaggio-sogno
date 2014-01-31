@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
@@ -11,9 +12,13 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import model.FinalPackage;
 import model.Package;
 import model.PackageHasProduct;
 import model.Product;
+
+import common.Constants;
+
 import dto.PackageDTO;
 import dto.ProductDTO;
 import entitymanagers.PackageMgr;
@@ -35,6 +40,7 @@ public class PackageMgrBean implements PackageMgr {
 	private ProductMgrBean prdMgr;
 
 	@Override
+	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public void add(PackageDTO pkg) {
 		Package newPkg = new Package(pkg);
 		newPkg.setUser(usrMgr.findByEmail(context.getCallerPrincipal().getName()));
@@ -58,12 +64,14 @@ public class PackageMgrBean implements PackageMgr {
 	}
 
 	@Override
-	public void remove(PackageDTO pkg) {
-		em.remove(findByID(pkg.getId()));
-	}
-
-	private Package findByID(int id) {
-		return em.find(Package.class, id);
+	@RolesAllowed({Constants.Group.EMPLOYEE})
+	public void remove(PackageDTO pkgDTO) {
+		Package pkg = em.find(Package.class, pkgDTO.getId());
+		List<FinalPackage> owned = em.createQuery("select t from FinalPackage t where t.pkg = :pkg", FinalPackage.class).setParameter("pkg", pkg ).getResultList();
+		for(FinalPackage fP : owned){
+			em.remove(fP);
+		}
+		em.remove(pkg);
 	}
 
 	@Override

@@ -340,7 +340,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@Override
 	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public void unreserve(FinalPackageDTO finalPkg) {
-		FinalPackage fP = fromRelativeID(finalPkg.getId());
+		FinalPackage fP = em.find(FinalPackage.class, finalPkg.getId());
 		if (fP.isReserved()) {
 			fP.setReserved(false);
 			fP.setPaid(false);
@@ -351,7 +351,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public List<FinalPackageDTO> listAll() {
 		List<FinalPackageDTO> out = new LinkedList<>();
-		for (FinalPackage fP : em.createNamedQuery(FinalPackage.ALL,
+		for (FinalPackage fP : em.createNamedQuery(FinalPackage.FIND_ALL,
 				FinalPackage.class).getResultList()) {
 			out.add(buildDTO(fP));
 		}
