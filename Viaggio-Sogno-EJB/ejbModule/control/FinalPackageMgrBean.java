@@ -127,7 +127,7 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		out.setOriginalPackage(pkgMgr.buildDTO(in.getPackage()));
 		out.setParticipants(in.getNumberOfPartecipants());
 		out.setTotalCost(in.getTotalCost());
-
+		out.setUser(usrMgr.buildDTO(in.getUser()));
 		
 		List<ProductDTO> productDTOs = new LinkedList<>();
 
