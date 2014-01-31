@@ -177,6 +177,9 @@ public class FinalPackage implements Serializable {
 		for(FinalProduct fProduct : getFinalProducts()){
 			out += fProduct.getProduct().getPrice();
 		}
+		for(Product product : getProducts()){
+			out += product.getPrice();
+		}
 		return out;
 	}
 
