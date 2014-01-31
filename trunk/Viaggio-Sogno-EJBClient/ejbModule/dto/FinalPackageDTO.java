@@ -22,6 +22,8 @@ public class FinalPackageDTO {
 	
 	private int totalCost;
 
+	private UserDTO user;
+	
 	@NotEmpty
 	private PackageDTO originalPackage;
 
@@ -94,6 +96,14 @@ public class FinalPackageDTO {
 
 	public void setSharedID(String sharedID) {
 		this.sharedID = sharedID;
+	}
+
+	public UserDTO getUser() {
+		return user;
+	}
+
+	public void setUser(UserDTO user) {
+		this.user = user;
 	}
 
 	public boolean isFinalized() {
