@@ -33,7 +33,6 @@ public class RegisterBean {
 	}
 	
 	public String register() {
-		System.out.println("Ciao");
 		userMgr.addCustomer(user);
 		
 		if ( sharedID != null ) {
@@ -41,6 +40,11 @@ public class RegisterBean {
 		} else {
 			return "customer/index";
 		}
+	}
+	
+	public String registerEmployee() {
+		userMgr.addEmployee(user);
+		return "index?faces-redirect=true";
 	}
 
 	public String getSharedID() {

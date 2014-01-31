@@ -9,6 +9,10 @@
 <h:head>
 </h:head>
 <h:body>
+
+
+    <f:event type="preRenderView" listener="#{redirectBean.go()}" />
+
 	<h:form>
 		<h:link outcome="customer/index" value="Customer login"/><br/>
 		<h:link outcome="employee/index" value="Employee login"/><br/>
