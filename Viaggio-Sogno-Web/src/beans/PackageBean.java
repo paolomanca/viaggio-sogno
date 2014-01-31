@@ -37,7 +37,7 @@ public class PackageBean {
 		if ( act != null ) {			
 			if( act.equalsIgnoreCase("create") ) {
 				pkg = new PackageDTO();
-				System.out.println("fix!"); // TODO WTF!?
+				System.out.println("fix!");
 			} else {
 				pkg = pkgMgr.getByID(pkgID);
 			}
