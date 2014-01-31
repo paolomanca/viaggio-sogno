@@ -43,7 +43,8 @@
 						<h:outputText value="#{flight.price}" />
 					</p:column>
 
-					<p:column width="150" style="text-align: center">
+					<p:column width="150" style="text-align: center"
+						rendered="#{not finalPackageBean.finalPackage.finalized}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Finalize" outcome="finalProduct">
 								<f:param name="act" value="create" />
@@ -92,7 +93,8 @@
 						<h:outputText value="#{finalFlight.price}" />
 					</p:column>
 
-					<p:column width="150" style="text-align: center">
+					<p:column width="150" style="text-align: center"
+						rendered="#{not finalPackageBean.finalPackage.finalized}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Modify" outcome="finalProduct">
 								<f:param name="act" value="edit" />
@@ -147,7 +149,8 @@
 						<h:outputText value="#{hotel.price}" />
 					</p:column>
 
-					<p:column width="150" style="text-align: center">
+					<p:column width="150" style="text-align: center"
+						rendered="#{not finalPackageBean.finalPackage.finalized}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Finalize" outcome="finalProduct">
 								<f:param name="act" value="create" />
@@ -193,7 +196,7 @@
 
 					<p:column headerText="Check out">
 						<h:outputText value="#{finalHotel.checkOut}">
-							<f:convertDateTime pattern="dd/MM/yyyy HH:mm" />
+							<f:convertDateTime pattern="dd/MM/yyyy" />
 						</h:outputText>
 					</p:column>
 
@@ -201,7 +204,8 @@
 						<h:outputText value="#{finalHotel.price}" />
 					</p:column>
 
-					<p:column width="150" style="text-align: center">
+					<p:column width="150" style="text-align: center"
+						rendered="#{not finalPackageBean.finalPackage.finalized}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Modify" outcome="finalProduct">
 								<f:param name="act" value="edit" />
@@ -246,7 +250,8 @@
 						<h:outputText value="#{excursion.price}" />
 					</p:column>
 
-					<p:column width="150" style="text-align: center">
+					<p:column width="150" style="text-align: center"
+						rendered="#{not finalPackageBean.finalPackage.finalized}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Finalize" outcome="finalProduct">
 								<f:param name="act" value="create" />
@@ -256,7 +261,8 @@
 
 							</p:menuitem>
 							<p:menuitem value="Remove"
-								action="#{finalPackageBean.removeProduct(excursion)}"  update=":customizePack"/>
+								action="#{finalPackageBean.removeProduct(excursion)}"
+								update=":customizePack" />
 						</p:menuButton>
 					</p:column>
 
@@ -287,7 +293,8 @@
 						<h:outputText value="#{finalExcursion.price}" />
 					</p:column>
 
-					<p:column width="150" style="text-align: center">
+					<p:column width="150" style="text-align: center"
+						rendered="#{not finalPackageBean.finalPackage.finalized}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Modify" outcome="finalProduct">
 								<f:param name="act" value="edit" />
@@ -296,19 +303,21 @@
 								<f:param name="fPrID" value="#{finalExcursion.id}" />
 							</p:menuitem>
 							<p:menuitem value="Remove"
-								action="#{finalPackageBean.removeFinalProduct(finalExcursion)}" update=":customizePack"/>
+								action="#{finalPackageBean.removeFinalProduct(finalExcursion)}"
+								update=":customizePack" />
 						</p:menuButton>
 					</p:column>
 
 				</p:dataTable>
 
-				<f:facet name="footer">
+				<f:attribute name="footer"
+					rendered="#{not finalPackageBean.finalPackage.finalized}" value="">
 					<p:button value="Add excursions" outcome="chooseAlternative">
 						<f:param name="act" value="add" />
 						<f:param name="type" value="EXCURSION" />
 						<f:param name="fPkgID" value="#{param['fPkgID']}" />
 					</p:button>
-				</f:facet>
+				</f:attribute>
 
 			</p:panel>
 
@@ -320,9 +329,11 @@
 					<p:row>
 						<p:column>
 							<h:outputText value="Share this package with your friends: " />
+							<p:commandButton value="Get shared URL"
+								action="#{finalPackageBean.share()}" update=":customizePack" rendered="#{not finalPackageBean.finalPackage.shared}" />
 							<h:link
 								value="#{request.requestURL.substring(0, request.requestURL.length() - request.requestURI.length())}#{request.contextPath}/finalPackage.xhtml?sharedID=#{finalPackageBean.finalPackage.sharedID}"
-								outcome="/finalPackage">
+								outcome="/finalPackage" rendered="#{finalPackageBean.finalPackage.shared}">
 								<f:param name="sharedID"
 									value="#{finalPackageBean.finalPackage.sharedID}" />
 							</h:link>
@@ -337,7 +348,8 @@
 						<p:column>
 							<p:commandButton value="Reserve"
 								action="#{finalPackageBean.reserve()}"
-								disabled="#{not finalPackageBean.finalPackage.finalized}" />
+								disabled="#{not finalPackageBean.finalPackage.finalized}"
+								update=":customizePack" />
 							<p:spacer width="20px" />
 							<h:outputText
 								value="All products have to be finalized in order to reserve the package"
