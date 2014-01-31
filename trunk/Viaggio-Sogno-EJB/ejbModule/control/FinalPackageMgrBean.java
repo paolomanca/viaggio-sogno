@@ -257,7 +257,6 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 		fP.setPackage(toFinalize);
 		fP.setProducts(new LinkedList<Product>());
 		fP.setFinalProducts(new LinkedList<FinalProduct>());
-
 		for (PackageHasProduct p : toFinalize.getPackageHasProducts()) {
 			if (p.isFirstChoice())
 				fP.getProducts().add(p.getProduct());
