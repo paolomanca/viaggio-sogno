@@ -4,7 +4,6 @@ import javax.annotation.security.RolesAllowed;
 import javax.ejb.Local;
 
 import common.Constants;
-
 import dto.UserDTO;
 
 @Local
@@ -33,5 +32,7 @@ public interface UserMgr {
 	public UserDTO getUserDTO();
 	
 	public boolean isRole(String role);
+
+	public String getPrincipal();
 
 }
