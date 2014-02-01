@@ -20,10 +20,6 @@
 				<p:dataTable var="flight" value="#{finalPackageBean.flights}"
 					rendered="#{not empty finalPackageBean.flights}">
 
-					<p:column headerText="ID" width="35" style="text-align: center">
-						<h:outputText value="#{flight.id}" />
-					</p:column>
-
 					<p:column headerText="From">
 						<h:outputText value="#{flight.depAirport}" />
 					</p:column>
@@ -67,10 +63,6 @@
 				<p:dataTable var="finalFlight"
 					value="#{finalPackageBean.finalFlights}"
 					rendered="#{not empty finalPackageBean.finalFlights}">
-
-					<p:column headerText="ID" width="35" style="text-align: center">
-						<h:outputText value="#{finalFlight.id}" />
-					</p:column>
 
 					<p:column headerText="From">
 						<h:outputText value="#{finalFlight.depAirport}" />
@@ -122,10 +114,6 @@
 				<p:dataTable var="hotel" value="#{finalPackageBean.hotels}"
 					rendered="#{not empty finalPackageBean.hotels}">
 
-					<p:column headerText="ID" width="35" style="text-align: center">
-						<h:outputText value="#{hotel.id}" />
-					</p:column>
-
 					<p:column headerText="Name">
 						<h:outputText value="#{hotel.name}" />
 					</p:column>
@@ -173,10 +161,7 @@
 				<p:dataTable var="finalHotel"
 					value="#{finalPackageBean.finalHotels}"
 					rendered="#{not empty finalPackageBean.finalHotels}">
-
-					<p:column headerText="ID" width="35" style="text-align: center">
-						<h:outputText value="#{finalHotel.id}" />
-					</p:column>
+					
 					<p:column headerText="Name">
 						<h:outputText value="#{finalHotel.name}" />
 					</p:column>
@@ -231,10 +216,7 @@
 			<p:panel header="Excursions">
 				<p:dataTable var="excursion" value="#{finalPackageBean.excursions}"
 					rendered="#{not empty finalPackageBean.excursions}">
-
-					<p:column headerText="ID" width="35" style="text-align: center">
-						<h:outputText value="#{excursion.id}" />
-					</p:column>
+					
 					<p:column headerText="Name">
 						<h:outputText value="#{excursion.name}" />
 					</p:column>
@@ -272,10 +254,7 @@
 				<p:dataTable var="finalExcursion"
 					value="#{finalPackageBean.finalExcursions}"
 					rendered="#{not empty finalPackageBean.finalExcursions}">
-
-					<p:column headerText="ID" width="35" style="text-align: center">
-						<h:outputText value="#{finalExcursion.id}" />
-					</p:column>
+					
 					<p:column headerText="Name">
 						<h:outputText value="#{finalExcursion.name}" />
 					</p:column>
