@@ -172,10 +172,9 @@ public class FinalPackageBean {
 	}
 
 	public String saveShared() {
-
 		fPkgMgr.copySharedPackage(sharedID);
 
-		return "customer/index";
+		return "index?faces-redirect=true";
 	}
 
 	public String remove(FinalPackageDTO finalPkg) {

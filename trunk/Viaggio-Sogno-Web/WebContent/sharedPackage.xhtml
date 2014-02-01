@@ -190,7 +190,7 @@
 
 			<p:spacer height="30px" />
 
-			<p:panel>
+			<p:panel rendered="#{!userBean.logged}">
 
 				<p:button value="Register and save the package" outcome="register">
 					<f:param name="sharedID" value="#{param['sharedID']}" />
