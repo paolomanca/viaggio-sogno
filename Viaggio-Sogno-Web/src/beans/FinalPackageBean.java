@@ -279,8 +279,10 @@ public class FinalPackageBean {
 
 		out.addAll(first);
 		out.addAll(alter);
-		if (prID > 0) {
-			out.remove(prMgr.getByID(prID));
+		for(ProductDTO pDTOAlreadyPresent : fPkg.getProducts()){
+			if(pDTOAlreadyPresent.getType().equals(type)){
+				out.remove(pDTOAlreadyPresent);
+			}
 		}
 		return out;
 	}

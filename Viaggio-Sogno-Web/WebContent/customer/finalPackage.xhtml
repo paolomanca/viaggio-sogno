@@ -41,7 +41,7 @@
 					</p:column>
 
 					<p:column width="150" style="text-align: center"
-						rendered="#{not finalPackageBean.finalPackage.finalized}">
+						rendered="#{not finalPackageBean.finalPackage.reserved}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Finalize" outcome="finalProduct">
 								<f:param name="act" value="create" />
@@ -87,7 +87,7 @@
 					</p:column>
 
 					<p:column width="150" style="text-align: center"
-						rendered="#{not finalPackageBean.finalPackage.finalized}">
+						rendered="#{not finalPackageBean.finalPackage.reserved}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Modify" outcome="finalProduct">
 								<f:param name="act" value="edit" />
@@ -139,7 +139,7 @@
 					</p:column>
 
 					<p:column width="150" style="text-align: center"
-						rendered="#{not finalPackageBean.finalPackage.finalized}">
+						rendered="#{not finalPackageBean.finalPackage.reserved}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Finalize" outcome="finalProduct">
 								<f:param name="act" value="create" />
@@ -161,7 +161,7 @@
 				<p:dataTable var="finalHotel"
 					value="#{finalPackageBean.finalHotels}"
 					rendered="#{not empty finalPackageBean.finalHotels}">
-					
+
 					<p:column headerText="Name">
 						<h:outputText value="#{finalHotel.name}" />
 					</p:column>
@@ -191,7 +191,7 @@
 					</p:column>
 
 					<p:column width="150" style="text-align: center"
-						rendered="#{not finalPackageBean.finalPackage.finalized}">
+						rendered="#{not finalPackageBean.finalPackage.reserved}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Modify" outcome="finalProduct">
 								<f:param name="act" value="edit" />
@@ -216,7 +216,7 @@
 			<p:panel header="Excursions">
 				<p:dataTable var="excursion" value="#{finalPackageBean.excursions}"
 					rendered="#{not empty finalPackageBean.excursions}">
-					
+
 					<p:column headerText="Name">
 						<h:outputText value="#{excursion.name}" />
 					</p:column>
@@ -234,7 +234,7 @@
 					</p:column>
 
 					<p:column width="150" style="text-align: center"
-						rendered="#{not finalPackageBean.finalPackage.finalized}">
+						rendered="#{not finalPackageBean.finalPackage.reserved}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Finalize" outcome="finalProduct">
 								<f:param name="act" value="create" />
@@ -254,7 +254,7 @@
 				<p:dataTable var="finalExcursion"
 					value="#{finalPackageBean.finalExcursions}"
 					rendered="#{not empty finalPackageBean.finalExcursions}">
-					
+
 					<p:column headerText="Name">
 						<h:outputText value="#{finalExcursion.name}" />
 					</p:column>
@@ -274,7 +274,7 @@
 					</p:column>
 
 					<p:column width="150" style="text-align: center"
-						rendered="#{not finalPackageBean.finalPackage.finalized}">
+						rendered="#{not finalPackageBean.finalPackage.reserved}">
 						<p:menuButton value="Actions">
 							<p:menuitem value="Modify" outcome="finalProduct">
 								<f:param name="act" value="edit" />
@@ -290,14 +290,13 @@
 
 				</p:dataTable>
 
-				<f:attribute name="footer"
-					rendered="#{not finalPackageBean.finalPackage.finalized}" value="">
-					<p:button value="Add excursions" outcome="chooseAlternative">
+				<f:facet name="footer">
+					<p:button value="Add excursions" outcome="chooseAlternative" disabled="#{finalPackageBean.finalPackage.reserved}">
 						<f:param name="act" value="add" />
 						<f:param name="type" value="EXCURSION" />
 						<f:param name="fPkgID" value="#{param['fPkgID']}" />
 					</p:button>
-				</f:attribute>
+				</f:facet>
 
 			</p:panel>
 
@@ -328,12 +327,17 @@
 					</p:row>
 					<p:row>
 						<p:column>
-							<p:outputLabel value="Number of participants: "/>
-							<p:spinner value="#{finalPackageBean.finalPackage.participants}" min="1" max="20" disabled="#{finalPackageBean.finalPackage.reserved}" />
-							<p:commandButton value ="Save" action="#{finalPackageBean.update()}" rendered="#{not finalPackageBean.finalPackage.reserved}" />
+							<p:outputLabel value="Number of participants: " />
+							<p:spinner value="#{finalPackageBean.finalPackage.participants}"
+								min="1" max="20"
+								disabled="#{finalPackageBean.finalPackage.reserved}" />
+							<p:commandButton value="Save"
+								action="#{finalPackageBean.update()}"
+								rendered="#{not finalPackageBean.finalPackage.reserved}" />
 						</p:column>
 						<p:column>
-							<p:outputLabel value="Total cost: #{finalPackageBean.finalPackage.totalCost}"/>
+							<p:outputLabel
+								value="Total cost: #{finalPackageBean.finalPackage.totalCost}" />
 						</p:column>
 					</p:row>
 					<p:row>
