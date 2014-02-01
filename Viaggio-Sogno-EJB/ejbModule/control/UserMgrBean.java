@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.annotation.security.RolesAllowed;
-import javax.ejb.EJBContext;
 import javax.ejb.LocalBean;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -32,7 +32,7 @@ public class UserMgrBean implements UserMgr {
 	private EntityManager em;
 
 	@Resource
-	private EJBContext context;
+	private SessionContext context;
 
 
 	@Override
@@ -154,5 +154,11 @@ public class UserMgrBean implements UserMgr {
 	@RolesAllowed({Constants.Group.CUSTOMER, Constants.Group.EMPLOYEE})
 	public boolean isRole(String role) {
 		return context.isCallerInRole(role);
+	}
+
+
+	@Override
+	public String getPrincipal() {
+		return context.getCallerPrincipal().getName();
 	}
 }
