@@ -42,7 +42,6 @@ public class PackageMgrBean implements PackageMgr {
 	@RolesAllowed({Constants.Group.EMPLOYEE})
 	public void add(PackageDTO pkg) {
 		Package newPkg = new Package(pkg);
-		newPkg.setUser(usrMgr.findByEmail(context.getCallerPrincipal().getName()));
 		em.persist(newPkg);
 		
 		for(ProductDTO prdDTO : pkg.getFirstChoices()){

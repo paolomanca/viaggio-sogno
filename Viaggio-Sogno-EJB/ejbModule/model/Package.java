@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
@@ -39,11 +37,6 @@ public class Package implements Serializable {
 	@Column(nullable=false)
 	private boolean showcased;
 
-	//uni-directional many-to-one association to User
-	@ManyToOne
-	@JoinColumn(name="USER_idUSER", nullable=false)
-	private User user;
-
 	//bi-directional one-to-many association to PackageHasProduct
 	@OneToMany(mappedBy="pkg", cascade = CascadeType.ALL)
 	private List<PackageHasProduct> packageHasProducts = new LinkedList<>();
@@ -70,14 +63,6 @@ public class Package implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public User getUser() {
-		return this.user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public boolean isShowcased() {

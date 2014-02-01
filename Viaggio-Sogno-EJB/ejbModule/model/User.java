@@ -47,10 +47,6 @@ public class User implements Serializable {
 	//bi-directional many-to-one association to FinalProduct
 	@OneToMany(mappedBy="user")
 	private List<FinalProduct> finalProducts;
-
-	//bi-directional many-to-one association to Package
-	@OneToMany(mappedBy="user", cascade=CascadeType.ALL)
-	private List<Package> packages;
 	
 	@ElementCollection(targetClass = Group.class)
 	@CollectionTable(	name = "USER_GROUP",
@@ -134,28 +130,6 @@ public class User implements Serializable {
 		finalPackage.setUser(null);
 
 		return finalPackage;
-	}
-
-	public List<Package> getPackages() {
-		return this.packages;
-	}
-
-	public void setPackages(List<Package> packages) {
-		this.packages = packages;
-	}
-
-	public Package addPackage(Package pkg) {
-		getPackages().add(pkg);
-		pkg.setUser(this);
-
-		return pkg;
-	}
-
-	public Package removePackage(Package pkg) {
-		getPackages().remove(pkg);
-		pkg.setUser(null);
-
-		return pkg;
 	}
 
 	public void setGroups(List<Group> groups) {
