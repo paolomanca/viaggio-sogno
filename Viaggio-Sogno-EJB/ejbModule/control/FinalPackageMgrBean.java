@@ -76,14 +76,10 @@ public class FinalPackageMgrBean implements FinalPackageMgr {
 					newFinalProducts.add(fPrd);
 				}
 			}
-
-			System.out
-					.println("original size: " + originalFinalProducts.size());
-			System.out.println("new size: " + newFinalProducts.size());
+			
 			originalFinalProducts.removeAll(newFinalProducts);
 
 			for (FinalProduct oFP : originalFinalProducts) {
-				System.out.println("Deleting ID: " + oFP.getId());
 				usrMgr.getPrincipalUser().freeID(oFP.getIdRelative());
 			}
 
