@@ -128,7 +128,6 @@ public class ProductDTO {
 		if (!(obj instanceof ProductDTO))
 			return false;
 		ProductDTO other = (ProductDTO) obj;
-		System.out.println("this ID: "+id+" other ID: "+ other.id);
 		if (id != other.id)
 			return false;
 		return true;
