@@ -14,9 +14,9 @@
 			<p:carousel value="#{packageBean.showcased}" var="package"
 				easing="easeOutBounce">
 				<h:panelGrid columns="1" cellpadding="5">
-				
+
 					<h:outputText value="#{package.name}" />
-					
+
 					<p:button value="View package" outcome="package">
 						<f:param name="act" value="show" />
 						<f:param name="pkgID" value="#{package.id}" />
@@ -26,34 +26,33 @@
 			</p:carousel>
 
 		</o:form>
-		
+
 		<p:spacer height="30px" />
 
 		<o:form id="ownFinalPackages">
-		
-			<h3>My Packages</h3>
-			<p:dataTable var="finalPkg" value="#{finalPackageBean.own}" styleClass="TD-id-action">
 
-				<p:column headerText="ID" width="35" style="text-align: center">
-					<h:outputText value="#{finalPkg.id}" />
-				</p:column>
-				<p:column headerText="Name">
-					<h:outputText value="#{finalPkg.name}" />
-				</p:column>
+			<p:panel header="My Packages">
+				<p:dataTable var="finalPkg" value="#{finalPackageBean.own}"
+					styleClass="TD-id-action">
 
-				<p:column width="150" style="text-align: center">
-					<p:menuButton value="Actions">
-						<p:menuitem value="Customize" outcome="finalPackage">
-							<f:param name="act" value="show" />
-							<f:param name="fPkgID" value="#{finalPkg.id}" />
-						</p:menuitem>
-						<p:menuitem value="Remove"
-							action="#{finalPackageBean.remove(finalPkg)}"
-							update=":ownFinalPackages" />
-					</p:menuButton>
-				</p:column>
+					<p:column headerText="Name">
+						<h:outputText value="#{finalPkg.name}" />
+					</p:column>
 
-			</p:dataTable>
+					<p:column width="150" style="text-align: center">
+						<p:menuButton value="Actions">
+							<p:menuitem value="Customize" outcome="finalPackage">
+								<f:param name="act" value="show" />
+								<f:param name="fPkgID" value="#{finalPkg.id}" />
+							</p:menuitem>
+							<p:menuitem value="Remove"
+								action="#{finalPackageBean.remove(finalPkg)}"
+								update=":ownFinalPackages" />
+						</p:menuButton>
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
 		</o:form>
 
 	</ui:define>

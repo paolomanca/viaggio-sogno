@@ -28,10 +28,6 @@
 
 					<f:facet name="header">Flights</f:facet>
 
-					<p:column headerText="ID" width="35" style="text-align: center">
-						<h:outputText value="#{flight.id}" />
-					</p:column>
-
 					<p:column headerText="From">
 						<h:outputText value="#{flight.depAirport}" />
 					</p:column>
@@ -63,10 +59,6 @@
 					selection="#{finalPackageBean.selectedProduct}"
 					selectionMode="single">
 
-					<p:column headerText="ID" width="35" style="text-align: center">
-						<h:outputText value="#{hotel.id}" />
-					</p:column>
-
 					<p:column headerText="Name">
 						<h:outputText value="#{hotel.name}" />
 					</p:column>
@@ -97,10 +89,7 @@
 					rowKey="#{excursion.id}"
 					selection="#{finalPackageBean.selectedProduct}"
 					selectionMode="single">
-
-					<p:column headerText="ID" width="35" style="text-align: center">
-						<h:outputText value="#{excursion.id}" />
-					</p:column>
+					
 					<p:column headerText="Name">
 						<h:outputText value="#{excursion.name}" />
 					</p:column>
