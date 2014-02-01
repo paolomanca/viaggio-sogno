@@ -21,9 +21,19 @@ public class UserBean {
 
 	private UserDTO user;
 
+	private boolean logged;
+
 	@PostConstruct
 	public void init() {
-		user = usrMgr.getUserDTO();
+		System.out.println("User principal: "+usrMgr.getPrincipal());
+		if(usrMgr.getPrincipal()!=null){
+			if(!usrMgr.getPrincipal().equals("ANONYMOUS")){
+				user = usrMgr.getUserDTO();
+				setLogged(true);
+			} else {
+				setLogged(false);
+			}
+		}
 	}
 
 	public UserDTO getUser() {
@@ -38,13 +48,13 @@ public class UserBean {
 		usrMgr.unregister();
 		logout();
 	}
-	
+
 
 	public void logout() {
 		ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		
+
 		ec.invalidateSession();
-        try {
+		try {
 			ec.redirect(ec.getRequestContextPath());
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -54,6 +64,14 @@ public class UserBean {
 	public String update() {
 		usrMgr.updateSelf(user);
 		return "costumer/index?faces-redirect=true";
+	}
+
+	public boolean isLogged() {
+		return logged;
+	}
+
+	public void setLogged(boolean logged) {
+		this.logged = logged;
 	}
 
 }
