@@ -100,7 +100,7 @@ public class UserMgrBean implements UserMgr {
 
 
 	@Override
-	@RolesAllowed({Constants.Group.CUSTOMER})
+	@RolesAllowed({Constants.Group.CUSTOMER, Constants.Group.EMPLOYEE})
 	public void unregister() {
 		remove(getPrincipalUser());
 	}
