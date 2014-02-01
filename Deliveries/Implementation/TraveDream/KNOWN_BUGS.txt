@@ -2,3 +2,5 @@
 - You cannot select the same product as first choice and alternative at the same time
 - There is no option to unshare a package
 - Pressing buttons without selecting items first (adding nulls) is not handled, thus ending in an error
+
+- In the non pacthed version, the button to add a new excursion is disabled. It is fixed in the pacthed version.
