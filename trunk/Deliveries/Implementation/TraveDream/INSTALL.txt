@@ -9,5 +9,7 @@ PREREQUISITES: a MySQL server is running and set up with the information provide
 4a/5a) Execute the script through the MySQL workbench
 
 6) Go to http://localhost:8080/Viaggio-Sogno/ to access the website
-7) You can only login as an employee with username "emp@e.e" and password "emp"
-7a) To access as a customer you must first register as one
+7) You can login as an employee with username "emp@e.e" and password "emp"
+7a) You can login as a customer with username "cust@c.c" and password "cust"
+
+WARNING: unregistering the last employee will prevent you from creating more from the web interface (we decided to prevent registration of employees through the web). In fact only a logged employee can register another employee. If you happen to remove the last employee you can either: insert one manually in the database (be careful since an idpool is required also) or start the process all over from step 1 after undeploying the web application (this method is the easiest).
