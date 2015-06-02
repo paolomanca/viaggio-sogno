@@ -1,0 +1,1 @@
+Project for the Software Engineering 2 course (Polimi, 2013/2014)
